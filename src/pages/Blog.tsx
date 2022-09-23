@@ -2,6 +2,8 @@ import React from 'react';
 
 interface BlogProps {}
 
-export const Blog: React.FC<BlogProps> = ({}) => {
-  return <></>;
+const Blog: React.FC<BlogProps> = ({}) => {
+  return <main></main>;
 };
+
+export default Blog;
