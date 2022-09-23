@@ -25,6 +25,7 @@ const UserUI: React.FC<UserUIProps> = ({ post }) => {
     e.preventDefault();
     signOut(auth);
     dispatch(logout());
+    navigate('/');
   };
 
   const navigateToPost: React.MouseEventHandler<HTMLButtonElement> = () => {
