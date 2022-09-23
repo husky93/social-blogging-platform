@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
   return (
-    <header className="mx-auto max-w-7xl px-4 sm:px-6">
+    <header className="mx-auto max-w-7xl px-4 sm:px-6 w-full">
       <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link className="flex items-center" to="/">
