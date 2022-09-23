@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, LazyExoticComponent } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { RootState, AppDispatch } from '../app/store';
 import { auth, onAuthStateChanged } from '../app/firebase';
-import { login, logout, selectUser } from '../features/user/userSlice';
+import { login, logout } from '../features/user/userSlice';
 import Loading from './Loading';
 
 const Homepage: LazyExoticComponent<any> = React.lazy(
