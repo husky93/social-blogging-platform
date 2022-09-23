@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({}) => {
               football. Read blog posts written by the best and the most
               experienced in bussiness.
             </p>
-            <button className='"transition-all inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 active:bg-green-900"'>
+            <button className="transition-all inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 active:bg-green-900">
               Get started
             </button>
           </div>

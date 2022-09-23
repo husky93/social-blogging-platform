@@ -1,40 +1,30 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 
 type InitialState = {
-  loading: boolean;
   data: null | object;
-  error: string;
 };
 
 const initialState: InitialState = {
-  loading: false,
   data: null,
-  error: '',
 };
 
-export const fetchUser = createAsyncThunk('user/fetchUser', () => {
-  //... async logic
-});
-
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder.addCase(fetchUser.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchUser.fulfilled, (state, action: PayloadAction) => {
-      state.loading = true;
+  reducers: {
+    login: (state, action) => {
       state.data = action.payload;
-      state.error = '';
-    });
-    builder.addCase(fetchUser.rejected, (state, action: PayloadAction) => {
-      state.loading = false;
+    },
+    logout: (state) => {
       state.data = null;
-      state.error = action.error.message || 'Something went wrong';
-    });
+    },
   },
 });
+
+export const { login, logout } = userSlice.actions;
+
+// selectors
+export const selectUser = (state: RootState) => state.user.data;
 
 export default userSlice.reducer;
