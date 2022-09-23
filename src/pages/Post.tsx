@@ -1,14 +1,18 @@
 import React from 'react';
 import Header from '../components/Header';
 import UserUI from '../components/UserUI';
+import Editor from '../components/EditorComponent';
 
 interface PostProps {}
 
 const Post: React.FC<PostProps> = ({}) => {
   return (
-    <Header>
-      <UserUI post={true} />
-    </Header>
+    <main>
+      <Header>
+        <UserUI post={true} />
+      </Header>
+      <Editor />
+    </main>
   );
 };
 
