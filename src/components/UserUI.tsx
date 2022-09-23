@@ -6,7 +6,8 @@ import { RootState } from '../app/store';
 import { logout } from '../features/user/userSlice';
 import Button from '../components/Button';
 import Wrapper from '../components/Wrapper';
-import Avatar from '../components/Avatar';
+
+import Dropdown from '../components/Dropdown';
 
 interface UserUIProps {}
 
@@ -25,13 +26,12 @@ const UserUI: React.FC<UserUIProps> = ({}) => {
     <Wrapper direction="row" alignItems="center" customClasses="gap-x-4">
       {user.data ? (
         <>
-          <Avatar imgLink={user.data.photoUrl} />
-          <span className="font-medium text-sm">{user.data.displayName}</span>
           <Button
-            variant="secondary"
-            text="Sign Out"
+            variant="primary"
+            text="Create Post"
             handleClick={logoutFromApp}
           />
+          <Dropdown user={user} handleSignOut={logoutFromApp} />
         </>
       ) : (
         ''
