@@ -1,7 +1,7 @@
 import React from 'react';
 import heroImg from '../assets/hero.jpg';
 import Container from '../components/Container';
-import Wrapper from '../components/Wrapper';
+import Button from '../components/Button';
 
 interface HeroProps {}
 
@@ -38,9 +38,7 @@ const Hero: React.FC<HeroProps> = ({}) => {
               football. Read blog posts written by the best and the most
               experienced in bussiness.
             </p>
-            <button className="transition-all inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 active:bg-green-900">
-              Get started
-            </button>
+            <Button text="Get Started" variant="primary" />
           </div>
         </div>
       </div>
