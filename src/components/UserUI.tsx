@@ -32,7 +32,11 @@ const UserUI: React.FC<UserUIProps> = ({ post }) => {
     navigate('/post');
   };
   return (
-    <Wrapper direction="row" alignItems="center" customClasses="gap-x-4">
+    <Wrapper
+      direction="column"
+      alignItems="center"
+      customClasses="gap-x-4 gap-y-4 sm:gap-y-0 sm:flex-row"
+    >
       {user.data ? (
         <>
           {post ? (
