@@ -5,10 +5,14 @@ import { auth, onAuthStateChanged } from '../app/firebase';
 import { login, logout, selectUser } from '../features/user/userSlice';
 import Loading from './Loading';
 
+const Homepage: LazyExoticComponent<any> = React.lazy(
+  () => import('./Homepage')
+);
+const Blog: LazyExoticComponent<any> = React.lazy(() => import('./Blog'));
+
 const App: React.FC = () => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const dispatch: AppDispatch = useAppDispatch();
-  let Page: LazyExoticComponent<any> = React.lazy(() => import('./Homepage'));
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
@@ -27,17 +31,17 @@ const App: React.FC = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (user.data) {
-      Page = React.lazy(() => import('./Blog'));
-    }
-  }, [user]);
-
   return (
-    <div className="min-h-screen">
-      <Suspense fallback={<Loading />}>
-        <Page />
-      </Suspense>
+    <div className="min-h-screen text-slate-800">
+      {user.data ? (
+        <Suspense fallback={<Loading />}>
+          <Blog />
+        </Suspense>
+      ) : (
+        <Suspense fallback={<Loading />}>
+          <Homepage />
+        </Suspense>
+      )}
     </div>
   );
 };

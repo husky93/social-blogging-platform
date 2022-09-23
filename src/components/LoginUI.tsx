@@ -17,12 +17,14 @@ const LoginUI: React.FC<LoginUIProps> = ({}) => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        login({
-          email: user.email,
-          uid: user.uid,
-          displayName: user.displayName,
-          photoUrl: user.photoURL,
-        });
+        dispatch(
+          login({
+            email: user.email,
+            uid: user.uid,
+            displayName: user.displayName,
+            photoUrl: user.photoURL,
+          })
+        );
       })
       .catch((error) => {
         const errorCode = error.code;
