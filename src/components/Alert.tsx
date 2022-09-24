@@ -6,7 +6,7 @@ interface AlertProps {
   title: string;
 }
 
-export const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
+const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
   const [classes, setClasses] = useState('');
 
   useEffect(() => {
@@ -42,8 +42,10 @@ export const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
   }, [variant]);
   return (
     <div className={classes} role="alert">
-      <span className="font-medium">{title}</span>
+      <span className="font-medium mr-1">{title}</span>
       {children}
     </div>
   );
 };
+
+export default Alert;

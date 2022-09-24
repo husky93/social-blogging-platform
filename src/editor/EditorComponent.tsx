@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { RootState } from '../app/store';
@@ -15,6 +15,7 @@ import {
   collection,
   addDoc,
   arrayUnion,
+  getDoc,
 } from '../app/firebase';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
@@ -27,6 +28,7 @@ import EditorUI from './components/EditorUI';
 import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
+import Alert from '../components/Alert';
 
 type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
@@ -46,6 +48,25 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
       children: [{ text: 'Start writing your article here...' }],
     },
   ];
+
+  useEffect(() => {
+    const usersRef: CollectionReference<DocumentData> = collection(db, 'users');
+    if (user.data !== null) {
+      getDoc(doc(usersRef, user.data.uid))
+        .then((document) => {
+          const data: DocumentData | undefined = document.data();
+          if (data) {
+            if (data.draft.title) {
+              setTitle(data.draft.title);
+              editor.children = data.draft.post;
+            }
+          }
+        })
+        .catch((error) => {
+          console.error('Error loading Draft from Database', error);
+        });
+    }
+  }, []);
 
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
@@ -67,7 +88,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
 
   const savePost: Function = async (post: Array<CustomElement>) => {
     try {
-      if (title) {
+      if (title && user.data) {
         setSubmitting(true);
         const postsRef: CollectionReference<DocumentData> = collection(
           db,
@@ -94,16 +115,16 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
 
   const saveDraft: Function = async (post: Array<CustomElement>) => {
     try {
-      if (title) {
+      if (title && user.data) {
         const usersRef: CollectionReference<DocumentData> = collection(
           db,
           'users'
         );
         await updateDoc(doc(usersRef, user.data.uid), {
-          draft: post,
+          draft: { title: title, post: post },
         });
         setDraftSaved(true);
-        await new Promise((resolve) => setTimeout(resolve, 4000));
+        await new Promise((resolve) => setTimeout(resolve, 6000));
         setDraftSaved(false);
       }
     } catch (error: any) {
@@ -138,6 +159,16 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           id="large-input"
           className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-gren-500"
         />
+        {draftSaved ? (
+          <div className="my-4">
+            <Alert variant="success" title="Draft Saved">
+              Your Post draft have been saved successfully! It will be
+              automatically loaded when you visit this page again.
+            </Alert>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <Slate editor={editor} value={initialValue}>
         <div className="my-6 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
