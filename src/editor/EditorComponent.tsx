@@ -9,8 +9,8 @@ import {
   Text,
 } from 'slate';
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
-import CodeElement from './rendreres/CodeElement';
 import DefaultElement from './rendreres/DefaultElement';
+import Heading from './rendreres/Heading';
 import Leaf from './Leaf';
 import EditorUI from './components/EditorUI';
 
@@ -28,7 +28,7 @@ declare module 'slate' {
 interface EditorProps {}
 
 const CustomEditor = {
-  isBoldMarkActive(editor: BaseEditor & ReactEditor) {
+  isBoldMarkActive(editor: BaseEditor & ReactEditor): boolean {
     const [match] = Editor.nodes(editor, {
       match: (n) => n.bold === true,
       universal: true,
@@ -37,15 +37,23 @@ const CustomEditor = {
     return !!match;
   },
 
-  isCodeBlockActive(editor: BaseEditor & ReactEditor) {
+  isHeadingOneBlockActive(editor: BaseEditor & ReactEditor): boolean {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'code',
+      match: (n) => n.type === 'heading-1',
     });
 
     return !!match;
   },
 
-  toggleBoldMark(editor: BaseEditor & ReactEditor) {
+  isHeadingTwoBlockActive(editor: BaseEditor & ReactEditor): boolean {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => n.type === 'heading-2',
+    });
+
+    return !!match;
+  },
+
+  toggleBoldMark(editor: BaseEditor & ReactEditor): void {
     const isActive = CustomEditor.isBoldMarkActive(editor);
     Transforms.setNodes(
       editor,
@@ -54,11 +62,20 @@ const CustomEditor = {
     );
   },
 
-  toggleCodeBlock(editor: BaseEditor & ReactEditor) {
-    const isActive = CustomEditor.isCodeBlockActive(editor);
+  toggleHeadingOneBlock(editor: BaseEditor & ReactEditor): void {
+    const isActive = CustomEditor.isHeadingOneBlockActive(editor);
     Transforms.setNodes(
       editor,
-      { type: isActive ? null : 'code' },
+      { type: isActive ? null : 'heading-1', bold: true },
+      { match: (n) => Editor.isBlock(editor, n) }
+    );
+  },
+
+  toggleHeadingTwoBlock(editor: BaseEditor & ReactEditor): void {
+    const isActive = CustomEditor.isHeadingTwoBlockActive(editor);
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? null : 'heading-2' },
       { match: (n) => Editor.isBlock(editor, n) }
     );
   },
@@ -77,8 +94,12 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
       switch (props.element.type) {
-        case 'code':
-          return <CodeElement {...props} />;
+        case 'heading-1':
+          return <Heading variant="h1" {...props} />;
+        case 'heading-2':
+          return <Heading variant="h2" {...props} />;
+        case 'heading-3':
+          return <Heading variant="h3" {...props} />;
         default:
           return <DefaultElement {...props} />;
       }
@@ -94,7 +115,20 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     <Container>
       <Slate editor={editor} value={initialValue}>
         <div className="my-6 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <EditorUI />
+          <EditorUI
+            toggleHeadingOneBlock={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleHeadingOneBlock(editor);
+            }}
+            toggleHeadingTwoBlock={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleHeadingTwoBlock(editor);
+            }}
+          />
           <div className="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">
             <Editable
               className="py-4 min-h-[500px]"
@@ -105,12 +139,6 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
                   return;
                 }
                 switch (event.key) {
-                  case '`': {
-                    event.preventDefault();
-                    CustomEditor.toggleCodeBlock(editor);
-                    break;
-                  }
-
                   case 'b': {
                     event.preventDefault();
                     CustomEditor.toggleBoldMark(editor);

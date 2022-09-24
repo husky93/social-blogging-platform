@@ -1,6 +1,8 @@
 import React from 'react';
 import EditorBtn from './EditorBtn';
 import { Icon } from '@ricons/utils';
+import { BaseEditor } from 'slate';
+import { ReactEditor } from 'slate-react';
 import {
   H1,
   H2,
@@ -14,26 +16,27 @@ import {
   List,
 } from '@ricons/tabler';
 
-interface EditorUIProps {}
+interface EditorUIProps {
+  toggleHeadingOneBlock: React.MouseEventHandler<HTMLButtonElement>;
+  toggleHeadingTwoBlock: React.MouseEventHandler<HTMLButtonElement>;
+}
 
-const EditorUI: React.FC<EditorUIProps> = ({}) => {
+const EditorUI: React.FC<EditorUIProps> = ({
+  toggleHeadingOneBlock,
+  toggleHeadingTwoBlock,
+}) => {
   return (
     <div className="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
       <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
         <div className="flex items-center space-x-1 sm:pr-4">
-          <EditorBtn handleClick={() => {}}>
+          <EditorBtn handleClick={toggleHeadingOneBlock}>
             <Icon>
               <H1 />
             </Icon>
           </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
+          <EditorBtn handleClick={toggleHeadingTwoBlock}>
             <Icon>
               <H2 />
-            </Icon>
-          </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
-            <Icon>
-              <H3 />
             </Icon>
           </EditorBtn>
           <EditorBtn handleClick={() => {}}>

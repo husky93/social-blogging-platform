@@ -8,7 +8,7 @@ interface LeafProps {
 
 const Leaf: React.FC<LeafProps> = ({ attributes, children, leaf }) => {
   return (
-    <span {...attributes} style={{ fontWeight: leaf.bold ? 'bold' : 'normal' }}>
+    <span {...attributes} style={{ fontWeight: leaf.bold ? 'bold' : '' }}>
       {children}
     </span>
   );
