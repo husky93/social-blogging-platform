@@ -44,6 +44,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
   const [title, setTitle] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [draftSaved, setDraftSaved] = useState(false);
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const navigate: NavigateFunction = useNavigate();
 
@@ -92,12 +93,31 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     }
   };
 
+  const saveDraft: Function = async (post: Array<CustomElement>) => {
+    try {
+      if (title) {
+        const usersRef: CollectionReference<DocumentData> = collection(
+          db,
+          'users'
+        );
+        await updateDoc(doc(usersRef, user.data.uid), {
+          draft: post,
+        });
+        setDraftSaved(true);
+        await new Promise((resolve) => setTimeout(resolve, 4000));
+        setDraftSaved(false);
+      }
+    } catch (error: any) {
+      console.error('Error writing new data to Firebase Database', error);
+    }
+  };
+
   const handleSubmitPost: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     savePost(editor.children);
   };
 
   const handleSaveDraft: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    console.log(editor.children);
+    saveDraft(editor.children);
   };
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

@@ -7,7 +7,6 @@ const CustomEditor = {
       match: (n) => n.bold === true,
       universal: true,
     });
-
     return !!match;
   },
 
