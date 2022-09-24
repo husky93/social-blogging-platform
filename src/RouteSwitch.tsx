@@ -15,7 +15,7 @@ const RouteSwitch: React.FC<RouteSwitchProps> = ({}) => {
       <Routes>
         <Route path="/" element={<App />} />
         <Route element={<ProtectedRoutes auth={user.data !== null} />}>
-          <Route path="/post" element={<Post />} />
+          <Route path="/create-post" element={<Post />} />
         </Route>
       </Routes>
     </BrowserRouter>

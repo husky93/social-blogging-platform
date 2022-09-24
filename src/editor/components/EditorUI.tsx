@@ -19,12 +19,18 @@ interface EditorUIProps {
   toggleHeadingOneBlock: React.MouseEventHandler<HTMLButtonElement>;
   toggleHeadingTwoBlock: React.MouseEventHandler<HTMLButtonElement>;
   toggleBlockquoteBlock: React.MouseEventHandler<HTMLButtonElement>;
+  toggleBoldMark: React.MouseEventHandler<HTMLButtonElement>;
+  toggleItalicMark: React.MouseEventHandler<HTMLButtonElement>;
+  toggleStrikethroughMark: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const EditorUI: React.FC<EditorUIProps> = ({
   toggleHeadingOneBlock,
   toggleHeadingTwoBlock,
   toggleBlockquoteBlock,
+  toggleBoldMark,
+  toggleItalicMark,
+  toggleStrikethroughMark,
 }) => {
   const editor = useSlateStatic();
 
@@ -59,18 +65,17 @@ const EditorUI: React.FC<EditorUIProps> = ({
           </EditorBtn>
         </div>
         <div className="flex flex-wrap items-center space-x-1 sm:pl-4">
-          <EditorBtn handleClick={() => {}}>
+          <EditorBtn handleClick={toggleBoldMark}>
             <Icon>
               <Bold />
             </Icon>
           </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
+          <EditorBtn handleClick={toggleItalicMark}>
             <Icon>
               <Italic />
             </Icon>
           </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
-            {' '}
+          <EditorBtn handleClick={toggleStrikethroughMark}>
             <Icon>
               <Strikethrough />
             </Icon>

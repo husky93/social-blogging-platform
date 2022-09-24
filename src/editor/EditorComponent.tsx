@@ -23,6 +23,22 @@ const CustomEditor = {
     return !!match;
   },
 
+  isItalicMarkActive(editor: BaseEditor & ReactEditor): boolean {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => n.italic === true,
+      universal: true,
+    });
+    return !!match;
+  },
+
+  isStrikethroughMarkActive(editor: BaseEditor & ReactEditor): boolean {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => n.strikethrough === true,
+      universal: true,
+    });
+    return !!match;
+  },
+
   isHeadingOneBlockActive(editor: BaseEditor & ReactEditor): boolean {
     const [match] = Editor.nodes(editor, {
       match: (n) => n.type === 'heading-1',
@@ -52,6 +68,24 @@ const CustomEditor = {
     Transforms.setNodes(
       editor,
       { bold: isActive ? null : true },
+      { match: (n) => Text.isText(n), split: true }
+    );
+  },
+
+  toggleItalicMark(editor: BaseEditor & ReactEditor): void {
+    const isActive = CustomEditor.isItalicMarkActive(editor);
+    Transforms.setNodes(
+      editor,
+      { italic: isActive ? null : true },
+      { match: (n) => Text.isText(n), split: true }
+    );
+  },
+
+  toggleStrikethroughMark(editor: BaseEditor & ReactEditor): void {
+    const isActive = CustomEditor.isStrikethroughMarkActive(editor);
+    Transforms.setNodes(
+      editor,
+      { strikethrough: isActive ? null : true },
       { match: (n) => Text.isText(n), split: true }
     );
   },
@@ -136,6 +170,24 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
             ) => {
               e.preventDefault();
               CustomEditor.toggleBlockquoteBlock(editor);
+            }}
+            toggleBoldMark={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleBoldMark(editor);
+            }}
+            toggleItalicMark={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleItalicMark(editor);
+            }}
+            toggleStrikethroughMark={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleStrikethroughMark(editor);
             }}
           />
           <div className="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">

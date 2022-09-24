@@ -29,7 +29,7 @@ const UserUI: React.FC<UserUIProps> = ({ post }) => {
   };
 
   const navigateToPost: React.MouseEventHandler<HTMLButtonElement> = () => {
-    navigate('/post');
+    navigate('/create-post');
   };
   return (
     <Wrapper
