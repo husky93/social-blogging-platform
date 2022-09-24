@@ -1,7 +1,23 @@
 import React, { useState, useCallback } from 'react';
-import Container from '../components/Container';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
+import { RootState } from '../app/store';
+import {
+  CollectionReference,
+  DocumentData,
+  DocumentReference,
+  DocumentSnapshot,
+} from 'firebase/firestore';
+import {
+  db,
+  doc,
+  updateDoc,
+  collection,
+  addDoc,
+  arrayUnion,
+} from '../app/firebase';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../app/hooks';
 import DefaultElement from './rendreres/DefaultElement';
 import Heading from './rendreres/Heading';
 import Blockquote from './rendreres/Blockquote';
@@ -9,6 +25,8 @@ import Unordered from './rendreres/Unordered';
 import Leaf from './Leaf';
 import EditorUI from './components/EditorUI';
 import CustomEditor from './CustomEditor';
+import BottomUI from './components/BottomUI';
+import Container from '../components/Container';
 
 type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
@@ -25,6 +43,9 @@ const initialValue: Array<CustomElement> = [
 const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
   const [title, setTitle] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const user: RootState['user'] = useAppSelector((state) => state.user);
+  const navigate: NavigateFunction = useNavigate();
 
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
@@ -43,6 +64,41 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     },
     []
   );
+
+  const savePost: Function = async (post: Array<CustomElement>) => {
+    try {
+      if (title) {
+        setSubmitting(true);
+        const postsRef: CollectionReference<DocumentData> = collection(
+          db,
+          'posts'
+        );
+        const usersRef: CollectionReference<DocumentData> = collection(
+          db,
+          'users'
+        );
+        const path = await addDoc(postsRef, {
+          author: user.data.uid,
+          title: title,
+          content: post,
+        });
+        await updateDoc(doc(usersRef, user.data.uid), {
+          posts: arrayUnion(path.id),
+        });
+        navigate(`/post/${path.id}`);
+      }
+    } catch (error: any) {
+      console.error('Error writing new data to Firebase Database', error);
+    }
+  };
+
+  const handleSubmitPost: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    savePost(editor.children);
+  };
+
+  const handleSaveDraft: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    console.log(editor.children);
+  };
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
@@ -131,6 +187,11 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           </div>
         </div>
       </Slate>
+      <BottomUI
+        handleSubmit={handleSubmitPost}
+        handleSave={handleSaveDraft}
+        submitting={submitting}
+      />
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ButtonProps {
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
-  text: string;
+  text: string | React.ReactNode;
   variant: 'primary' | 'secondary';
 }
 

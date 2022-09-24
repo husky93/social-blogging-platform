@@ -15,6 +15,9 @@ import {
   doc,
   getDoc,
   Firestore,
+  addDoc,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import { FirebaseApp } from '@firebase/app-types';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -46,7 +49,10 @@ export {
   GoogleAuthProvider,
   getFirestore,
   collection,
+  addDoc,
   setDoc,
   doc,
   getDoc,
+  updateDoc,
+  arrayUnion,
 };
