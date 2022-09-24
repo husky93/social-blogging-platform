@@ -1,140 +1,19 @@
 import React, { useState, useCallback } from 'react';
 import Container from '../components/Container';
-import { createEditor, BaseEditor, Transforms, Editor, Text } from 'slate';
-import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
+import { createEditor } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 import DefaultElement from './rendreres/DefaultElement';
 import Heading from './rendreres/Heading';
 import Blockquote from './rendreres/Blockquote';
 import Unordered from './rendreres/Unordered';
 import Leaf from './Leaf';
 import EditorUI from './components/EditorUI';
+import CustomEditor from './CustomEditor';
 
 type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
 
 interface EditorProps {}
-
-const CustomEditor = {
-  isBoldMarkActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.bold === true,
-      universal: true,
-    });
-
-    return !!match;
-  },
-
-  isItalicMarkActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.italic === true,
-      universal: true,
-    });
-    return !!match;
-  },
-
-  isStrikethroughMarkActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.strikethrough === true,
-      universal: true,
-    });
-    return !!match;
-  },
-
-  isHeadingOneBlockActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'heading-1',
-    });
-
-    return !!match;
-  },
-
-  isHeadingTwoBlockActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'heading-2',
-    });
-
-    return !!match;
-  },
-
-  isBlockquoteActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'blockquote',
-    });
-
-    return !!match;
-  },
-
-  isUnorderedActive(editor: BaseEditor & ReactEditor): boolean {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'unordered',
-    });
-
-    return !!match;
-  },
-
-  toggleBoldMark(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isBoldMarkActive(editor);
-    Transforms.setNodes(
-      editor,
-      { bold: isActive ? null : true },
-      { match: (n) => Text.isText(n), split: true }
-    );
-  },
-
-  toggleItalicMark(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isItalicMarkActive(editor);
-    Transforms.setNodes(
-      editor,
-      { italic: isActive ? null : true },
-      { match: (n) => Text.isText(n), split: true }
-    );
-  },
-
-  toggleStrikethroughMark(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isStrikethroughMarkActive(editor);
-    Transforms.setNodes(
-      editor,
-      { strikethrough: isActive ? null : true },
-      { match: (n) => Text.isText(n), split: true }
-    );
-  },
-
-  toggleHeadingOneBlock(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isHeadingOneBlockActive(editor);
-    Transforms.setNodes(
-      editor,
-      { type: isActive ? null : 'heading-1', bold: true },
-      { match: (n) => Editor.isBlock(editor, n) }
-    );
-  },
-
-  toggleHeadingTwoBlock(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isHeadingTwoBlockActive(editor);
-    Transforms.setNodes(
-      editor,
-      { type: isActive ? null : 'heading-2' },
-      { match: (n) => Editor.isBlock(editor, n) }
-    );
-  },
-
-  toggleBlockquoteBlock(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isBlockquoteActive(editor);
-    Transforms.setNodes(
-      editor,
-      { type: isActive ? null : 'blockquote' },
-      { match: (n) => Editor.isBlock(editor, n) }
-    );
-  },
-
-  toggleUnorderedBlock(editor: BaseEditor & ReactEditor): void {
-    const isActive = CustomEditor.isUnorderedActive(editor);
-    Transforms.setNodes(
-      editor,
-      { type: isActive ? null : 'unordered' },
-      { match: (n) => Editor.isBlock(editor, n) }
-    );
-  },
-};
 
 const initialValue: Array<CustomElement> = [
   {
