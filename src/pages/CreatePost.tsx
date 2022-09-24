@@ -3,9 +3,9 @@ import Header from '../components/Header';
 import UserUI from '../components/UserUI';
 import Editor from '../editor/EditorComponent';
 
-interface PostProps {}
+interface CreatePostProps {}
 
-const Post: React.FC<PostProps> = ({}) => {
+const CreatePost: React.FC<CreatePostProps> = ({}) => {
   return (
     <main>
       <Header>
@@ -16,4 +16,4 @@ const Post: React.FC<PostProps> = ({}) => {
   );
 };
 
-export default Post;
+export default CreatePost;

@@ -1,6 +1,6 @@
 import React from 'react';
 import App from './pages/App';
-import Post from './pages/Post';
+import Post from './pages/CreatePost';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './app/hooks';
