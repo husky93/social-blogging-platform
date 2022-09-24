@@ -33,13 +33,6 @@ type CustomText = { text: string };
 
 interface EditorProps {}
 
-const initialValue: Array<CustomElement> = [
-  {
-    type: 'paragraph',
-    children: [{ text: 'Start writing your article here...' }],
-  },
-];
-
 const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
   const [title, setTitle] = useState('');
@@ -47,6 +40,12 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [draftSaved, setDraftSaved] = useState(false);
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const navigate: NavigateFunction = useNavigate();
+  const initialValue: Array<CustomElement> = [
+    {
+      type: 'paragraph',
+      children: [{ text: 'Start writing your article here...' }],
+    },
+  ];
 
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
