@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import UserUI from '../components/UserUI';
-import Editor from '../components/EditorComponent';
+import Editor from '../editor/EditorComponent';
 
 interface PostProps {}
 
