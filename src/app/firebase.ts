@@ -8,6 +8,14 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
+import {
+  getFirestore,
+  collection,
+  setDoc,
+  doc,
+  getDoc,
+  Firestore,
+} from 'firebase/firestore';
 import { FirebaseApp } from '@firebase/app-types';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,12 +34,19 @@ const firebaseConfig = {
 const app: FirebaseApp = initializeApp(firebaseConfig);
 const auth: Auth = getAuth(app);
 const provider: GoogleAuthProvider = new GoogleAuthProvider();
+const db: Firestore = getFirestore(app);
 
 export {
   auth,
   provider,
+  db,
   onAuthStateChanged,
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
+  getFirestore,
+  collection,
+  setDoc,
+  doc,
+  getDoc,
 };
