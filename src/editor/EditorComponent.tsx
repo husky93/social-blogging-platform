@@ -1,29 +1,15 @@
 import React, { useState, useCallback } from 'react';
 import Container from '../components/Container';
-import {
-  createEditor,
-  BaseEditor,
-  Descendant,
-  Transforms,
-  Editor,
-  Text,
-} from 'slate';
+import { createEditor, BaseEditor, Transforms, Editor, Text } from 'slate';
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
 import DefaultElement from './rendreres/DefaultElement';
 import Heading from './rendreres/Heading';
+import Blockquote from './rendreres/Blockquote';
 import Leaf from './Leaf';
 import EditorUI from './components/EditorUI';
 
 type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
-
-declare module 'slate' {
-  interface CustomTypes {
-    Editor: BaseEditor & ReactEditor;
-    Element: CustomElement;
-    Text: CustomText;
-  }
-}
 
 interface EditorProps {}
 
@@ -48,6 +34,14 @@ const CustomEditor = {
   isHeadingTwoBlockActive(editor: BaseEditor & ReactEditor): boolean {
     const [match] = Editor.nodes(editor, {
       match: (n) => n.type === 'heading-2',
+    });
+
+    return !!match;
+  },
+
+  isBlockquoteActive(editor: BaseEditor & ReactEditor): boolean {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => n.type === 'blockquote',
     });
 
     return !!match;
@@ -79,6 +73,15 @@ const CustomEditor = {
       { match: (n) => Editor.isBlock(editor, n) }
     );
   },
+
+  toggleBlockquoteBlock(editor: BaseEditor & ReactEditor): void {
+    const isActive = CustomEditor.isBlockquoteActive(editor);
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? null : 'blockquote' },
+      { match: (n) => Editor.isBlock(editor, n) }
+    );
+  },
 };
 
 const initialValue: Array<CustomElement> = [
@@ -98,8 +101,8 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           return <Heading variant="h1" {...props} />;
         case 'heading-2':
           return <Heading variant="h2" {...props} />;
-        case 'heading-3':
-          return <Heading variant="h3" {...props} />;
+        case 'blockquote':
+          return <Blockquote {...props} />;
         default:
           return <DefaultElement {...props} />;
       }
@@ -127,6 +130,12 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
             ) => {
               e.preventDefault();
               CustomEditor.toggleHeadingTwoBlock(editor);
+            }}
+            toggleBlockquoteBlock={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleBlockquoteBlock(editor);
             }}
           />
           <div className="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">

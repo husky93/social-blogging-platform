@@ -6,25 +6,28 @@ import { ReactEditor } from 'slate-react';
 import {
   H1,
   H2,
-  H3,
   Bold,
   Italic,
   Strikethrough,
-  Link,
   Quote,
   ListNumbers,
   List,
 } from '@ricons/tabler';
+import { useSlateStatic } from 'slate-react';
 
 interface EditorUIProps {
   toggleHeadingOneBlock: React.MouseEventHandler<HTMLButtonElement>;
   toggleHeadingTwoBlock: React.MouseEventHandler<HTMLButtonElement>;
+  toggleBlockquoteBlock: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const EditorUI: React.FC<EditorUIProps> = ({
   toggleHeadingOneBlock,
   toggleHeadingTwoBlock,
+  toggleBlockquoteBlock,
 }) => {
+  const editor = useSlateStatic();
+
   return (
     <div className="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
       <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
@@ -39,12 +42,7 @@ const EditorUI: React.FC<EditorUIProps> = ({
               <H2 />
             </Icon>
           </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
-            <Icon>
-              <Link />
-            </Icon>
-          </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
+          <EditorBtn handleClick={toggleBlockquoteBlock}>
             <Icon>
               <Quote />
             </Icon>
