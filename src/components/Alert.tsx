@@ -48,4 +48,5 @@ const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
   );
 };
 
+export type AlertVariant = 'info' | 'danger' | 'success' | 'warning' | 'dark';
 export default Alert;

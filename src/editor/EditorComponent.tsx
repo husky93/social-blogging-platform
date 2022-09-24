@@ -28,7 +28,7 @@ import EditorUI from './components/EditorUI';
 import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
-import Alert from '../components/Alert';
+import Alert, { AlertVariant } from '../components/Alert';
 
 type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
@@ -39,7 +39,12 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
   const [title, setTitle] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [draftSaved, setDraftSaved] = useState(false);
+  const [error, setError] = useState({
+    show: false,
+    title: '',
+    text: '',
+    variant: '',
+  });
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const navigate: NavigateFunction = useNavigate();
   const initialValue: Array<CustomElement> = [
@@ -107,6 +112,12 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           posts: arrayUnion(path.id),
         });
         navigate(`/post/${path.id}`);
+      } else {
+        showError(
+          'Error!',
+          'In order to Submit your post you need to specify a title!',
+          'warning'
+        );
       }
     } catch (error: any) {
       console.error('Error writing new data to Firebase Database', error);
@@ -123,13 +134,36 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         await updateDoc(doc(usersRef, user.data.uid), {
           draft: { title: title, post: post },
         });
-        setDraftSaved(true);
-        await new Promise((resolve) => setTimeout(resolve, 6000));
-        setDraftSaved(false);
+        showError(
+          'Draft Saved!',
+          'Your Post draft have been saved successfully! It will be automatically loaded when you visit this page again.',
+          'success'
+        );
+      } else {
+        showError(
+          'Error!',
+          'In order to Save Draft your post you need to specify a title!',
+          'warning'
+        );
       }
     } catch (error: any) {
       console.error('Error writing new data to Firebase Database', error);
     }
+  };
+
+  const showError = async (
+    title: string,
+    text: string,
+    variant: AlertVariant
+  ): Promise<void> => {
+    setError({
+      show: true,
+      title,
+      text,
+      variant,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+    setError({ show: false, title: '', text: '', variant: '' });
   };
 
   const handleSubmitPost: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -159,11 +193,10 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           id="large-input"
           className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-gren-500"
         />
-        {draftSaved ? (
+        {error.show ? (
           <div className="my-4">
-            <Alert variant="success" title="Draft Saved">
-              Your Post draft have been saved successfully! It will be
-              automatically loaded when you visit this page again.
+            <Alert variant={error.variant} title={error.title}>
+              {error.text}
             </Alert>
           </div>
         ) : (
