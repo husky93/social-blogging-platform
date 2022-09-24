@@ -22,6 +22,7 @@ interface EditorUIProps {
   toggleBoldMark: React.MouseEventHandler<HTMLButtonElement>;
   toggleItalicMark: React.MouseEventHandler<HTMLButtonElement>;
   toggleStrikethroughMark: React.MouseEventHandler<HTMLButtonElement>;
+  toggleUnorderedBlock: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const EditorUI: React.FC<EditorUIProps> = ({
@@ -31,6 +32,7 @@ const EditorUI: React.FC<EditorUIProps> = ({
   toggleBoldMark,
   toggleItalicMark,
   toggleStrikethroughMark,
+  toggleUnorderedBlock,
 }) => {
   const editor = useSlateStatic();
 
@@ -53,14 +55,9 @@ const EditorUI: React.FC<EditorUIProps> = ({
               <Quote />
             </Icon>
           </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
+          <EditorBtn handleClick={toggleUnorderedBlock}>
             <Icon>
               <List />
-            </Icon>
-          </EditorBtn>
-          <EditorBtn handleClick={() => {}}>
-            <Icon>
-              <ListNumbers />
             </Icon>
           </EditorBtn>
         </div>

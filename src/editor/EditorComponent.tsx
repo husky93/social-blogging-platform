@@ -5,6 +5,7 @@ import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
 import DefaultElement from './rendreres/DefaultElement';
 import Heading from './rendreres/Heading';
 import Blockquote from './rendreres/Blockquote';
+import Unordered from './rendreres/Unordered';
 import Leaf from './Leaf';
 import EditorUI from './components/EditorUI';
 
@@ -63,6 +64,14 @@ const CustomEditor = {
     return !!match;
   },
 
+  isUnorderedActive(editor: BaseEditor & ReactEditor): boolean {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => n.type === 'unordered',
+    });
+
+    return !!match;
+  },
+
   toggleBoldMark(editor: BaseEditor & ReactEditor): void {
     const isActive = CustomEditor.isBoldMarkActive(editor);
     Transforms.setNodes(
@@ -116,6 +125,15 @@ const CustomEditor = {
       { match: (n) => Editor.isBlock(editor, n) }
     );
   },
+
+  toggleUnorderedBlock(editor: BaseEditor & ReactEditor): void {
+    const isActive = CustomEditor.isUnorderedActive(editor);
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? null : 'unordered' },
+      { match: (n) => Editor.isBlock(editor, n) }
+    );
+  },
 };
 
 const initialValue: Array<CustomElement> = [
@@ -137,6 +155,8 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           return <Heading variant="h2" {...props} />;
         case 'blockquote':
           return <Blockquote {...props} />;
+        case 'unordered':
+          return <Unordered {...props} />;
         default:
           return <DefaultElement {...props} />;
       }
@@ -170,6 +190,12 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
             ) => {
               e.preventDefault();
               CustomEditor.toggleBlockquoteBlock(editor);
+            }}
+            toggleUnorderedBlock={(
+              e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              CustomEditor.toggleUnorderedBlock(editor);
             }}
             toggleBoldMark={(
               e: React.MouseEvent<HTMLButtonElement, MouseEvent>
