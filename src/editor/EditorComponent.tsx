@@ -104,7 +104,11 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           'users'
         );
         const path = await addDoc(postsRef, {
-          author: user.data.uid,
+          author: {
+            uid: user.data.uid,
+            displayName: user.data.displayName,
+            photoUrl: user.data.photoUrl,
+          },
           title: title,
           content: post,
         });
