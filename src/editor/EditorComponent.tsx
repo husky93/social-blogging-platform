@@ -24,6 +24,7 @@ const initialValue: Array<CustomElement> = [
 
 const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
+  const [title, setTitle] = useState('');
 
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
@@ -43,12 +44,26 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     []
   );
 
+  const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTitle(e.target.value);
+  };
+
   const renderLeaf: (props: any) => JSX.Element = useCallback((props: any) => {
     return <Leaf {...props} />;
   }, []);
 
   return (
     <Container>
+      <div className="my-6">
+        <input
+          value={title}
+          onChange={handleTitleChange}
+          placeholder="Your article title..."
+          type="text"
+          id="large-input"
+          className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-gren-500"
+        />
+      </div>
       <Slate editor={editor} value={initialValue}>
         <div className="my-6 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
           <EditorUI
