@@ -115,6 +115,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),
         });
+        saveDraft(initialValue, '');
         navigate(`/post/${path.id}`);
       } else {
         showError(
@@ -128,15 +129,18 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     }
   };
 
-  const saveDraft: Function = async (post: Array<CustomElement>) => {
+  const saveDraft: Function = async (
+    post: Array<CustomElement>,
+    draftTitle: string
+  ) => {
     try {
-      if (title && user.data) {
+      if (user.data) {
         const usersRef: CollectionReference<DocumentData> = collection(
           db,
           'users'
         );
         await updateDoc(doc(usersRef, user.data.uid), {
-          draft: { title: title, post: post },
+          draft: { title: draftTitle, post: post },
         });
         showError(
           'Draft Saved!',
@@ -146,7 +150,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
       } else {
         showError(
           'Error!',
-          'In order to Save Draft your post you need to specify a title!',
+          'In order to Save Draft your post you need to be logged in!',
           'warning'
         );
       }
@@ -175,7 +179,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
   };
 
   const handleSaveDraft: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    saveDraft(editor.children);
+    saveDraft(editor.children, title);
   };
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
