@@ -1,6 +1,7 @@
 import React from 'react';
 import App from './pages/App';
-import Post from './pages/CreatePost';
+import Post from './pages/Post';
+import CreatePost from './pages/CreatePost';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './app/hooks';
@@ -16,7 +17,7 @@ const RouteSwitch: React.FC<RouteSwitchProps> = ({}) => {
         <Route path="/" element={<App />} />
         <Route path="/post/:id" element={<Post />} />
         <Route element={<ProtectedRoutes auth={user.data !== null} />}>
-          <Route path="/create-post" element={<Post />} />
+          <Route path="/create-post" element={<CreatePost />} />
         </Route>
       </Routes>
     </BrowserRouter>

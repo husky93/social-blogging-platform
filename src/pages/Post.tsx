@@ -4,6 +4,9 @@ import { getDoc, doc, collection, db } from '../app/firebase';
 import { DocumentData, CollectionReference } from 'firebase/firestore';
 import { useAppSelector } from '../app/hooks';
 import { RootState } from '../app/store';
+import Header from '../components/Header';
+import UserUI from '../components/UserUI';
+import LoginUI from '../components/LoginUI';
 import Loading from './Loading';
 
 interface PostProps {}
@@ -24,9 +27,11 @@ const Post: React.FC<PostProps> = ({}) => {
         console.error('Error loading Post from database', error)
       );
   }, []);
-  return (
+  return post === null ? (
+    <Loading />
+  ) : (
     <main>
-      {post === null ? <Loading /> : ''}
+      <Header>{user.data ? <UserUI /> : <LoginUI />}</Header>
       {post === undefined ? <div>404! Post not found</div> : ''}
       {post ? <div>{params.id}</div> : ''}
     </main>
