@@ -15,6 +15,7 @@ import PostUI from '../components/PostUI';
 import Loading from './Loading';
 import Card from '../components/Card';
 import Alert from '../components/Alert';
+import Comments from '../components/Comments';
 import Author from '../components/Author';
 import type { DocumentData, CollectionReference } from 'firebase/firestore';
 import type { RootState } from '../app/store';
@@ -64,17 +65,22 @@ const Post: React.FC<PostProps> = ({}) => {
               likes={post.likes}
               bookmarks={post.bookmarks}
             />
-            <Card customClasses="p-12">
-              <Author
-                avatarUrl={post.author.photoUrl}
-                displayName={post.author.displayName}
-                timestamp={post.timestamp}
-              />
-              <h1 className="my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
-                {post.title}
-              </h1>
-              {post.content.map((item: Node) => serialize(item))}
-            </Card>
+            <div>
+              <Card customClasses="p-12">
+                <Author
+                  avatarUrl={post.author.photoUrl}
+                  displayName={post.author.displayName}
+                  timestamp={post.timestamp}
+                />
+                <h1 className="my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+                  {post.title}
+                </h1>
+                {post.content.map((item: Node) => serialize(item))}
+              </Card>
+              <Card customClasses="p-12 mt-6">
+                <Comments post={post} postID={params.id} />
+              </Card>
+            </div>
           </div>
         </Container>
       ) : (
