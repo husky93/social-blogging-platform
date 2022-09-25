@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Container from '../components/Container';
 import UserUI from '../components/UserUI';
 import LoginUI from '../components/LoginUI';
+import PostUI from '../components/PostUI';
 import Loading from './Loading';
 import Card from '../components/Card';
 import type { DocumentData, CollectionReference } from 'firebase/firestore';
@@ -39,7 +40,8 @@ const Post: React.FC<PostProps> = ({}) => {
       {post === undefined ? <Container>404! Post not found</Container> : ''}
       {post ? (
         <Container>
-          <div className="my-12">
+          <div className="my-12 flex">
+            <PostUI />
             <Card customClasses="p-6">
               <h1 className="my-4 text-center text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-slate-800">
                 {post.title}
