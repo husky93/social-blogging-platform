@@ -109,6 +109,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           content: post,
           timestamp: serverTimestamp(),
           likes: [],
+          bookmarks: [],
         });
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),

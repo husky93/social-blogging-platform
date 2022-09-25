@@ -58,7 +58,11 @@ const Post: React.FC<PostProps> = ({}) => {
             ''
           )}
           <div className="flex">
-            <PostUI postID={params.id} likes={post.likes} />
+            <PostUI
+              postID={params.id}
+              likes={post.likes}
+              bookmarks={post.bookmarks}
+            />
             <Card customClasses="p-6">
               <h1 className="my-4 text-center text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-slate-800">
                 {post.title}

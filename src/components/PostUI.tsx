@@ -9,6 +9,7 @@ import { doc, updateDoc, arrayUnion, arrayRemove, db } from '../app/firebase';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { showAlert } from './Alert';
 import React, { useState, useEffect } from 'react';
+import type { DocumentData, DocumentReference } from 'firebase/firestore';
 import type { RootState, AppDispatch } from '../app/store';
 
 interface PostUIProps {
@@ -37,27 +38,47 @@ const PostUI: React.FC<PostUIProps> = ({
     }
   }, [user]);
 
-  const toggleLikeDatabase: Function = async (active: boolean) => {
-    if (postID !== undefined && user.data !== null) {
-      const postRef = doc(db, 'posts', postID);
+  const toggleArrayDatabase: Function = async (
+    active: boolean,
+    arrayName: string,
+    payload: string | null | undefined,
+    path: string,
+    document: string | null | undefined
+  ) => {
+    if (document && payload) {
+      const ref: DocumentReference<DocumentData> = doc(db, path, document);
       if (!active) {
-        await updateDoc(postRef, {
-          likes: arrayUnion(user.data.uid),
+        await updateDoc(ref, {
+          [arrayName]: arrayUnion(payload),
         });
       }
-
       if (active)
-        await updateDoc(postRef, {
-          likes: arrayRemove(user.data.uid),
+        await updateDoc(ref, {
+          [arrayName]: arrayRemove(payload),
         });
     }
+  };
+
+  const toggleBookmarkDatabase: Function = async (
+    active: boolean,
+    arrayName: string,
+    payload: string | null | undefined,
+    path: string,
+    document: string | null | undefined
+  ) => {
+    toggleArrayDatabase(active, arrayName, payload, path, document);
+    toggleArrayDatabase(active, arrayName, document, 'posts', payload);
   };
 
   const handleUiItemClick: Function = (
     active: boolean,
     setCount: React.Dispatch<React.SetStateAction<number>>,
     setActive: React.Dispatch<React.SetStateAction<boolean>>,
-    databaseQuery: Function
+    databaseQuery: Function,
+    payload: string | null | undefined,
+    path: string,
+    document: string | null | undefined,
+    arrayName: string
   ) => {
     if (user.data === null) {
       showAlert(
@@ -74,7 +95,7 @@ const PostUI: React.FC<PostUIProps> = ({
       setCount((prevState) => prevState + 1);
     }
     setActive((prevState) => !prevState);
-    databaseQuery(active);
+    databaseQuery(active, arrayName, payload, path, document);
   };
 
   const likeClasses: string = likesActive
@@ -84,7 +105,9 @@ const PostUI: React.FC<PostUIProps> = ({
     ? 'flex items-center transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
     : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600';
 
-  return (
+  return postID === undefined ? (
+    ''
+  ) : (
     <div className="hidden min-w-16 py-4 pr-6 sm:flex sm:flex-col sm:gap-8 text-2xl">
       <div className="flex flex-col justify-center items-center">
         <button
@@ -94,7 +117,11 @@ const PostUI: React.FC<PostUIProps> = ({
               likesActive,
               setLikesCount,
               setLikesActive,
-              toggleLikeDatabase
+              toggleArrayDatabase,
+              user.data?.uid,
+              'posts',
+              postID,
+              'likes'
             );
           }}
         >
@@ -109,7 +136,12 @@ const PostUI: React.FC<PostUIProps> = ({
             handleUiItemClick(
               bookmarksActive,
               setBookmarksCount,
-              setBookmarksActive
+              setBookmarksActive,
+              toggleBookmarkDatabase,
+              postID,
+              'users',
+              user.data?.uid,
+              'bookmarks'
             );
           }}
         >

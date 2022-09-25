@@ -38,6 +38,7 @@ const LoginUI: React.FC<LoginUIProps> = ({}) => {
         displayName: user.displayName,
         photoUrl: user.photoURL,
         posts: [],
+        bookmarks: [],
       });
     } catch (error: any) {
       console.error('Error writing new data to Firebase Database', error);
