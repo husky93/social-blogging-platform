@@ -11,6 +11,7 @@ import Loading from './Loading';
 import Card from '../components/Card';
 import type { DocumentData, CollectionReference } from 'firebase/firestore';
 import type { RootState } from '../app/store';
+import type { Node } from 'slate';
 
 interface PostProps {}
 
@@ -41,10 +42,10 @@ const Post: React.FC<PostProps> = ({}) => {
         <Container>
           <div className="my-12">
             <Card customClasses="p-6">
-              <h1 className="text-center text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-slate-800">
+              <h1 className="my-4 text-center text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-slate-800">
                 {post.title}
               </h1>
-              {post.content.map((item) => serialize(item))}
+              {post.content.map((item: Node) => serialize(item))}
             </Card>
           </div>
         </Container>
