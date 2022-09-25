@@ -14,19 +14,19 @@ import type { RootState, AppDispatch } from '../app/store';
 
 interface PostUIProps {
   likes: Array<string>;
-  bookmarks: number;
+  bookmarks: Array<string>;
   postID: string | undefined;
 }
 
 const PostUI: React.FC<PostUIProps> = ({
   likes = [],
-  bookmarks = 0,
+  bookmarks = [],
   postID,
 }) => {
   const [likesActive, setLikesActive] = useState(false);
   const [bookmarksActive, setBookmarksActive] = useState(false);
   const [likesCount, setLikesCount] = useState(likes.length);
-  const [bookmarksCount, setBookmarksCount] = useState(bookmarks);
+  const [bookmarksCount, setBookmarksCount] = useState(bookmarks.length);
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const dispatch: AppDispatch = useAppDispatch();
 
@@ -34,7 +34,9 @@ const PostUI: React.FC<PostUIProps> = ({
     if (user.data !== null) {
       const userID = user.data.uid;
       const isLiked = likes.find((id) => id === userID);
+      const isBookmarked = bookmarks.find((id) => id === userID);
       if (isLiked !== undefined) setLikesActive(true);
+      if (isBookmarked !== undefined) setBookmarksActive(true);
     }
   }, [user]);
 
