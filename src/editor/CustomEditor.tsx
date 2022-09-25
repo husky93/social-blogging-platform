@@ -90,7 +90,7 @@ const CustomEditor = {
     const isActive = CustomEditor.isHeadingOneBlockActive(editor);
     Transforms.setNodes(
       editor,
-      { type: isActive ? null : 'heading-1', bold: true },
+      { type: isActive ? null : 'heading-1' },
       { match: (n) => Editor.isBlock(editor, n) }
     );
   },

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface DefaultElementProps {
-  attributes: Array<any>;
+  attributes?: Array<any>;
   children: React.ReactNode;
 }
 

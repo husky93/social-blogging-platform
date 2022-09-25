@@ -27,8 +27,8 @@ import type { CollectionReference, DocumentData } from 'firebase/firestore';
 import type { NavigateFunction } from 'react-router-dom';
 import type { AlertVariant } from '../components/Alert';
 
-type CustomElement = { type: 'paragraph'; children: CustomText[] };
-type CustomText = { text: string };
+export type CustomElement = { type: 'paragraph'; children: CustomText[] };
+export type CustomText = { text: string };
 
 interface EditorProps {}
 

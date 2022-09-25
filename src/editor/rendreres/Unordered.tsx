@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface UnorderedProps {
-  attributes: Array<any>;
+  attributes?: Array<any>;
   children: React.ReactNode;
 }
 
