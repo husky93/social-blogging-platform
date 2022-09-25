@@ -1,7 +1,6 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { auth, onAuthStateChanged } from '../app/firebase';
-import { login, logout } from '../features/user/userSlice';
+import { useCheckIfLoggedIn } from '../app/hooks';
 import Loading from './Loading';
 import type { LazyExoticComponent } from 'react';
 import type { RootState, AppDispatch } from '../app/store';
@@ -13,27 +12,8 @@ const Homepage: LazyExoticComponent<any> = React.lazy(
 
 const App: React.FC = () => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
-  const [loading, setLoading] = useState(true);
   const dispatch: AppDispatch = useAppDispatch();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (userAuth) => {
-      if (userAuth) {
-        dispatch(
-          login({
-            email: userAuth.email,
-            uid: userAuth.uid,
-            displayName: userAuth.displayName,
-            photoUrl: userAuth.photoURL,
-          })
-        );
-        setLoading(false);
-      } else {
-        dispatch(logout());
-        setLoading(false);
-      }
-    });
-  }, []);
+  const loading = useCheckIfLoggedIn(dispatch);
 
   return (
     <div className="min-h-screen text-slate-800">
