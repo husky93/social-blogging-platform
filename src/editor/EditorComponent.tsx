@@ -12,7 +12,7 @@ import {
   serverTimestamp,
 } from '../app/firebase';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import DefaultElement from './rendreres/DefaultElement';
 import Heading from './rendreres/Heading';
 import Blockquote from './rendreres/Blockquote';
@@ -23,10 +23,12 @@ import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
 import Alert from '../components/Alert';
+import { activate, deactivate } from '../features/alert/alertSlice';
 import type { RootState } from '../app/store';
 import type { CollectionReference, DocumentData } from 'firebase/firestore';
-import type { NavigateFunction } from 'react-router-dom';
 import type { AlertVariant } from '../components/Alert';
+import type { AppDispatch } from '../app/store';
+import type { NavigateFunction } from 'react-router-dom';
 
 export type CustomElement = { type: 'paragraph'; children: CustomText[] };
 export type CustomText = { text: string };
@@ -37,12 +39,8 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
   const [title, setTitle] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState({
-    show: false,
-    title: '',
-    text: '',
-    variant: '',
-  });
+  const dispatch: AppDispatch = useAppDispatch();
+  const alert: RootState['alert'] = useAppSelector((state) => state.alert);
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const navigate: NavigateFunction = useNavigate();
   const initialValue: Array<CustomElement> = [
@@ -70,6 +68,23 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         });
     }
   }, []);
+
+  const showAlert = async (
+    title: string,
+    text: string,
+    variant: AlertVariant
+  ): Promise<void> => {
+    dispatch(
+      activate({
+        isShown: true,
+        title,
+        text,
+        variant,
+      })
+    );
+    await new Promise((resolve) => setTimeout(resolve, 6000));
+    dispatch(deactivate());
+  };
 
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
@@ -110,6 +125,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           title: title,
           content: post,
           timestamp: serverTimestamp(),
+          likes: [],
         });
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),
@@ -117,7 +133,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         saveDraft(initialValue, '');
         navigate(`/post/${path.id}`);
       } else {
-        showError(
+        showAlert(
           'Error!',
           'In order to Submit your post you need to specify a title!',
           'warning'
@@ -141,13 +157,13 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         await updateDoc(doc(usersRef, user.data.uid), {
           draft: { title: draftTitle, post: post },
         });
-        showError(
+        showAlert(
           'Draft Saved!',
           'Your Post draft have been saved successfully! It will be automatically loaded when you visit this page again.',
           'success'
         );
       } else {
-        showError(
+        showAlert(
           'Error!',
           'In order to Save Draft your post you need to be logged in!',
           'warning'
@@ -156,21 +172,6 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     } catch (error: any) {
       console.error('Error writing new data to Firebase Database', error);
     }
-  };
-
-  const showError = async (
-    title: string,
-    text: string,
-    variant: AlertVariant
-  ): Promise<void> => {
-    setError({
-      show: true,
-      title,
-      text,
-      variant,
-    });
-    await new Promise((resolve) => setTimeout(resolve, 6000));
-    setError({ show: false, title: '', text: '', variant: '' });
   };
 
   const handleSubmitPost: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -200,10 +201,10 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           id="large-input"
           className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-gren-500"
         />
-        {error.show ? (
+        {alert.data.isShown ? (
           <div className="my-4">
-            <Alert variant={error.variant} title={error.title}>
-              {error.text}
+            <Alert variant={alert.data.variant} title={alert.data.title}>
+              {alert.data.text}
             </Alert>
           </div>
         ) : (

@@ -21,7 +21,9 @@ const PostUI: React.FC<PostUIProps> = ({ likes = 0, bookmarks = 0 }) => {
   const handleUiItemClick: Function = (
     active: boolean,
     setCount: React.Dispatch<React.SetStateAction<number>>,
-    setActive: React.Dispatch<React.SetStateAction<boolean>>
+    setActive: React.Dispatch<React.SetStateAction<boolean>>,
+    databaseQueryInactive: Function,
+    databaseQueryActive: Function
   ) => {
     if (active) {
       setCount((prevState) => prevState - 1);

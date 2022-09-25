@@ -2,7 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 type InitialState = {
-  data: null | object;
+  data: null | {
+    uid: string;
+    displayName: string;
+    photoUrl: string;
+    email: string;
+  };
 };
 
 const initialState: InitialState = {
