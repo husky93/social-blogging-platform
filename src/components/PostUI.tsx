@@ -12,22 +12,30 @@ import React, { useState, useEffect } from 'react';
 import type { RootState, AppDispatch } from '../app/store';
 
 interface PostUIProps {
-  likes: number;
+  likes: Array<string>;
   bookmarks: number;
   postID: string | undefined;
 }
 
 const PostUI: React.FC<PostUIProps> = ({
-  likes = 0,
+  likes = [],
   bookmarks = 0,
   postID,
 }) => {
   const [likesActive, setLikesActive] = useState(false);
   const [bookmarksActive, setBookmarksActive] = useState(false);
-  const [likesCount, setLikesCount] = useState(likes);
+  const [likesCount, setLikesCount] = useState(likes.length);
   const [bookmarksCount, setBookmarksCount] = useState(bookmarks);
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const dispatch: AppDispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user.data !== null) {
+      const userID = user.data.uid;
+      const isLiked = likes.find((id) => id === userID);
+      if (isLiked !== undefined) setLikesActive(true);
+    }
+  }, [user]);
 
   const toggleLikeDatabase: Function = async (active: boolean) => {
     if (postID !== undefined && user.data !== null) {
