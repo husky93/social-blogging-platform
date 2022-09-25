@@ -17,6 +17,7 @@ import {
   addDoc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
   serverTimestamp,
 } from 'firebase/firestore';
 import type { Firestore } from 'firebase/firestore';
@@ -56,5 +57,6 @@ export {
   getDoc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
   serverTimestamp,
 };

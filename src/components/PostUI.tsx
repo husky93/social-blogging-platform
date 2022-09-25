@@ -5,32 +5,68 @@ import {
   BookmarkOutline,
   Bookmark,
 } from '@ricons/ionicons5';
+import { doc, updateDoc, arrayUnion, arrayRemove, db } from '../app/firebase';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { showAlert } from './Alert';
 import React, { useState, useEffect } from 'react';
+import type { RootState, AppDispatch } from '../app/store';
 
 interface PostUIProps {
   likes: number;
   bookmarks: number;
+  postID: string | undefined;
 }
 
-const PostUI: React.FC<PostUIProps> = ({ likes = 0, bookmarks = 0 }) => {
+const PostUI: React.FC<PostUIProps> = ({
+  likes = 0,
+  bookmarks = 0,
+  postID,
+}) => {
   const [likesActive, setLikesActive] = useState(false);
   const [bookmarksActive, setBookmarksActive] = useState(false);
   const [likesCount, setLikesCount] = useState(likes);
   const [bookmarksCount, setBookmarksCount] = useState(bookmarks);
+  const user: RootState['user'] = useAppSelector((state) => state.user);
+  const dispatch: AppDispatch = useAppDispatch();
+
+  const toggleLikeDatabase: Function = async (active: boolean) => {
+    if (postID !== undefined && user.data !== null) {
+      const postRef = doc(db, 'posts', postID);
+      if (!active) {
+        await updateDoc(postRef, {
+          likes: arrayUnion(user.data.uid),
+        });
+      }
+
+      if (active)
+        await updateDoc(postRef, {
+          likes: arrayRemove(user.data.uid),
+        });
+    }
+  };
 
   const handleUiItemClick: Function = (
     active: boolean,
     setCount: React.Dispatch<React.SetStateAction<number>>,
     setActive: React.Dispatch<React.SetStateAction<boolean>>,
-    databaseQueryInactive: Function,
-    databaseQueryActive: Function
+    databaseQuery: Function
   ) => {
+    if (user.data === null) {
+      showAlert(
+        'Error!',
+        'You must be logged in to like / bookmark your favorite posts!',
+        'warning',
+        dispatch
+      );
+      return;
+    }
     if (active) {
       setCount((prevState) => prevState - 1);
     } else {
       setCount((prevState) => prevState + 1);
     }
     setActive((prevState) => !prevState);
+    databaseQuery(active);
   };
 
   const likeClasses: string = likesActive
@@ -46,7 +82,12 @@ const PostUI: React.FC<PostUIProps> = ({ likes = 0, bookmarks = 0 }) => {
         <button
           className={likeClasses}
           onClick={() => {
-            handleUiItemClick(likesActive, setLikesCount, setLikesActive);
+            handleUiItemClick(
+              likesActive,
+              setLikesCount,
+              setLikesActive,
+              toggleLikeDatabase
+            );
           }}
         >
           <Icon>{likesActive ? <Heart /> : <HeartOutline />}</Icon>
