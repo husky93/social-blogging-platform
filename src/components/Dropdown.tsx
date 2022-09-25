@@ -21,7 +21,7 @@ const Dropdown: React.FC<DropdownProps> = ({ user, handleSignOut }) => {
     <div className="relative">
       <button
         onClick={toggleDropdown}
-        className="transition-all py-1 px-4 flex gap-x-4 items-center bg-white border border-gray-200 rounded hover:bg-gray-100"
+        className="transition-all py-1 px-4 flex gap-x-4 items-center bg-white border border-white hover:border-gray-200 rounded hover:bg-gray-100"
       >
         <Avatar imgLink={user.data.photoUrl} />
         <span className="font-medium text-sm">{user.data.displayName}</span>
