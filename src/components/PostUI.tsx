@@ -13,8 +13,18 @@ interface PostUIProps {
 }
 
 const PostUI: React.FC<PostUIProps> = ({ likes = 0, bookmarks = 0 }) => {
-  const [likesActive, setLikesActive] = useState(true);
+  const [likesActive, setLikesActive] = useState(false);
   const [bookmarksActive, setBookmarksActive] = useState(false);
+
+  const handleLikeClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    setLikesActive((prevState) => !prevState);
+  };
+
+  const handleBookmarksClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
+    setBookmarksActive((prevState) => !prevState);
+  };
 
   const likeClasses: string = likesActive
     ? 'transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
@@ -26,13 +36,13 @@ const PostUI: React.FC<PostUIProps> = ({ likes = 0, bookmarks = 0 }) => {
   return (
     <div className="hidden min-w-16 py-4 pr-6 sm:flex sm:flex-col sm:gap-8 text-2xl">
       <div>
-        <button className={likeClasses}>
+        <button className={likeClasses} onClick={handleLikeClick}>
           <Icon>{likesActive ? <Heart /> : <HeartOutline />}</Icon>
         </button>
         <span className="text-sm">{likes}</span>
       </div>
       <div>
-        <button className={bookmarkClasses}>
+        <button className={bookmarkClasses} onClick={handleBookmarksClick}>
           <Icon>{bookmarksActive ? <Bookmark /> : <BookmarkOutline />}</Icon>
         </button>
         <span className="text-sm">{bookmarks}</span>
