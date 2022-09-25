@@ -86,7 +86,7 @@ const Post: React.FC<PostProps> = ({}) => {
                 likes={post.likes}
                 bookmarks={post.bookmarks}
               />
-              <div>
+              <div className="w-full">
                 <Card customClasses="p-8 sm:p-12">
                   <Author
                     avatarUrl={post.author.photoUrl}

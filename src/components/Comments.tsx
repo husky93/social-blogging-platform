@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import Button from './Button';
+import Comment from './Comment';
 import { showAlert } from './Alert';
 import { updateDoc, doc, arrayUnion, db } from '../app/firebase';
+import { Timestamp } from 'firebase/firestore';
+import type { FieldValue } from 'firebase/firestore';
 import type { RootState } from '../app/store';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 
@@ -10,6 +13,12 @@ interface CommentsProps {
   post: null | undefined | DocumentData;
   postID: string;
 }
+
+type CommentObject = {
+  text: string;
+  timestamp: Timestamp;
+  author: { uid: string; displayName: string; photoUrl: string };
+};
 
 const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
   const [value, setValue] = useState('');
@@ -24,7 +33,11 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
     photoUrl: string
   ): Promise<void> => {
     const postRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
-    const commentObject = { author: { uid, displayName, photoUrl }, text };
+    const commentObject: object = {
+      author: { uid, displayName, photoUrl },
+      text,
+      timestamp: Timestamp.now(),
+    };
     await updateDoc(postRef, {
       comments: arrayUnion(commentObject),
     });
@@ -90,6 +103,13 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
           handleClick={handleCommentSubmit}
         />
       </div>
+      {commentList.map((comment: CommentObject) => (
+        <Comment
+          text={comment.text}
+          author={comment.author}
+          timestamp={comment.timestamp}
+        />
+      ))}
     </div>
   );
 };
