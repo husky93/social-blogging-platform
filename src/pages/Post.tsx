@@ -87,7 +87,7 @@ const Post: React.FC<PostProps> = ({}) => {
                 bookmarks={post.bookmarks}
               />
               <div>
-                <Card customClasses="p-12">
+                <Card customClasses="p-8 sm:p-12">
                   <Author
                     avatarUrl={post.author.photoUrl}
                     displayName={post.author.displayName}
@@ -98,7 +98,7 @@ const Post: React.FC<PostProps> = ({}) => {
                   </h1>
                   {post.content.map((item: Node) => serialize(item))}
                 </Card>
-                <Card customClasses="p-12 mt-6">
+                <Card customClasses="p-8 sm:p-12 mt-6">
                   <Comments post={post} postID={params.id} />
                 </Card>
               </div>

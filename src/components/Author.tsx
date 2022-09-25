@@ -1,6 +1,7 @@
 import type { Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import React from 'react';
+import Avatar from './Avatar';
 
 interface AuthorProps {
   avatarUrl: string;
@@ -16,10 +17,10 @@ const Author: React.FC<AuthorProps> = ({
   const date = new Date(timestamp.seconds * 1000);
   return (
     <div className="flex items-center space-x-4">
-      <img className="w-10 h-10 rounded-full" src={avatarUrl} alt="Profile" />
+      <Avatar imgLink={avatarUrl} />
       <div className="font-medium dark:text-white">
         <div>{displayName}</div>
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-sm font-light text-gray-500 dark:text-gray-400">
           Posted on {format(date, 'do MMMMMMM y')}
         </div>
       </div>

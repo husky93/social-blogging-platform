@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import Button from './Button';
-import Alert from './Alert';
-import type { DocumentData } from 'firebase/firestore';
+import { showAlert } from './Alert';
+import { updateDoc, doc, arrayUnion, db } from '../app/firebase';
+import type { RootState } from '../app/store';
+import type { DocumentReference, DocumentData } from 'firebase/firestore';
 
 interface CommentsProps {
   post: null | undefined | DocumentData;
@@ -10,14 +13,57 @@ interface CommentsProps {
 
 const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
   const [value, setValue] = useState('');
+  const [commentList, setCommentList] = useState(post?.comments);
+  const user: RootState['user'] = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const addComment: Function = async (
+    text: string,
+    uid: string,
+    displayName: string,
+    photoUrl: string
+  ): Promise<void> => {
+    const postRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
+    const commentObject = { author: { uid, displayName, photoUrl }, text };
+    await updateDoc(postRef, {
+      comments: arrayUnion(commentObject),
+    });
+    setValue('');
+    const newCommentList = [...commentList, commentObject];
+    setCommentList(newCommentList);
+  };
 
   const handleCommentSubmit: React.MouseEventHandler<HTMLButtonElement> = (
     e
-  ) => {};
+  ): void => {
+    e.preventDefault();
+    if (value.length >= 6 && user.data) {
+      addComment(
+        value,
+        user.data.uid,
+        user.data.displayName,
+        user.data.photoUrl
+      );
+    } else if (!user.data) {
+      showAlert(
+        'Error!',
+        'You need to be logged in in order to add comments!',
+        'info',
+        dispatch
+      );
+    } else {
+      showAlert(
+        'Error!',
+        'Your comment needs at least 6 characters!',
+        'danger',
+        dispatch
+      );
+    }
+  };
 
   const handleTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
     e
-  ) => {
+  ): void => {
     setValue(e.target.value);
   };
 

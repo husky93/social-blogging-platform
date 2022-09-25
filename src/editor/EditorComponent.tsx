@@ -23,10 +23,8 @@ import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
 import Alert, { showAlert } from '../components/Alert';
-import { activate, deactivate } from '../features/alert/alertSlice';
 import type { RootState } from '../app/store';
 import type { CollectionReference, DocumentData } from 'firebase/firestore';
-import type { AlertVariant } from '../components/Alert';
 import type { AppDispatch } from '../app/store';
 import type { NavigateFunction } from 'react-router-dom';
 
@@ -110,6 +108,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           timestamp: serverTimestamp(),
           likes: [],
           bookmarks: [],
+          comments: [],
         });
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),

@@ -9,7 +9,7 @@ const Avatar: React.FC<AvatarProps> = ({ imgLink }) => {
     <>
       <img
         data-tooltip-target="tooltip-bonnie"
-        className="w-8 h-8 rounded-full"
+        className="w-9 h-9 rounded-full"
         src={imgLink}
         alt="Avatar"
       />
