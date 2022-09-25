@@ -22,7 +22,6 @@ const Post: React.FC<PostProps> = ({}) => {
 
   useEffect(() => {
     const postsRef: CollectionReference<DocumentData> = collection(db, 'posts');
-    const usersRef: CollectionReference<DocumentData> = collection(db, 'users');
     getDoc(doc(postsRef, params.id))
       .then((document) => {
         const data: DocumentData | undefined = document.data();

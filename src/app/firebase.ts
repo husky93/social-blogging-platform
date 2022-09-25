@@ -17,6 +17,7 @@ import {
   addDoc,
   updateDoc,
   arrayUnion,
+  serverTimestamp,
 } from 'firebase/firestore';
 import type { Firestore } from 'firebase/firestore';
 import type { FirebaseApp } from '@firebase/app-types';
@@ -55,4 +56,5 @@ export {
   getDoc,
   updateDoc,
   arrayUnion,
+  serverTimestamp,
 };

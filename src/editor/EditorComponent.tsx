@@ -9,6 +9,7 @@ import {
   addDoc,
   arrayUnion,
   getDoc,
+  serverTimestamp,
 } from '../app/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
@@ -108,6 +109,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           },
           title: title,
           content: post,
+          timestamp: serverTimestamp(),
         });
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),
