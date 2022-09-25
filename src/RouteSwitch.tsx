@@ -5,7 +5,7 @@ import CreatePost from './pages/CreatePost';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './app/hooks';
-import { RootState } from './app/store';
+import type { RootState } from './app/store';
 
 interface RouteSwitchProps {}
 

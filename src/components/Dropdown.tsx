@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Avatar from '../components/Avatar';
-import { RootState } from '../app/store';
+import type { RootState } from '../app/store';
 
 interface DropdownProps {
   user: RootState['user'];

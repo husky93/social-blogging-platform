@@ -1,8 +1,6 @@
 import React from 'react';
 import EditorBtn from './EditorBtn';
 import { Icon } from '@ricons/utils';
-import { BaseEditor } from 'slate';
-import { ReactEditor } from 'slate-react';
 import {
   H1,
   H2,
@@ -10,7 +8,6 @@ import {
   Italic,
   Strikethrough,
   Quote,
-  ListNumbers,
   List,
 } from '@ricons/tabler';
 import { useSlateStatic } from 'slate-react';

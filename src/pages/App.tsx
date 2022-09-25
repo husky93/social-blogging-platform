@@ -1,14 +1,10 @@
-import React, {
-  Suspense,
-  useEffect,
-  LazyExoticComponent,
-  useState,
-} from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { RootState, AppDispatch } from '../app/store';
 import { auth, onAuthStateChanged } from '../app/firebase';
 import { login, logout } from '../features/user/userSlice';
 import Loading from './Loading';
+import type { LazyExoticComponent } from 'react';
+import type { RootState, AppDispatch } from '../app/store';
 
 const Blog: LazyExoticComponent<any> = React.lazy(() => import('./Blog'));
 const Homepage: LazyExoticComponent<any> = React.lazy(

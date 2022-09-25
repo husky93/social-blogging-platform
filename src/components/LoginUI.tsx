@@ -1,10 +1,7 @@
 import React from 'react';
-
-import { AppDispatch } from '../app/store';
 import { useAppDispatch } from '../app/hooks';
 import { login } from '../features/user/userSlice';
 import Button from '../components/Button';
-import { User, UserCredential } from 'firebase/auth';
 import {
   auth,
   provider,
@@ -15,7 +12,9 @@ import {
   collection,
   setDoc,
 } from '../app/firebase';
-import {
+import type { AppDispatch } from '../app/store';
+import type { User, UserCredential } from 'firebase/auth';
+import type {
   CollectionReference,
   DocumentData,
   DocumentReference,

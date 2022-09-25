@@ -14,12 +14,12 @@ import {
   setDoc,
   doc,
   getDoc,
-  Firestore,
   addDoc,
   updateDoc,
   arrayUnion,
 } from 'firebase/firestore';
-import { FirebaseApp } from '@firebase/app-types';
+import type { Firestore } from 'firebase/firestore';
+import type { FirebaseApp } from '@firebase/app-types';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 

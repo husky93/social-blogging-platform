@@ -1,6 +1,7 @@
-import React, { LazyExoticComponent } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import LoginUI from '../components/LoginUI';
+import type { LazyExoticComponent } from 'react';
 
 const Hero: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Hero')

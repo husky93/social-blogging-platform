@@ -1,14 +1,14 @@
 import React from 'react';
 import { auth, signOut } from '../app/firebase';
-import { AppDispatch } from '../app/store';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
-import { RootState } from '../app/store';
+import { useNavigate } from 'react-router-dom';
 import { logout } from '../features/user/userSlice';
 import Button from '../components/Button';
 import Wrapper from '../components/Wrapper';
-
 import Dropdown from '../components/Dropdown';
+import type { AppDispatch } from '../app/store';
+import type { RootState } from '../app/store';
+import type { NavigateFunction } from 'react-router-dom';
 
 interface UserUIProps {
   post?: boolean;

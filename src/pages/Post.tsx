@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDoc, doc, collection, db } from '../app/firebase';
-import { DocumentData, CollectionReference } from 'firebase/firestore';
 import { useAppSelector } from '../app/hooks';
-import { RootState } from '../app/store';
 import Header from '../components/Header';
 import Container from '../components/Container';
 import UserUI from '../components/UserUI';
 import LoginUI from '../components/LoginUI';
 import Loading from './Loading';
+import type { DocumentData, CollectionReference } from 'firebase/firestore';
+import type { RootState } from '../app/store';
 
 interface PostProps {}
 

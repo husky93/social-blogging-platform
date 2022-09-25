@@ -1,13 +1,6 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
-import { RootState } from '../app/store';
-import {
-  CollectionReference,
-  DocumentData,
-  DocumentReference,
-  DocumentSnapshot,
-} from 'firebase/firestore';
 import {
   db,
   doc,
@@ -17,7 +10,7 @@ import {
   arrayUnion,
   getDoc,
 } from '../app/firebase';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import DefaultElement from './rendreres/DefaultElement';
 import Heading from './rendreres/Heading';
@@ -28,7 +21,11 @@ import EditorUI from './components/EditorUI';
 import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
-import Alert, { AlertVariant } from '../components/Alert';
+import Alert from '../components/Alert';
+import type { RootState } from '../app/store';
+import type { CollectionReference, DocumentData } from 'firebase/firestore';
+import type { NavigateFunction } from 'react-router-dom';
+import type { AlertVariant } from '../components/Alert';
 
 type CustomElement = { type: 'paragraph'; children: CustomText[] };
 type CustomText = { text: string };
