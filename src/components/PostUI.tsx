@@ -15,37 +15,56 @@ interface PostUIProps {
 const PostUI: React.FC<PostUIProps> = ({ likes = 0, bookmarks = 0 }) => {
   const [likesActive, setLikesActive] = useState(false);
   const [bookmarksActive, setBookmarksActive] = useState(false);
+  const [likesCount, setLikesCount] = useState(likes);
+  const [bookmarksCount, setBookmarksCount] = useState(bookmarks);
 
-  const handleLikeClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    setLikesActive((prevState) => !prevState);
-  };
-
-  const handleBookmarksClick: React.MouseEventHandler<
-    HTMLButtonElement
-  > = () => {
-    setBookmarksActive((prevState) => !prevState);
+  const handleUiItemClick: Function = (
+    active: boolean,
+    setCount: React.Dispatch<React.SetStateAction<number>>,
+    setActive: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    if (active) {
+      setCount((prevState) => prevState - 1);
+    } else {
+      setCount((prevState) => prevState + 1);
+    }
+    setActive((prevState) => !prevState);
   };
 
   const likeClasses: string = likesActive
-    ? 'transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
-    : 'transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600';
+    ? 'flex items-center transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
+    : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600';
   const bookmarkClasses: string = bookmarksActive
-    ? 'transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
-    : 'transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600';
+    ? 'flex items-center transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
+    : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600';
 
   return (
     <div className="hidden min-w-16 py-4 pr-6 sm:flex sm:flex-col sm:gap-8 text-2xl">
-      <div>
-        <button className={likeClasses} onClick={handleLikeClick}>
+      <div className="flex flex-col justify-center items-center">
+        <button
+          className={likeClasses}
+          onClick={() => {
+            handleUiItemClick(likesActive, setLikesCount, setLikesActive);
+          }}
+        >
           <Icon>{likesActive ? <Heart /> : <HeartOutline />}</Icon>
         </button>
-        <span className="text-sm">{likes}</span>
+        <span className="text-gray-500 text-sm">{likesCount}</span>
       </div>
-      <div>
-        <button className={bookmarkClasses} onClick={handleBookmarksClick}>
+      <div className="flex flex-col justify-center items-center">
+        <button
+          className={bookmarkClasses}
+          onClick={() => {
+            handleUiItemClick(
+              bookmarksActive,
+              setBookmarksCount,
+              setBookmarksActive
+            );
+          }}
+        >
           <Icon>{bookmarksActive ? <Bookmark /> : <BookmarkOutline />}</Icon>
         </button>
-        <span className="text-sm">{bookmarks}</span>
+        <span className="text-gray-500 text-sm">{bookmarksCount}</span>
       </div>
     </div>
   );

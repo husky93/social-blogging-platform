@@ -23,7 +23,6 @@ export const serialize = (
   }
 
   const children = node.children.map((n) => serialize(n));
-  console.log(children);
 
   switch (node.type) {
     case 'blockquote':
