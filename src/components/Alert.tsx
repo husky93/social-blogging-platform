@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { AppDispatch } from '../app/store';
+import { activate, deactivate } from '../features/alert/alertSlice';
 
 interface AlertProps {
   variant: 'info' | 'danger' | 'success' | 'warning' | 'dark';
@@ -46,6 +48,24 @@ const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
       {children}
     </div>
   );
+};
+
+export const showAlert = async (
+  title: string,
+  text: string,
+  variant: AlertVariant,
+  dispatch: AppDispatch
+): Promise<void> => {
+  dispatch(
+    activate({
+      isShown: true,
+      title,
+      text,
+      variant,
+    })
+  );
+  await new Promise((resolve) => setTimeout(resolve, 6000));
+  dispatch(deactivate());
 };
 
 export type AlertVariant = 'info' | 'danger' | 'success' | 'warning' | 'dark';

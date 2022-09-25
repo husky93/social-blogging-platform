@@ -22,7 +22,7 @@ import EditorUI from './components/EditorUI';
 import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
-import Alert from '../components/Alert';
+import Alert, { showAlert } from '../components/Alert';
 import { activate, deactivate } from '../features/alert/alertSlice';
 import type { RootState } from '../app/store';
 import type { CollectionReference, DocumentData } from 'firebase/firestore';
@@ -68,23 +68,6 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         });
     }
   }, []);
-
-  const showAlert = async (
-    title: string,
-    text: string,
-    variant: AlertVariant
-  ): Promise<void> => {
-    dispatch(
-      activate({
-        isShown: true,
-        title,
-        text,
-        variant,
-      })
-    );
-    await new Promise((resolve) => setTimeout(resolve, 6000));
-    dispatch(deactivate());
-  };
 
   const renderElement: (props: any) => JSX.Element = useCallback(
     (props: any) => {
@@ -136,7 +119,8 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         showAlert(
           'Error!',
           'In order to Submit your post you need to specify a title!',
-          'warning'
+          'warning',
+          dispatch
         );
       }
     } catch (error: any) {
@@ -160,13 +144,15 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         showAlert(
           'Draft Saved!',
           'Your Post draft have been saved successfully! It will be automatically loaded when you visit this page again.',
-          'success'
+          'success',
+          dispatch
         );
       } else {
         showAlert(
           'Error!',
           'In order to Save Draft your post you need to be logged in!',
-          'warning'
+          'warning',
+          dispatch
         );
       }
     } catch (error: any) {
