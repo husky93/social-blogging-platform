@@ -43,7 +43,7 @@ const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
     }
   }, [variant]);
   return (
-    <div className={classes} role="alert">
+    <div className={classes}>
       <span className="font-medium mr-1">{title}</span>
       {children}
     </div>

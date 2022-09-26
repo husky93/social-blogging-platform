@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import Button from './Button';
 import Comment from './Comment';
-import { showAlert } from './Alert';
+import Alert, { showAlert } from './Alert';
 import { updateDoc, doc, arrayUnion, db } from '../app/firebase';
 import { Timestamp } from 'firebase/firestore';
 import type { RootState } from '../app/store';
@@ -24,6 +24,7 @@ const CommentList: React.FC<CommentListProps> = ({ post, postID }) => {
   const [value, setValue] = useState('');
   const [commentList, setCommentList] = useState(post?.comments);
   const user: RootState['user'] = useAppSelector((state) => state.user);
+  const alert: RootState['alert'] = useAppSelector((state) => state.alert);
   const dispatch = useAppDispatch();
 
   const addComment: Function = async (
@@ -89,6 +90,13 @@ const CommentList: React.FC<CommentListProps> = ({ post, postID }) => {
     <div>
       {user.data ? (
         <div>
+          {alert.data.isShown ? (
+            <Alert title={alert.data.title} variant={alert.data.variant}>
+              {alert.data.text}
+            </Alert>
+          ) : (
+            ''
+          )}
           <label
             htmlFor="comment"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
