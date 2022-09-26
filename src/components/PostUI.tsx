@@ -45,19 +45,25 @@ const PostUI: React.FC<PostUIProps> = ({
     arrayName: string,
     payload: string | null | undefined,
     path: string,
-    document: string | null | undefined
+    document: string | null | undefined,
+    isLikes?: boolean
   ) => {
     if (document && payload) {
       const ref: DocumentReference<DocumentData> = doc(db, path, document);
       if (!active) {
+        const likeCount = isLikes ? { likesCount: likesCount + 1 } : {};
         await updateDoc(ref, {
           [arrayName]: arrayUnion(payload),
+          ...likeCount,
         });
       }
-      if (active)
+      if (active) {
+        const likeCount = isLikes ? { likesCount: likesCount - 1 } : {};
         await updateDoc(ref, {
           [arrayName]: arrayRemove(payload),
+          ...likeCount,
         });
+      }
     }
   };
 
@@ -80,7 +86,8 @@ const PostUI: React.FC<PostUIProps> = ({
     payload: string | null | undefined,
     path: string,
     document: string | null | undefined,
-    arrayName: string
+    arrayName: string,
+    isLikes?: boolean
   ) => {
     if (user.data === null) {
       showAlert(
@@ -97,7 +104,7 @@ const PostUI: React.FC<PostUIProps> = ({
       setCount((prevState) => prevState + 1);
     }
     setActive((prevState) => !prevState);
-    databaseQuery(active, arrayName, payload, path, document);
+    databaseQuery(active, arrayName, payload, path, document, isLikes);
   };
 
   const likeClasses: string = likesActive
@@ -123,7 +130,8 @@ const PostUI: React.FC<PostUIProps> = ({
               user.data?.uid,
               'posts',
               postID,
-              'likes'
+              'likes',
+              true
             );
           }}
         >

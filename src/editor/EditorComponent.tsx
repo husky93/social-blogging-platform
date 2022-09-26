@@ -107,6 +107,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           content: post,
           timestamp: serverTimestamp(),
           likes: [],
+          likesCount: 0,
           bookmarks: [],
           comments: [],
         });
