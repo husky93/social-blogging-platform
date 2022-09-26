@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import Card from './Card';
 import Author from './Author';
-import { useNavigate } from 'react-router-dom';
+import Badge from './Badge';
 import LikeToggler from './LikeToggler';
-import React from 'react';
 import type { DocumentData } from 'firebase/firestore';
 
 interface PostCardProps {
@@ -34,6 +35,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <h2 className="my-4 ml-12 text-3xl font-extrabold text-gray-900 hover:text-green-700">
           {post.title}
         </h2>
+        <div className="ml-12 flex gap-2">
+          {post.tags.map((tag: string) => (
+            <Badge>#{tag}</Badge>
+          ))}
+        </div>
         <div className="my-2 ml-12 text-xl flex items-center">
           <LikeToggler active={false} handleToggle={() => {}} id={post.id} />
           <span className="font-light text-sm">
