@@ -146,12 +146,14 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         await updateDoc(doc(usersRef, user.data.uid), {
           draft: { title: draftTitle, post: post },
         });
-        showAlert(
-          'Draft Saved!',
-          'Your Post draft have been saved successfully! It will be automatically loaded when you visit this page again.',
-          'success',
-          dispatch
-        );
+        if (draftTitle) {
+          showAlert(
+            'Draft Saved!',
+            'Your Post draft have been saved successfully! It will be automatically loaded when you visit this page again.',
+            'success',
+            dispatch
+          );
+        }
       } else {
         showAlert(
           'Error!',
