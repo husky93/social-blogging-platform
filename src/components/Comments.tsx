@@ -14,7 +14,7 @@ interface CommentsProps {
   postID: string;
 }
 
-type CommentObject = {
+export type CommentObject = {
   text: string;
   timestamp: Timestamp;
   author: { uid: string; displayName: string; photoUrl: string };
@@ -76,6 +76,10 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
     }
   };
 
+  const updateCommentsList = (newList: Array<CommentObject>) => {
+    setCommentList(newList);
+  };
+
   const handleTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
     e
   ): void => {
@@ -105,15 +109,16 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
           handleClick={handleCommentSubmit}
         />
       </div>
-      {commentList.map((comment: CommentObject, index: number) => (
-        <Comment
-          id={index}
-          text={comment.text}
-          author={comment.author}
-          timestamp={comment.timestamp}
-          likes={comment.likes}
-        />
-      ))}
+      {commentList
+        ? commentList.map((comment: CommentObject, index: number) => (
+            <Comment
+              postID={postID}
+              id={index}
+              comments={commentList}
+              updateCommentsList={updateCommentsList}
+            />
+          ))
+        : ''}
     </div>
   );
 };
