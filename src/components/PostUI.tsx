@@ -108,7 +108,7 @@ const PostUI: React.FC<PostUIProps> = ({
     : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600';
 
   return postID === undefined ? (
-    ''
+    <div></div>
   ) : (
     <div className="hidden min-w-16 py-4 pr-6 sm:flex sm:flex-col sm:gap-8 text-2xl">
       <div className="flex flex-col justify-center items-center">

@@ -18,6 +18,7 @@ type CommentObject = {
   text: string;
   timestamp: Timestamp;
   author: { uid: string; displayName: string; photoUrl: string };
+  likes: Array<string>;
 };
 
 const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
@@ -37,6 +38,7 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
       author: { uid, displayName, photoUrl },
       text,
       timestamp: Timestamp.now(),
+      likes: [],
     };
     await updateDoc(postRef, {
       comments: arrayUnion(commentObject),
@@ -103,11 +105,13 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
           handleClick={handleCommentSubmit}
         />
       </div>
-      {commentList.map((comment: CommentObject) => (
+      {commentList.map((comment: CommentObject, index: number) => (
         <Comment
+          id={index}
           text={comment.text}
           author={comment.author}
           timestamp={comment.timestamp}
+          likes={comment.likes}
         />
       ))}
     </div>
