@@ -22,7 +22,11 @@ const BlogContent: React.FC<BlogContentProps> = ({}) => {
     const getDocuments: Function = async () => {
       const q = query(collection(db, 'posts'), orderBy('likesCount'), limit(6));
       const documentSnapshots = await getDocs(q);
-      setPosts(documentSnapshots.docs.map((item) => item.data()));
+      setPosts(
+        documentSnapshots.docs.map((item) => {
+          return { ...item.data(), id: item.id };
+        })
+      );
       setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length - 1]);
     };
     getDocuments();
