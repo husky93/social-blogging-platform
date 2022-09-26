@@ -17,6 +17,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     e
   ): void => {
     e.preventDefault();
+    e.stopPropagation();
     navigate(`/post/${post.id}`);
   };
 

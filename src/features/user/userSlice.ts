@@ -6,7 +6,6 @@ type InitialState = {
     uid: string;
     displayName: string;
     photoUrl: string;
-    email: string;
   };
 };
 

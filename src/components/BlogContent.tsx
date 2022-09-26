@@ -20,7 +20,11 @@ const BlogContent: React.FC<BlogContentProps> = ({}) => {
 
   useEffect(() => {
     const getDocuments: Function = async () => {
-      const q = query(collection(db, 'posts'), orderBy('likesCount'), limit(6));
+      const q = query(
+        collection(db, 'posts'),
+        orderBy('likesCount', 'desc'),
+        limit(6)
+      );
       const documentSnapshots = await getDocs(q);
       setPosts(
         documentSnapshots.docs.map((item) => {

@@ -13,7 +13,6 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch) => {
       if (userAuth) {
         dispatch(
           login({
-            email: userAuth.email,
             uid: userAuth.uid,
             displayName: userAuth.displayName,
             photoUrl: userAuth.photoURL,

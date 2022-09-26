@@ -33,7 +33,6 @@ const LoginUI: React.FC<LoginUIProps> = ({}) => {
         'users'
       );
       await setDoc(doc(usersRef, user.uid), {
-        email: user.email,
         uid: user.uid,
         displayName: user.displayName,
         photoUrl: user.photoURL,
@@ -54,7 +53,6 @@ const LoginUI: React.FC<LoginUIProps> = ({}) => {
         const user: User = result.user;
         dispatch(
           login({
-            email: user.email,
             uid: user.uid,
             displayName: user.displayName,
             photoUrl: user.photoURL,
