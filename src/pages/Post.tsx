@@ -34,8 +34,8 @@ const Card: LazyExoticComponent<any> = React.lazy(
 const Alert: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Alert')
 );
-const Comments: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Comments')
+const CommentList: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/CommentList')
 );
 const Author: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Author')
@@ -99,7 +99,7 @@ const Post: React.FC<PostProps> = ({}) => {
                   {post.content.map((item: Node) => serialize(item))}
                 </Card>
                 <Card customClasses="p-8 sm:p-12 mt-6">
-                  <Comments post={post} postID={params.id} />
+                  <CommentList post={post} postID={params.id} />
                 </Card>
               </div>
             </div>

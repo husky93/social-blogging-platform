@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 import LikeToggler from './LikeToggler';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 import type { RootState } from '../app/store';
-import type { CommentObject } from './Comments';
+import type { CommentObject } from './CommentList';
 
 interface CommentProps {
   id: number;

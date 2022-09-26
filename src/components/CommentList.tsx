@@ -9,7 +9,7 @@ import type { FieldValue } from 'firebase/firestore';
 import type { RootState } from '../app/store';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 
-interface CommentsProps {
+interface CommentListProps {
   post: null | undefined | DocumentData;
   postID: string;
 }
@@ -21,7 +21,7 @@ export type CommentObject = {
   likes: Array<string>;
 };
 
-const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
+const CommentList: React.FC<CommentListProps> = ({ post, postID }) => {
   const [value, setValue] = useState('');
   const [commentList, setCommentList] = useState(post?.comments);
   const user: RootState['user'] = useAppSelector((state) => state.user);
@@ -123,4 +123,4 @@ const Comments: React.FC<CommentsProps> = ({ post, postID }) => {
   );
 };
 
-export default Comments;
+export default CommentList;
