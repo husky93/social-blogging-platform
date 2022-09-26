@@ -22,6 +22,7 @@ import EditorUI from './components/EditorUI';
 import CustomEditor from './CustomEditor';
 import BottomUI from './components/BottomUI';
 import Container from '../components/Container';
+import TagInput from '../components/TagInput';
 import Alert, { showAlert } from '../components/Alert';
 import type { RootState } from '../app/store';
 import type { CollectionReference, DocumentData } from 'firebase/firestore';
@@ -36,6 +37,8 @@ interface EditorProps {}
 const EditorComponent: React.FC<EditorProps> = ({}) => {
   const [editor] = useState(() => withReact(createEditor()));
   const [title, setTitle] = useState('');
+  const [tagInputValue, setTagInputValue] = useState('');
+  const [tags, setTags] = useState<Array<string>>([]);
   const [submitting, setSubmitting] = useState(false);
   const dispatch: AppDispatch = useAppDispatch();
   const alert: RootState['alert'] = useAppSelector((state) => state.alert);
@@ -87,7 +90,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
 
   const savePost: Function = async (post: Array<CustomElement>) => {
     try {
-      if (title && user.data) {
+      if (title && user.data && tags.length > 0) {
         setSubmitting(true);
         const postsRef: CollectionReference<DocumentData> = collection(
           db,
@@ -110,6 +113,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           likesCount: 0,
           bookmarks: [],
           comments: [],
+          tags,
         });
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),
@@ -119,7 +123,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
       } else {
         showAlert(
           'Error!',
-          'In order to Submit your post you need to specify a title!',
+          'In order to Submit your post you need to specify a title and add at least one tag!',
           'warning',
           dispatch
         );
@@ -161,16 +165,76 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     }
   };
 
-  const handleSubmitPost: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleSubmitPost: React.MouseEventHandler<HTMLButtonElement> = (
+    e
+  ): void => {
     savePost(editor.children);
   };
 
-  const handleSaveDraft: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleSaveDraft: React.MouseEventHandler<HTMLButtonElement> = (
+    e
+  ): void => {
     saveDraft(editor.children, title);
   };
 
-  const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ): void => {
     setTitle(e.target.value);
+  };
+
+  const handleTagsChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ): void => {
+    if (tags.length < 4) {
+      setTagInputValue(e.target.value);
+    } else {
+      showAlert(
+        'Too many tags!',
+        'You can add maximum 4 tags!',
+        'info',
+        dispatch
+      );
+    }
+  };
+
+  const handleTagsInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    e
+  ): void => {
+    if (e.key === ' ') {
+      setTagInputValue('');
+      const isTagAlreadyExists =
+        tags.find((tag) => tag === tagInputValue) !== undefined;
+      if (isTagAlreadyExists) {
+        showAlert(
+          'Error!',
+          'You already added a tag with the same name, choose a different one!',
+          'warning',
+          dispatch
+        );
+        return;
+      }
+      if (tagInputValue.length >= 5) {
+        setTags((prevState) => [...prevState, tagInputValue]);
+      } else {
+        showAlert(
+          'Error!',
+          'Your tag has to have at least 4 characters!',
+          'warning',
+          dispatch
+        );
+      }
+    }
+  };
+
+  const handleRemoveTag: React.MouseEventHandler<HTMLButtonElement> = (
+    e
+  ): void => {
+    const newTags = [...tags];
+    const clickedElement = e.target as HTMLElement;
+    const index = parseInt(clickedElement.closest('button')!.dataset.id!, 10);
+    newTags.splice(index, 1);
+    setTags(newTags);
   };
 
   const renderLeaf: (props: any) => JSX.Element = useCallback((props: any) => {
@@ -187,6 +251,13 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           type="text"
           id="large-input"
           className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-gren-500"
+        />
+        <TagInput
+          tags={tags}
+          handleInputChange={handleTagsChange}
+          handleKeyDown={handleTagsInputKeyDown}
+          value={tagInputValue}
+          handleRemoveTag={handleRemoveTag}
         />
         {alert.data.isShown ? (
           <div className="my-4">
