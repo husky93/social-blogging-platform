@@ -98,7 +98,7 @@ const Post: React.FC<PostProps> = ({}) => {
                   </h1>
                   {post.content.map((item: Node) => serialize(item))}
                 </Card>
-                <Card customClasses="p-8 sm:p-12 mt-6">
+                <Card customClasses="py-8 px-4 sm:p-12 mt-6">
                   <CommentList post={post} postID={params.id} />
                 </Card>
               </div>
