@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const loading = useCheckIfLoggedIn(dispatch);
 
   return (
-    <div className="min-h-screen text-slate-800">
+    <>
       {loading ? (
         <Loading />
       ) : user.data ? (
@@ -28,7 +28,7 @@ const App: React.FC = () => {
           <Homepage />
         </Suspense>
       )}
-    </div>
+    </>
   );
 };
 
