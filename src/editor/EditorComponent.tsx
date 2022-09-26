@@ -189,12 +189,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     if (tags.length < 4) {
       setTagInputValue(e.target.value);
     } else {
-      showAlert(
-        'Too many tags!',
-        'You can add maximum 4 tags!',
-        'info',
-        dispatch
-      );
+      showAlert('Info!', 'You can add maximum 4 tags', 'info', dispatch);
     }
   };
 
