@@ -30,6 +30,8 @@ const Comment: React.FC<CommentProps> = ({
   ): void => {
     if (user.data !== null) {
       setLikeActive((prevState) => !prevState);
+      if (!likeActive) setLikesCount((prevState) => (prevState += 1));
+      if (likeActive) setLikesCount((prevState) => (prevState -= 1));
     }
   };
 
@@ -47,12 +49,13 @@ const Comment: React.FC<CommentProps> = ({
           </span>
         </div>
         <p className="mb-4">{text}</p>
-        <div className="text-xl">
+        <div className="text-xl flex items-center">
           <LikeToggler
             id={id}
             handleToggle={handleLikeToggle}
             active={likeActive}
           />
+          <span className="text-gray-600 text-sm">{likesCount}</span>
         </div>
       </div>
     </div>
