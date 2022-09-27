@@ -2,14 +2,16 @@ import React from 'react';
 
 interface AvatarProps {
   imgLink: string;
+  sm?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ imgLink }) => {
+const Avatar: React.FC<AvatarProps> = ({ imgLink, sm }) => {
+  const classes = sm ? 'w-4 h-4 rounded-full' : 'w-9 h-9 rounded-full';
   return (
     <>
       <img
         data-tooltip-target="tooltip-bonnie"
-        className="w-9 h-9 rounded-full"
+        className={classes}
         src={imgLink}
         alt="Avatar"
       />
