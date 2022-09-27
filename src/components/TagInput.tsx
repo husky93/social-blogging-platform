@@ -20,7 +20,7 @@ const TagInput: React.FC<TagInputProps> = ({
     <div className="flex-wrap mt-4 flex text-sm font-medium w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
       {tags.map((tag, index) => (
         <Tag handleRemove={handleRemoveTag} id={index}>
-          {tag}
+          {'#' + tag}
         </Tag>
       ))}
       <input

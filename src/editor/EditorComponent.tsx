@@ -199,6 +199,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     e
   ): void => {
     if (e.key === ' ') {
+      e.preventDefault();
       setTagInputValue('');
       const isTagAlreadyExists =
         tags.find((tag) => tag === tagInputValue) !== undefined;
@@ -211,7 +212,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         );
         return;
       }
-      if (tagInputValue.length >= 5) {
+      if (tagInputValue.length >= 4) {
         setTags((prevState) => [...prevState, tagInputValue]);
       } else {
         showAlert(
