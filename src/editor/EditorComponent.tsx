@@ -124,7 +124,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         showAlert(
           'Error!',
           'In order to Submit your post you need to specify a title and add at least one tag!',
-          'warning',
+          'danger',
           dispatch
         );
       }
