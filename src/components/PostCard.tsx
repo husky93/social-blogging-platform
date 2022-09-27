@@ -1,9 +1,10 @@
 import Skeleton from './Skeleton';
-import Card from './Card';
 import { useNavigate } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import type { DocumentData } from 'firebase/firestore';
 import type { LazyExoticComponent } from 'react';
+
+const Card: LazyExoticComponent<any> = React.lazy(() => import('./Card'));
 const Author: LazyExoticComponent<any> = React.lazy(() => import('./Author'));
 const Badge: LazyExoticComponent<any> = React.lazy(() => import('./Badge'));
 const LikeToggler: LazyExoticComponent<any> = React.lazy(
@@ -28,8 +29,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div onClick={handleCardClick} className="cursor-pointer">
-      <Card customClasses="p-4 m-4">
-        <Suspense fallback={<Skeleton />}>
+      <Suspense fallback={<Skeleton />}>
+        <Card customClasses="p-4 m-4">
           <Author
             avatarUrl={photoUrl}
             displayName={displayName}
@@ -50,8 +51,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               {post.likesCount} {post.likesCount > 1 ? 'reactions' : 'reaction'}
             </span>
           </div>
-        </Suspense>
-      </Card>
+        </Card>
+      </Suspense>
     </div>
   );
 };
