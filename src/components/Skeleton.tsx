@@ -2,7 +2,7 @@ import React from 'react';
 
 interface SkeletonProps {}
 
-export const Skeleton: React.FC<SkeletonProps> = ({}) => {
+const Skeleton: React.FC<SkeletonProps> = ({}) => {
   return (
     <div role="status" className="space-y-2.5 animate-pulse max-w-lg">
       <div className="flex items-center space-x-2 w-full">
@@ -39,3 +39,5 @@ export const Skeleton: React.FC<SkeletonProps> = ({}) => {
     </div>
   );
 };
+
+export default Skeleton;
