@@ -14,7 +14,7 @@ const Blog: React.FC<BlogProps> = ({}) => {
         <UserUI />
       </Header>
       <Container customClasses="flex">
-        <div className="sticky basis-1/4 my-4">
+        <div className="basis-1/4 my-4">
           <Menu />
         </div>
         <div className="basis-2/4">

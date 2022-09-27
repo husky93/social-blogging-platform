@@ -47,20 +47,14 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch) => {
 
 export const useInfiniteLoading = () => {
   const [posts, setPosts] = useState<Array<DocumentData>>([]);
+  const [loading, setLoading] = useState(true);
   const initialPageLoaded = useRef(false);
   const [hasMore, setHasMore] = useState(true);
   const [lastVisible, setLastVisible] =
     useState<QueryDocumentSnapshot<DocumentData> | null>(null);
 
-  const loadItems = async () => {
-    const q = initialPageLoaded.current
-      ? query(
-          collection(db, 'posts'),
-          orderBy('likesCount', 'desc'),
-          limit(4),
-          startAfter(lastVisible)
-        )
-      : query(collection(db, 'posts'), orderBy('likesCount', 'desc'), limit(4));
+  const loadItems = async (q: Query<DocumentData>) => {
+    await setLoading(true);
     const documentSnapshots: QuerySnapshot<DocumentData> = await getDocs(q);
     await setPosts((prevState) => {
       const dataArray = documentSnapshots.docs.map((item) => {
@@ -69,15 +63,20 @@ export const useInfiniteLoading = () => {
       return [...prevState, ...dataArray];
     });
     setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length - 1]);
-    await setHasMore(documentSnapshots.docs.length < 4 ? false : true);
+    await setHasMore(documentSnapshots.docs.length < 5 ? false : true);
+    await setLoading(false);
   };
 
   useEffect(() => {
     if (initialPageLoaded.current) {
       return;
     }
-
-    loadItems();
+    const q = query(
+      collection(db, 'posts'),
+      orderBy('likesCount', 'desc'),
+      limit(5)
+    );
+    loadItems(q);
     initialPageLoaded.current = true;
   }, [loadItems]);
 
@@ -85,5 +84,7 @@ export const useInfiniteLoading = () => {
     posts,
     hasMore,
     loadItems,
+    loading,
+    lastVisible,
   };
 };
