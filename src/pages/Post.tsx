@@ -65,6 +65,16 @@ const Post: React.FC<PostProps> = ({}) => {
         console.error('Error loading Post from database', error)
       );
   }, []);
+
+  const renderComments = () => {
+    if (!user.data && post?.comments.length === 0) return;
+    return (
+      <Card customClasses="py-8 px-4 sm:p-12 mt-6">
+        <CommentList post={post} postID={params.id} />
+      </Card>
+    );
+  };
+
   return post === null ? (
     <Loading />
   ) : (
@@ -99,9 +109,7 @@ const Post: React.FC<PostProps> = ({}) => {
                   </h1>
                   {post.content.map((item: Node) => serialize(item))}
                 </Card>
-                <Card customClasses="py-8 px-4 sm:p-12 mt-6">
-                  <CommentList post={post} postID={params.id} />
-                </Card>
+                {renderComments()}
               </div>
             </div>
           </Container>
