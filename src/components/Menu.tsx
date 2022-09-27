@@ -13,7 +13,7 @@ interface MenuProps {}
 
 const Menu: React.FC<MenuProps> = ({}) => {
   return (
-    <nav className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
+    <nav className="w-full overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
       <ul className="space-y-2">
         <li>
           <Link to="/" className="nav-link">

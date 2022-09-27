@@ -3,6 +3,7 @@ import Spinner from '../components/Spinner';
 import Header from '../components/Header';
 import Container from '../components/Container';
 import Wrapper from '../components/Wrapper';
+import Footer from '../components/Footer';
 
 interface LoadingProps {}
 
@@ -15,6 +16,7 @@ const Loading: React.FC<LoadingProps> = ({}) => {
           <Spinner />
         </Wrapper>
       </Container>
+      <Footer />
     </main>
   );
 };

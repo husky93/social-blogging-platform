@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import LoginUI from '../components/LoginUI';
+import Footer from '../components/Footer';
 import type { LazyExoticComponent } from 'react';
 
 const Hero: LazyExoticComponent<any> = React.lazy(
@@ -16,6 +17,7 @@ const Homepage: React.FC<HomepageProps> = ({}) => {
         <LoginUI />
       </Header>
       <Hero />
+      <Footer />
     </main>
   );
 };

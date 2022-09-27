@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import UserUI from '../components/UserUI';
 import Editor from '../editor/EditorComponent';
 
@@ -12,6 +13,7 @@ const CreatePost: React.FC<CreatePostProps> = ({}) => {
         <UserUI post={true} />
       </Header>
       <Editor />
+      <Footer />
     </main>
   );
 };

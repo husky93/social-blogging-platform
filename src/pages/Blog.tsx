@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '../components/Container';
 import Menu from '../components/Menu';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import BlogContent from '../components/BlogContent';
 import UserUI from '../components/UserUI';
 
@@ -9,7 +10,7 @@ interface BlogProps {}
 
 const Blog: React.FC<BlogProps> = ({}) => {
   return (
-    <main>
+    <main className="min-h-screen">
       <Header>
         <UserUI />
       </Header>
@@ -22,6 +23,7 @@ const Blog: React.FC<BlogProps> = ({}) => {
         </div>
         <div className="basis-1/4"></div>
       </Container>
+      <Footer />
     </main>
   );
 };

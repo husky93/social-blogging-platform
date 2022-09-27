@@ -40,6 +40,9 @@ const CommentList: LazyExoticComponent<any> = React.lazy(
 const Author: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Author')
 );
+const Footer: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Footer')
+);
 
 interface PostProps {}
 
@@ -69,16 +72,14 @@ const Post: React.FC<PostProps> = ({}) => {
       <main>
         <Header>{user.data ? <UserUI /> : <LoginUI />}</Header>
         {post === undefined ? <Container>404! Post not found</Container> : ''}
-        {post ? (
+        {post && (
           <Container customClasses="my-14">
-            {alert.data.isShown ? (
+            {alert.data.isShown && (
               <div className="my-4">
                 <Alert title={alert.data.title} variant={alert.data.variant}>
                   {alert.data.text}
                 </Alert>
               </div>
-            ) : (
-              ''
             )}
             <div className="flex">
               <PostUI
@@ -104,9 +105,8 @@ const Post: React.FC<PostProps> = ({}) => {
               </div>
             </div>
           </Container>
-        ) : (
-          ''
         )}
+        <Footer />
       </main>
     </Suspense>
   );
