@@ -5,7 +5,7 @@ interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = ({}) => {
   return (
-    <Container>
+    <Container customClasses="w-full">
       <footer className="flex justify-center border-t-2 text-sm text-gray-600 border-gray-100 p-8 mt-6 sm:px-6">
         <span>
           2022 © Copyright{' '}
