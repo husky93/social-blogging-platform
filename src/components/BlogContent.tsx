@@ -43,7 +43,7 @@ const BlogContent: React.FC<BlogContentProps> = ({}) => {
       {posts.map((post, i) => {
         const isLastElement = posts.length === i + 1;
         return isLastElement ? (
-          <div ref={lastPostElementRef}>
+          <div ref={lastPostElementRef} key={`post-${i}-ref`}>
             <PostCard post={post} key={`post-${i}`} />
           </div>
         ) : (

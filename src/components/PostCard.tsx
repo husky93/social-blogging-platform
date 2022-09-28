@@ -41,8 +41,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             {post.title}
           </h2>
           <div className="ml-12 flex gap-2">
-            {post.tags.map((tag: string) => (
-              <Badge>#{tag}</Badge>
+            {post.tags.map((tag: string, i: number) => (
+              <Badge key={`badge-${i}`}>#{tag}</Badge>
             ))}
           </div>
           <div className="my-2 ml-12 text-xl flex items-center">
