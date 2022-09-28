@@ -111,7 +111,7 @@ export const useFetchUser = (userID: string | undefined): FetchUserObject => {
     fetchUser();
   }, []);
 
-  return { userData, loading };
+  return { userData, setUserData, loading };
 };
 
 export const useFetchPost = (
