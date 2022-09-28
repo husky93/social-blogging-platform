@@ -146,7 +146,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
         </Header>
         <Container customClasses="flex flex-1 items-start mt-6">
           {loading ? (
-            <div>
+            <div className="flex justify-center gap-x-4 gap-y-8">
               <Skeleton />
               <Skeleton />
               <Skeleton />
