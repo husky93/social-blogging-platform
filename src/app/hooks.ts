@@ -5,8 +5,8 @@ import {
   auth,
   getDocs,
   query,
-  startAfter,
-  startAt,
+  doc,
+  getDoc,
   collection,
   db,
   orderBy,
@@ -18,12 +18,15 @@ import type {
   QueryDocumentSnapshot,
   Query,
   QuerySnapshot,
+  DocumentReference,
+  DocumentSnapshot,
 } from 'firebase/firestore';
 import type { RootState, AppDispatch } from './store';
+import type { FetchUserObject, InfiniteLoadingObject } from './types';
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useCheckIfLoggedIn = (dispatch: AppDispatch) => {
+export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
@@ -45,7 +48,7 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch) => {
   return loading;
 };
 
-export const useInfiniteLoading = () => {
+export const useInfiniteLoading = (): InfiniteLoadingObject => {
   const [posts, setPosts] = useState<Array<DocumentData>>([]);
   const [loading, setLoading] = useState(true);
   const initialPageLoaded = useRef(false);
@@ -53,7 +56,7 @@ export const useInfiniteLoading = () => {
   const [lastVisible, setLastVisible] =
     useState<QueryDocumentSnapshot<DocumentData> | null>(null);
 
-  const loadItems = async (q: Query<DocumentData>) => {
+  const loadItems = async (q: Query<DocumentData>): Promise<void> => {
     await setLoading(true);
     const documentSnapshots: QuerySnapshot<DocumentData> = await getDocs(q);
     await setPosts((prevState) => {
@@ -87,4 +90,27 @@ export const useInfiniteLoading = () => {
     loading,
     lastVisible,
   };
+};
+
+export const useFetchUser = (userID: string | undefined): FetchUserObject => {
+  const [userData, setUserData] = useState<DocumentData | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUser = async (): Promise<void> => {
+    if (userID !== undefined) {
+      await setLoading(true);
+      const docRef: DocumentReference<DocumentData> = doc(db, 'users', userID);
+      const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
+      if (docSnap) {
+        setUserData(docSnap.data());
+      }
+    }
+    await setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  return { userData, loading };
 };
