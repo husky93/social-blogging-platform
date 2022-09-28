@@ -5,6 +5,9 @@ import {
   BrandFacebook,
   BrandTwitter,
   BrandLinkedin,
+  InfoSquare,
+  Lock,
+  QuestionMark,
 } from '@ricons/tabler';
 import { Icon } from '@ricons/utils';
 import React from 'react';
@@ -29,6 +32,32 @@ const Menu: React.FC<MenuProps> = ({}) => {
               <Bookmark className="nav-icon" />
             </Icon>
             <span className="ml-3 text-base">Bookmarks</span>
+          </Link>
+        </li>
+      </ul>
+      <ul className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+        <li>
+          <Link to="/" className="nav-link">
+            <Icon>
+              <InfoSquare className="nav-icon" />
+            </Icon>
+            <span className="ml-3 text-base">About</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/" className="nav-link">
+            <Icon>
+              <Lock className="nav-icon" />
+            </Icon>
+            <span className="ml-3 text-base">Privacy Policy</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/" className="nav-link">
+            <Icon>
+              <QuestionMark className="nav-icon" />
+            </Icon>
+            <span className="ml-3 text-base">FAQ</span>
           </Link>
         </li>
       </ul>
