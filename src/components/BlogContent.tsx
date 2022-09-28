@@ -39,7 +39,7 @@ const BlogContent: React.FC<BlogContentProps> = ({}) => {
   );
 
   return (
-    <div>
+    <>
       {posts.map((post, i) => {
         const isLastElement = posts.length === i + 1;
         return isLastElement ? (
@@ -57,7 +57,7 @@ const BlogContent: React.FC<BlogContentProps> = ({}) => {
           <Skeleton />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

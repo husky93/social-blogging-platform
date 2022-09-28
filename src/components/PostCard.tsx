@@ -30,7 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     <div onClick={handleCardClick} className="cursor-pointer">
       <Suspense fallback={<Skeleton />}>
-        <Card customClasses="p-4 m-4">
+        <Card customClasses="p-4 my-6">
           <Author
             avatarUrl={photoUrl}
             displayName={displayName}
