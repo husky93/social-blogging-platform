@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from 'react';
 
 interface ButtonProps {
-  handleClick?: React.MouseEventHandler<HTMLButtonElement>;
   text: string | React.ReactNode;
-  variant: 'primary' | 'secondary' | 'danger';
+  variant: 'primary' | 'secondary' | 'danger' | 'hollow';
+  handleClick?: React.MouseEventHandler<HTMLButtonElement>;
+  id?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ handleClick, text, variant }) => {
+const Button: React.FC<ButtonProps> = ({ handleClick, text, variant, id }) => {
   const [classes, setClasses] = useState('');
 
   useEffect(() => {
     switch (variant) {
       case 'primary':
         setClasses(
-          'transition-all inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 active:bg-green-900'
+          'button bg-green-600 text-white hover:bg-green-700 active:bg-green-900'
         );
         break;
       case 'danger':
         setClasses(
-          'transition-all inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 active:bg-red-900'
+          'button bg-red-600 text-white hover:bg-red-700 active:bg-red-900'
+        );
+        break;
+      case 'hollow':
+        setClasses(
+          'button text-gray-500 bg-white hover:bg-gray-100 border border-gray-200 hover:text-gray-900'
         );
         break;
       default:
         setClasses(
-          'transition-all inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-slate-800 shadow-sm hover:bg-gray-400 active:bg-gray-600'
+          'button bg-gray-300 text-slate-800 hover:bg-gray-400 active:bg-gray-600'
         );
     }
   }, []);
 
   return (
-    <button onClick={handleClick} className={classes}>
+    <button onClick={handleClick} className={classes} data-id={id}>
       {text}
     </button>
   );
