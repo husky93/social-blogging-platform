@@ -46,9 +46,11 @@ const Bookmarks: React.FC<BookmarksProps> = ({}) => {
       }
     };
     if (userData && isFirstLoad.current) {
-      userData.bookmarks.forEach((postID: string) => fetchPost(postID));
+      userData.bookmarks.forEach(async (postID: string, i: number) => {
+        await fetchPost(postID);
+        if (i === userData.bookmarks.length - 1) setLoading(false);
+      });
       isFirstLoad.current = false;
-      setLoading(false);
     }
   }, [userData]);
 
@@ -68,8 +70,12 @@ const Bookmarks: React.FC<BookmarksProps> = ({}) => {
               <Skeleton />
               <Skeleton />
             </>
-          ) : (
+          ) : posts.length > 0 ? (
             posts.map((post: DocumentData) => <PostCard post={post} />)
+          ) : (
+            <h2 className="text-center my-8 text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+              You don't have any bookmarks yet!
+            </h2>
           )}
         </Container>
         <Footer />
