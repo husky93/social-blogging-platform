@@ -116,15 +116,23 @@ export const useFetchUser = (userID: string | undefined): FetchUserObject => {
 
 export const useFetchPost = (
   postID: string | undefined
-): DocumentData | undefined => {
-  const [post, setPost] = useState<DocumentData | undefined>(undefined);
+): DocumentData | undefined | null => {
+  const [post, setPost] = useState<DocumentData | undefined | null>(null);
 
   const fetchPost = async (): Promise<void> => {
     if (postID) {
-      const docRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
-      const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
-      if (docSnap) {
-        setPost(docSnap.data());
+      try {
+        const docRef: DocumentReference<DocumentData> = doc(
+          db,
+          'posts',
+          postID
+        );
+        const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
+        if (docSnap) {
+          setPost(docSnap.data());
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   };
