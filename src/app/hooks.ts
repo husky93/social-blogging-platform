@@ -107,10 +107,31 @@ export const useFetchUser = (userID: string | undefined): FetchUserObject => {
     }
     await setLoading(false);
   };
-
   useEffect(() => {
     fetchUser();
   }, []);
 
   return { userData, loading };
+};
+
+export const useFetchPost = (
+  postID: string | undefined
+): DocumentData | undefined => {
+  const [post, setPost] = useState<DocumentData | undefined>(undefined);
+
+  const fetchPost = async (): Promise<void> => {
+    if (postID) {
+      const docRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
+      const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
+      if (docSnap) {
+        setPost(docSnap.data());
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchPost();
+  }, []);
+
+  return post;
 };

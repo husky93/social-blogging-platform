@@ -1,14 +1,13 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
-import { getDoc, doc, collection, db } from '../app/firebase';
 import {
   useAppSelector,
   useAppDispatch,
   useCheckIfLoggedIn,
+  useFetchPost,
 } from '../app/hooks';
 import { serialize } from '../editor/serialize';
-import type { DocumentData, CollectionReference } from 'firebase/firestore';
 import type { RootState } from '../app/store';
 import type { Node } from 'slate';
 import type { LazyExoticComponent } from 'react';
@@ -52,19 +51,7 @@ const Post: React.FC<PostProps> = ({}) => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const alert: RootState['alert'] = useAppSelector((state) => state.alert);
   const loading = useCheckIfLoggedIn(dispatch);
-  const [post, setPost] = useState<null | undefined | DocumentData>(null);
-
-  useEffect(() => {
-    const postsRef: CollectionReference<DocumentData> = collection(db, 'posts');
-    getDoc(doc(postsRef, params.id))
-      .then((document) => {
-        const data: DocumentData | undefined = document.data();
-        setPost(data);
-      })
-      .catch((error) =>
-        console.error('Error loading Post from database', error)
-      );
-  }, []);
+  const post = useFetchPost(params.id);
 
   const renderComments = () => {
     if (!user.data && post?.comments.length === 0) return;
