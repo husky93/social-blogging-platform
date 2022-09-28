@@ -4,6 +4,7 @@ import Post from './pages/Post';
 import CreatePost from './pages/CreatePost';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Dashboard from './pages/Dashboard';
+import Bookmarks from './pages/Bookmarks';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './app/hooks';
 import type { RootState } from './app/store';
@@ -20,6 +21,7 @@ const RouteSwitch: React.FC<RouteSwitchProps> = ({}) => {
         <Route element={<ProtectedRoutes auth={user.data !== null} />}>
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/bookmarks" element={<Bookmarks />} />
         </Route>
       </Routes>
     </BrowserRouter>
