@@ -1,6 +1,12 @@
-import React, { Suspense, useEffect, useState, useRef } from 'react';
+import React, {
+  Suspense,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
 import { useFetchUser, useAppSelector } from '../app/hooks';
-import { db, doc, getDoc } from '../app/firebase';
+import { db, doc, getDoc, updateDoc, deleteDoc } from '../app/firebase';
 import Loading from './Loading';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -62,22 +68,31 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
 
   const handleModalClose: React.MouseEventHandler<
     HTMLDivElement | HTMLButtonElement
-  > = (e) => {
+  > = useCallback(() => {
     setModalID(undefined);
-  };
+  }, []);
 
-  const handleModalOpen: React.MouseEventHandler<HTMLButtonElement> = (
-    e
-  ): void => {
-    if (e.target instanceof HTMLButtonElement) {
-      console.log(e.target.dataset.id);
-      setModalID(e.target.dataset.id);
-    }
-  };
+  const handleModalOpen: React.MouseEventHandler<HTMLButtonElement> =
+    useCallback((e): void => {
+      if (e.target instanceof HTMLButtonElement) {
+        console.log(e.target.dataset.id);
+        setModalID(e.target.dataset.id);
+      }
+    }, []);
 
-  const handleConfirmDelete: React.MouseEventHandler<HTMLButtonElement> = (
-    e
-  ): void => {
+  const updateDatabaseDeletion = useCallback(
+    async (uID: string, pID: string, userNewPosts: Array<string>) => {
+      const postRef: DocumentReference<DocumentData> = doc(db, 'posts', pID);
+      const userRef: DocumentReference<DocumentData> = doc(db, 'users', uID);
+      await updateDoc(userRef, { ...userData, posts: userNewPosts });
+      await deleteDoc(postRef);
+    },
+    []
+  );
+
+  const handleConfirmDelete: React.MouseEventHandler<
+    HTMLButtonElement
+  > = (): void => {
     if (userData) {
       const newUserPosts = [...userData.posts];
       const newPosts = [...posts];
@@ -86,9 +101,12 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
       if (indexUser !== -1 && indexPost !== -1) {
         newUserPosts.splice(indexUser, 1);
         newPosts.splice(indexPost, 1);
+        if (modalID && userID) {
+          updateDatabaseDeletion(userID, modalID, newUserPosts);
+        }
+        setModalID(undefined);
         setUserData({ ...userData, posts: newUserPosts });
         setPosts(newPosts);
-        setModalID(undefined);
       }
     }
   };
@@ -126,7 +144,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
         <Header>
           <UserUI />
         </Header>
-        <Container customClasses="flex flex-1 justify-center items-start mt-6">
+        <Container customClasses="flex flex-1 items-start mt-6">
           {loading ? (
             <div>
               <Skeleton />
@@ -138,7 +156,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
               {userData && userData.posts.length === 0 ? (
                 <h1>You don't have any articles added yet!</h1>
               ) : (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-8">
                   {userData &&
                     posts &&
                     posts.map((post: DocumentData) => (

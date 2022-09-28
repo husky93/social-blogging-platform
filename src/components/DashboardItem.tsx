@@ -23,9 +23,9 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
   return (
     <>
       {!!post && (
-        <Card>
+        <Card customClasses="w-72">
           <div className="p-4 text-center">
-            <h4 className="transition-all my-3 font-extrabold text-lg line-clamp-2 hover:text-green-700">
+            <h4 className="transition-all my-3 font-extrabold text-lg line-clamp-1 hover:text-green-700">
               {post.title}
             </h4>
             <span className="font-light text-gray-500 text-sm">
