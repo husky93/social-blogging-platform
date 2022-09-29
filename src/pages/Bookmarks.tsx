@@ -2,16 +2,16 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useFetchUser, useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchPost } from '../app/modules';
 import Loading from './Loading';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import type { LazyExoticComponent } from 'react';
 import type { RootState } from '../app/store';
-import type {
-  DocumentReference,
-  DocumentData,
-  DocumentSnapshot,
-} from 'firebase/firestore';
+import type { DocumentData } from 'firebase/firestore';
 
+const Header: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Header')
+);
+const Footer: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Footer')
+);
 const Container: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Container')
 );

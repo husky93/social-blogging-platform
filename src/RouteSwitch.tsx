@@ -6,7 +6,7 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import Dashboard from './pages/Dashboard';
 import Bookmarks from './pages/Bookmarks';
 import ScrollToTop from './components/ScrollToTop';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAppSelector } from './app/hooks';
 import type { RootState } from './app/store';
 
@@ -15,7 +15,7 @@ interface RouteSwitchProps {}
 const RouteSwitch: React.FC<RouteSwitchProps> = ({}) => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
   return (
-    <BrowserRouter>
+    <Router>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<App />} />
@@ -26,7 +26,7 @@ const RouteSwitch: React.FC<RouteSwitchProps> = ({}) => {
           <Route path="/bookmarks" element={<Bookmarks />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 };
 

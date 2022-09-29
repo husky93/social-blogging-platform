@@ -9,20 +9,22 @@ import { useFetchUser, useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchPost } from '../app/modules';
 import { db, doc, getDoc, updateDoc, deleteDoc } from '../app/firebase';
 import Loading from './Loading';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import UserUI from '../components/UserUI';
 import { Icon } from '@ricons/utils';
 import { AlertCircle } from '@ricons/tabler';
 import type { RootState } from '../app/store';
 import type { LazyExoticComponent } from 'react';
-import type {
-  DocumentData,
-  DocumentReference,
-  DocumentSnapshot,
-} from 'firebase/firestore';
+import type { DocumentData, DocumentReference } from 'firebase/firestore';
 import type { FetchUserObject } from '../app/types';
 
+const Header: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Header')
+);
+const Footer: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Footer')
+);
+const UserUI: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/UserUI')
+);
 const Container: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Container')
 );

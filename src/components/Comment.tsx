@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '../app/hooks';
 import { format } from 'date-fns';
 import { db, doc, updateDoc } from '../app/firebase';
-import Avatar from './Avatar';
-import LikeToggler from './LikeToggler';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 import type { RootState } from '../app/store';
 import type { CommentObject } from './CommentList';
+import type { LazyExoticComponent } from 'react';
+
+const Avatar: LazyExoticComponent<any> = React.lazy(() => import('./Avatar'));
+const LikeToggler: LazyExoticComponent<any> = React.lazy(
+  () => import('./LikeToggler')
+);
 
 interface CommentProps {
   id: number;

@@ -1,12 +1,20 @@
 import React from 'react';
-import Header from '../components/Header';
-import LoginUI from '../components/LoginUI';
-import Footer from '../components/Footer';
-import Trending from '../components/Trending';
 import type { LazyExoticComponent } from 'react';
 
 const Hero: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Hero')
+);
+const Header: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Header')
+);
+const LoginUI: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/LoginUI')
+);
+const Footer: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Footer')
+);
+const Trending: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Trending')
 );
 
 interface HomepageProps {}

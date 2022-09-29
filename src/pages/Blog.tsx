@@ -1,11 +1,27 @@
 import React from 'react';
-import Container from '../components/Container';
-import Menu from '../components/Menu';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import BlogContent from '../components/BlogContent';
-import Ad from '../components/Ad';
-import UserUI from '../components/UserUI';
+import type { LazyExoticComponent } from 'react';
+
+const Container: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Container')
+);
+const Menu: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Menu')
+);
+const Header: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Header')
+);
+const Footer: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Footer')
+);
+const BlogContent: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/BlogContent')
+);
+const Ad: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Ad')
+);
+const UserUI: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/UserUI')
+);
 
 interface BlogProps {}
 

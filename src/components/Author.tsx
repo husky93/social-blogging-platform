@@ -1,7 +1,9 @@
-import type { Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import React from 'react';
-import Avatar from './Avatar';
+import type { Timestamp } from 'firebase/firestore';
+import type { LazyExoticComponent } from 'react';
+
+const Avatar: LazyExoticComponent<any> = React.lazy(() => import('./Avatar'));
 
 interface AuthorProps {
   avatarUrl: string;
