@@ -1,6 +1,7 @@
 import { Transforms, Editor, Text } from 'slate';
 import type { ReactEditor } from 'slate-react';
 import type { BaseEditor } from 'slate';
+import type { Node } from 'slate';
 
 const CustomEditor = {
   isBoldMarkActive(editor: BaseEditor & ReactEditor): boolean {

@@ -4,7 +4,7 @@ import Menu from '../components/Menu';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BlogContent from '../components/BlogContent';
-import Add from '../components/Ad';
+import Ad from '../components/Ad';
 import UserUI from '../components/UserUI';
 
 interface BlogProps {}
@@ -23,9 +23,9 @@ const Blog: React.FC<BlogProps> = ({}) => {
           <BlogContent />
         </div>
         <div className="basis-1/4">
-          <Add />
-          <Add />
-          <Add />
+          <Ad />
+          <Ad />
+          <Ad />
         </div>
       </Container>
       <Footer />
