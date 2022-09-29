@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useCheckIfLoggedIn } from '../app/hooks';
 import Loading from './Loading';
@@ -15,21 +15,7 @@ const App: React.FC = () => {
   const dispatch: AppDispatch = useAppDispatch();
   const loading = useCheckIfLoggedIn(dispatch);
 
-  return (
-    <>
-      {loading ? (
-        <Loading />
-      ) : user.data ? (
-        <Suspense fallback={<Loading />}>
-          <Blog />
-        </Suspense>
-      ) : (
-        <Suspense fallback={<Loading />}>
-          <Homepage />
-        </Suspense>
-      )}
-    </>
-  );
+  return <>{loading ? <Loading /> : user.data ? <Blog /> : <Homepage />}</>;
 };
 
 export default App;

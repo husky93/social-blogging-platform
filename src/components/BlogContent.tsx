@@ -1,5 +1,5 @@
 import { useInfiniteLoading } from '../app/hooks';
-import React, { useCallback, useRef, RefObject } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   query,
   collection,

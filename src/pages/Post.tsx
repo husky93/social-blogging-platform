@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
 import {
@@ -65,55 +65,53 @@ const Post: React.FC<PostProps> = ({}) => {
   return post === null ? (
     <Loading />
   ) : (
-    <Suspense fallback={<Loading />}>
-      <main className="min-h-screen flex flex-col">
-        <Header>{user.data ? <UserUI /> : <LoginUI />}</Header>
-        {post === undefined ? (
-          <Container customClasses="flex-1 w-full flex items-center">
-            <h1 className="text-center my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
-              Error 404! Post not found
-            </h1>
-          </Container>
-        ) : (
-          ''
-        )}
-        {post && (
-          <Container customClasses="my-14 flex-1 w-full">
-            {alert.data.isShown && (
-              <div className="my-4">
-                <Alert title={alert.data.title} variant={alert.data.variant}>
-                  {alert.data.text}
-                </Alert>
-              </div>
-            )}
-            <div className="flex">
-              <PostUI
-                postID={params.id}
-                likes={post.likes}
-                bookmarks={post.bookmarks}
-              />
-              <div className="w-full">
-                <Card customClasses="p-8 sm:p-12">
-                  <Author
-                    avatarUrl={post.author.photoUrl}
-                    displayName={post.author.displayName}
-                    timestamp={post.timestamp}
-                  />
-                  <h1 className="my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
-                    {post.title}
-                  </h1>
-                  {post.content.map((item: Node, i: number) =>
-                    serialize(item, i)
-                  )}
-                </Card>
-                {renderComments()}
-              </div>
+    <main className="min-h-screen flex flex-col">
+      <Header>{user.data ? <UserUI /> : <LoginUI />}</Header>
+      {post === undefined ? (
+        <Container customClasses="flex-1 w-full flex items-center">
+          <h1 className="text-center my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+            Error 404! Post not found
+          </h1>
+        </Container>
+      ) : (
+        ''
+      )}
+      {post && (
+        <Container customClasses="my-14 flex-1 w-full">
+          {alert.data.isShown && (
+            <div className="my-4">
+              <Alert title={alert.data.title} variant={alert.data.variant}>
+                {alert.data.text}
+              </Alert>
             </div>
-          </Container>
-        )}
-        <Footer />
-      </main>
-    </Suspense>
+          )}
+          <div className="flex">
+            <PostUI
+              postID={params.id}
+              likes={post.likes}
+              bookmarks={post.bookmarks}
+            />
+            <div className="w-full">
+              <Card customClasses="p-8 sm:p-12">
+                <Author
+                  avatarUrl={post.author.photoUrl}
+                  displayName={post.author.displayName}
+                  timestamp={post.timestamp}
+                />
+                <h1 className="my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+                  {post.title}
+                </h1>
+                {post.content.map((item: Node, i: number) =>
+                  serialize(item, i)
+                )}
+              </Card>
+              {renderComments()}
+            </div>
+          </div>
+        </Container>
+      )}
+      <Footer />
+    </main>
   );
 };
 

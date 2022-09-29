@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import Loading from './Loading';
+import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import type { LazyExoticComponent } from 'react';
@@ -17,13 +16,11 @@ const UserUI: LazyExoticComponent<any> = React.lazy(
 const CreatePost: React.FC<CreatePostProps> = ({}) => {
   return (
     <main>
-      <Suspense fallback={<Loading />}>
-        <Header>
-          <UserUI post={true} />
-        </Header>
-        <Editor />
-        <Footer />
-      </Suspense>
+      <Header>
+        <UserUI post={true} />
+      </Header>
+      <Editor />
+      <Footer />
     </main>
   );
 };
