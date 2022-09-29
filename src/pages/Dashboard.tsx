@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { useFetchUser, useAppSelector } from '../app/hooks';
+import { fetchPost } from '../app/modules';
 import { db, doc, getDoc, updateDoc, deleteDoc } from '../app/firebase';
 import Loading from './Loading';
 import Header from '../components/Header';
@@ -50,18 +51,8 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    const fetchPost = async (postID: string): Promise<void> => {
-      const docRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
-      const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
-      const data: DocumentData | undefined = docSnap.data();
-      if (data) {
-        data.id = postID;
-        setPosts((prevState) => [...prevState, data]);
-      }
-    };
-
     if (userData && isFirstLoad.current) {
-      userData.posts.forEach((postID: string) => fetchPost(postID));
+      userData.posts.forEach((postID: string) => fetchPost(postID, setPosts));
       isFirstLoad.current = false;
     }
   }, [userData]);
@@ -80,7 +71,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
       }
     }, []);
 
-  const updateDatabaseDeletion = useCallback(
+  const updateDatabaseOnDeletion = useCallback(
     async (uID: string, pID: string, userNewPosts: Array<string>) => {
       const postRef: DocumentReference<DocumentData> = doc(db, 'posts', pID);
       const userRef: DocumentReference<DocumentData> = doc(db, 'users', uID);
@@ -102,7 +93,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
         newUserPosts.splice(indexUser, 1);
         newPosts.splice(indexPost, 1);
         if (modalID && userID) {
-          updateDatabaseDeletion(userID, modalID, newUserPosts);
+          updateDatabaseOnDeletion(userID, modalID, newUserPosts);
         }
         setModalID(undefined);
         setUserData({ ...userData, posts: newUserPosts });

@@ -1,5 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { fetchPost } from './modules';
 import {
   onAuthStateChanged,
   auth,
@@ -119,26 +120,8 @@ export const useFetchPost = (
 ): DocumentData | undefined | null => {
   const [post, setPost] = useState<DocumentData | undefined | null>(null);
 
-  const fetchPost = async (): Promise<void> => {
-    if (postID) {
-      try {
-        const docRef: DocumentReference<DocumentData> = doc(
-          db,
-          'posts',
-          postID
-        );
-        const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
-        if (docSnap) {
-          setPost(docSnap.data());
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
   useEffect(() => {
-    fetchPost();
+    fetchPost(postID, setPost);
   }, []);
 
   return post;
