@@ -69,7 +69,7 @@ const Post: React.FC<PostProps> = ({}) => {
       <main className="min-h-screen flex flex-col">
         <Header>{user.data ? <UserUI /> : <LoginUI />}</Header>
         {post === undefined ? (
-          <Container customClasses="flex-1 flex items-center">
+          <Container customClasses="flex-1 w-full flex items-center">
             <h1 className="text-center my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
               Error 404! Post not found
             </h1>
@@ -78,7 +78,7 @@ const Post: React.FC<PostProps> = ({}) => {
           ''
         )}
         {post && (
-          <Container customClasses="my-14 flex-1">
+          <Container customClasses="my-14 flex-1 w-full">
             {alert.data.isShown && (
               <div className="my-4">
                 <Alert title={alert.data.title} variant={alert.data.variant}>

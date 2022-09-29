@@ -2,7 +2,7 @@
   "name": "social-blogging-platform",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://husky93.github.io/social-blogging-platform",
+  "homepage": "https://husky93.github.io/social-blogging-platform/",
   "type": "module",
   "scripts": {
     "dev": "vite",
