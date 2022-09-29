@@ -130,6 +130,7 @@ const CommentList: React.FC<CommentListProps> = ({ post, postID }) => {
               id={index}
               comments={commentList}
               updateCommentsList={updateCommentsList}
+              key={`comment-${index}`}
             />
           ))
         : ''}
