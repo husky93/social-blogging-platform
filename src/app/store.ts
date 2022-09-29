@@ -9,6 +9,10 @@ const store = configureStore({
     alert: alertReducer,
     posts: postsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export default store;

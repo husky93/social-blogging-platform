@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
-import { useFetchUser, useAppSelector } from '../app/hooks';
-import { db, doc, getDoc } from '../app/firebase';
+import { useFetchUser, useAppSelector, useAppDispatch } from '../app/hooks';
+import { fetchPost } from '../app/modules';
 import Loading from './Loading';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -35,25 +35,23 @@ interface BookmarksProps {}
 
 const Bookmarks: React.FC<BookmarksProps> = ({}) => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
+  const fetchedPosts: RootState['posts'] = useAppSelector(
+    (state) => state.posts
+  );
   const userID: string | undefined = user.data ? user.data.uid : undefined;
   const { userData } = useFetchUser(userID);
   const [posts, setPosts] = useState<Array<DocumentData>>([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    const fetchPost = async (postID: string): Promise<void> => {
-      const docRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
-      const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
-      const data: DocumentData | undefined = docSnap.data();
-      if (data) {
-        data.id = postID;
-        setPosts((prevState) => [...prevState, data]);
-      }
-    };
     if (userData && isFirstLoad.current) {
       userData.bookmarks.forEach(async (postID: string, i: number) => {
-        await fetchPost(postID);
+        const post = await fetchPost(postID, fetchedPosts.data, dispatch);
+        if (post) {
+          setPosts((prevData) => [...prevData, post]);
+        }
         if (i === userData.bookmarks.length - 1) setLoading(false);
       });
       isFirstLoad.current = false;

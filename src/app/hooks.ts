@@ -119,9 +119,20 @@ export const useFetchPost = (
   postID: string | undefined
 ): DocumentData | undefined | null => {
   const [post, setPost] = useState<DocumentData | undefined | null>(null);
+  const posts: RootState['posts'] = useAppSelector((state) => state.posts);
+  const dispatch: AppDispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchPost(postID, setPost);
+    const getPost = async (): Promise<void> => {
+      const data: DocumentData | undefined = await fetchPost(
+        postID,
+        posts.data,
+        dispatch
+      );
+      setPost(data);
+    };
+
+    getPost();
   }, []);
 
   return post;

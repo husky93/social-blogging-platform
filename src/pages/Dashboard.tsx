@@ -5,7 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
-import { useFetchUser, useAppSelector } from '../app/hooks';
+import { useFetchUser, useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchPost } from '../app/modules';
 import { db, doc, getDoc, updateDoc, deleteDoc } from '../app/firebase';
 import Loading from './Loading';
@@ -48,11 +48,20 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
     useFetchUser(userID);
   const [modalID, setModalID] = useState<string | undefined>(undefined);
   const [posts, setPosts] = useState<Array<DocumentData>>([]);
+  const fetchedPosts: RootState['posts'] = useAppSelector(
+    (state) => state.posts
+  );
+  const dispatch = useAppDispatch();
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
     if (userData && isFirstLoad.current) {
-      userData.posts.forEach((postID: string) => fetchPost(postID, setPosts));
+      userData.posts.forEach(async (postID: string) => {
+        const post = await fetchPost(postID, fetchedPosts.data, dispatch);
+        if (post) {
+          setPosts((prevState) => [...prevState, post]);
+        }
+      });
       isFirstLoad.current = false;
     }
   }, [userData]);

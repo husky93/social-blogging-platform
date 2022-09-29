@@ -19,7 +19,6 @@ export const fetchPost = async (
   );
 
   if (desiredPost === undefined) {
-    console.log('yo');
     const docRef: DocumentReference<DocumentData> = doc(db, 'posts', postID);
     const docSnap: DocumentSnapshot<DocumentData> = await getDoc(docRef);
     const data: DocumentData | undefined = docSnap.data();
