@@ -43,7 +43,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app: FirebaseApp = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const auth: Auth = getAuth(app);
 const provider: GoogleAuthProvider = new GoogleAuthProvider();
 const db: Firestore = getFirestore(app);

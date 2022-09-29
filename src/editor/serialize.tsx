@@ -1,4 +1,4 @@
-import { Text } from 'slate';
+import { Text, Element } from 'slate';
 import Blockquote from './rendreres/Blockquote';
 import Heading from './rendreres/Heading';
 import Unordered from './rendreres/Unordered';
@@ -23,7 +23,7 @@ export const serialize = (
   }
 
   const children = node.children.map((n) => serialize(n));
-
+  if (!Element.isElement(node)) return;
   switch (node.type) {
     case 'blockquote':
       return <Blockquote>{children}</Blockquote>;

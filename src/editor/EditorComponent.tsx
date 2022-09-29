@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { createEditor } from 'slate';
+import { createEditor, Descendant } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import {
   db,

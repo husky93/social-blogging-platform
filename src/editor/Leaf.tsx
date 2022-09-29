@@ -11,9 +11,10 @@ const Leaf: React.FC<LeafProps> = ({ attributes, children, leaf }) => {
     <span
       {...attributes}
       style={{
-        fontWeight: leaf.bold ? 'bold' : 'inherit',
-        fontStyle: leaf.italic ? 'italic' : 'inherit',
-        textDecoration: leaf.strikethrough ? 'line-through' : 'inherit',
+        fontWeight: leaf.bold !== undefined ? 'bold' : 'inherit',
+        fontStyle: leaf.italic !== undefined ? 'italic' : 'inherit',
+        textDecoration:
+          leaf.strikethrough !== undefined ? 'line-through' : 'inherit',
       }}
     >
       {children}
