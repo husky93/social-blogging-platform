@@ -14,6 +14,7 @@ import {
   limit,
 } from './firebase';
 import { login, logout } from '../features/user/userSlice';
+import { addPost } from '../features/posts/postsSlice';
 import type {
   DocumentData,
   QueryDocumentSnapshot,
@@ -56,13 +57,16 @@ export const useInfiniteLoading = (): InfiniteLoadingObject => {
   const [hasMore, setHasMore] = useState(true);
   const [lastVisible, setLastVisible] =
     useState<QueryDocumentSnapshot<DocumentData> | null>(null);
+  const dispatch = useAppDispatch();
 
   const loadItems = async (q: Query<DocumentData>): Promise<void> => {
     await setLoading(true);
     const documentSnapshots: QuerySnapshot<DocumentData> = await getDocs(q);
     await setPosts((prevState) => {
       const dataArray = documentSnapshots.docs.map((item) => {
-        return { ...item.data(), id: item.id };
+        const post = { ...item.data(), id: item.id };
+        dispatch(addPost(post));
+        return post;
       });
       return [...prevState, ...dataArray];
     });
