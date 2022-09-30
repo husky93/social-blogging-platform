@@ -150,7 +150,9 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
         ) : (
           <div>
             {userData && userData.posts.length === 0 ? (
-              <h1>You don't have any articles added yet!</h1>
+              <h1 className="text-center my-8 text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+                You don't have any articles added yet!
+              </h1>
             ) : (
               <div className="flex flex-wrap justify-center gap-x-4 gap-y-8">
                 {userData &&
