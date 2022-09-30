@@ -1,1 +1,0 @@
-import{a,F as r}from"./index.7a492b0c.js";const o=({imgLink:t,sm:s})=>a(r,{children:a("img",{"data-tooltip-target":"tooltip-bonnie",className:s?"w-4 h-4 rounded-full":"w-9 h-9 rounded-full",src:t,alt:"Avatar"})});export{o as default};
