@@ -7,6 +7,7 @@ import {
 } from '@ricons/ionicons5';
 import { doc, updateDoc, arrayUnion, arrayRemove, db } from '../app/firebase';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { toggleLike } from '../features/posts/postsSlice';
 import { showAlert } from './Alert';
 import React, { useState, useEffect } from 'react';
 import type { DocumentData, DocumentReference } from 'firebase/firestore';
@@ -46,7 +47,8 @@ const PostUI: React.FC<PostUIProps> = ({
     payload: string | null | undefined,
     path: string,
     document: string | null | undefined,
-    isLikes?: boolean
+    isLikes?: boolean,
+    isUserDbQuery?: boolean
   ) => {
     if (document && payload) {
       const ref: DocumentReference<DocumentData> = doc(db, path, document);
@@ -56,6 +58,15 @@ const PostUI: React.FC<PostUIProps> = ({
           [arrayName]: arrayUnion(payload),
           ...likeCount,
         });
+        user.data && !isUserDbQuery
+          ? dispatch(
+              toggleLike({
+                postID,
+                userID: user.data.uid,
+                isBookmark: !isLikes,
+              })
+            )
+          : null;
       }
       if (active) {
         const likeCount = isLikes ? { likesCount: likesCount - 1 } : {};
@@ -63,6 +74,15 @@ const PostUI: React.FC<PostUIProps> = ({
           [arrayName]: arrayRemove(payload),
           ...likeCount,
         });
+        user.data && !isUserDbQuery
+          ? dispatch(
+              toggleLike({
+                postID,
+                userID: user.data.uid,
+                isBookmark: !isLikes,
+              })
+            )
+          : null;
       }
     }
   };
@@ -74,7 +94,15 @@ const PostUI: React.FC<PostUIProps> = ({
     path: string,
     document: string | null | undefined
   ) => {
-    toggleArrayDatabase(active, arrayName, payload, path, document);
+    toggleArrayDatabase(
+      active,
+      arrayName,
+      payload,
+      path,
+      document,
+      false,
+      true
+    );
     toggleArrayDatabase(active, arrayName, document, 'posts', payload);
   };
 
