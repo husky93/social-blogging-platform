@@ -118,7 +118,6 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         await updateDoc(doc(usersRef, user.data.uid), {
           posts: arrayUnion(path.id),
         });
-        saveDraft(initialValue, '');
         navigate(`/post/${path.id}`);
       } else {
         showAlert(

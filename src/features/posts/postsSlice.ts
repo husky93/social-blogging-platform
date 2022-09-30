@@ -24,6 +24,19 @@ export const postsSlice = createSlice({
         state.data.push(action.payload);
       }
     },
+    deletePost: (state, action) => {
+      const currentState = current(state);
+      const isPostAdded = currentState.data.find(
+        (post) => post.id === action.payload
+      );
+      const postIndex = currentState.data.findIndex(
+        (item) => item.id === action.payload
+      );
+
+      if (isPostAdded) {
+        state.data.splice(postIndex, 1);
+      }
+    },
     toggleLike: (state, action) => {
       const { postID, userID, isBookmark } = action.payload;
       const currentState = current(state);
@@ -63,7 +76,8 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { addPost, toggleLike, updateComments } = postsSlice.actions;
+export const { addPost, deletePost, toggleLike, updateComments } =
+  postsSlice.actions;
 
 export const selectAlert = (state: RootState) => state.posts.data;
 

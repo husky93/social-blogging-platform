@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useFetchUser, useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchPost } from '../app/modules';
+import { deletePost } from '../features/posts/postsSlice';
 import { db, doc, updateDoc, deleteDoc } from '../app/firebase';
 import { Icon } from '@ricons/utils';
 import { AlertCircle } from '@ricons/tabler';
@@ -81,6 +82,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
       const userRef: DocumentReference<DocumentData> = doc(db, 'users', uID);
       await updateDoc(userRef, { ...userData, posts: userNewPosts });
       await deleteDoc(postRef);
+      dispatch(deletePost(pID));
     },
     []
   );
