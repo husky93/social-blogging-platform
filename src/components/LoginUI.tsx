@@ -78,7 +78,7 @@ const LoginUI: React.FC<LoginUIProps> = ({}) => {
   };
 
   return (
-    <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+    <div className="items-center justify-end flex flex-1">
       <Button variant="primary" handleClick={loginToApp} text="Sign in" />
     </div>
   );
