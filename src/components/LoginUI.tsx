@@ -21,9 +21,11 @@ import type {
   DocumentSnapshot,
 } from 'firebase/firestore';
 
-interface LoginUIProps {}
+interface LoginUIProps {
+  text?: string;
+}
 
-const LoginUI: React.FC<LoginUIProps> = ({}) => {
+const LoginUI: React.FC<LoginUIProps> = ({ text }) => {
   const dispatch: AppDispatch = useAppDispatch();
 
   const saveUser: Function = async (user: User) => {
@@ -78,8 +80,12 @@ const LoginUI: React.FC<LoginUIProps> = ({}) => {
   };
 
   return (
-    <div className="items-center justify-end flex flex-1">
-      <Button variant="primary" handleClick={loginToApp} text="Sign in" />
+    <div className={text ? '' : 'items-center justify-end flex flex-1'}>
+      <Button
+        variant="primary"
+        handleClick={loginToApp}
+        text={text ? text : 'Sign in'}
+      />
     </div>
   );
 };

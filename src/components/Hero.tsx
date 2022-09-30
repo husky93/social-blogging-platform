@@ -1,7 +1,7 @@
 import React from 'react';
 import heroImg from '../assets/hero.jpg';
 import Container from '../components/Container';
-import Button from '../components/Button';
+import LoginUI from './LoginUI';
 
 interface HeroProps {}
 
@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({}) => {
               football. Read blog posts written by the best and the most
               experienced in bussiness.
             </p>
-            <Button text="Get Started" variant="primary" />
+            <LoginUI text="Get Started" />
           </div>
         </div>
       </div>
