@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { format } from 'date-fns';
 import { db, doc, updateDoc } from '../app/firebase';
+import { updateComments } from '../features/posts/postsSlice';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 import type { RootState } from '../app/store';
 import type { CommentObject } from './CommentList';
@@ -29,6 +30,7 @@ const Comment: React.FC<CommentProps> = ({
   const [likesCount, setLikesCount] = useState(comments[id].likes.length);
   const [comment, setComment] = useState(comments[id]);
   const user: RootState['user'] = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (user.data) {
@@ -55,6 +57,7 @@ const Comment: React.FC<CommentProps> = ({
         });
         setComment(newCommentsArray[id]);
         updateCommentsList(newCommentsArray);
+        dispatch(updateComments({ comments: newCommentsArray, postID }));
       }
       if (likeActive) {
         const newCommentsArray = [
@@ -70,6 +73,7 @@ const Comment: React.FC<CommentProps> = ({
         });
         setComment(newCommentsArray[id]);
         updateCommentsList(newCommentsArray);
+        dispatch(updateComments({ comments: newCommentsArray, postID }));
       }
     }
   };

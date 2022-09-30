@@ -32,7 +32,7 @@ export const postsSlice = createSlice({
         (item) => item.id === postID
       );
       const propName = isBookmark ? 'bookmarks' : 'likes';
-      console.log(propName);
+
       if (post !== undefined) {
         const isClicked = post[propName].find(
           (item: string) => item === userID
@@ -48,10 +48,22 @@ export const postsSlice = createSlice({
         }
       }
     },
+    updateComments: (state, action) => {
+      const { postID, comments } = action.payload;
+      const currentState = current(state);
+      const post = currentState.data.find((item) => item.id === postID);
+      console.log(post);
+      const postIndex = currentState.data.findIndex(
+        (item) => item.id === postID
+      );
+      if (post !== undefined) {
+        state.data[postIndex].comments = comments;
+      }
+    },
   },
 });
 
-export const { addPost, toggleLike } = postsSlice.actions;
+export const { addPost, toggleLike, updateComments } = postsSlice.actions;
 
 export const selectAlert = (state: RootState) => state.posts.data;
 

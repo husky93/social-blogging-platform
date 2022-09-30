@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { updateComments } from '../features/posts/postsSlice';
 import { showAlert } from './Alert';
 import { updateDoc, doc, arrayUnion, db } from '../app/firebase';
 import { Timestamp } from 'firebase/firestore';
@@ -55,6 +56,7 @@ const CommentList: React.FC<CommentListProps> = ({ post, postID }) => {
     setValue('');
     const newCommentList = [...commentList, commentObject];
     setCommentList(newCommentList);
+    dispatch(updateComments({ postID, comments: newCommentList }));
   };
 
   const handleCommentSubmit: React.MouseEventHandler<HTMLButtonElement> = (
