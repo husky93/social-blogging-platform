@@ -7,7 +7,7 @@ Social Blogging Platform project built with [Vite](https://vitejs.dev/) with use
 ### Live: [click here](https://husky93.github.io/social-blogging-platform/)
 
 ## Features
-- Display Loading indicator while page components load (Route Switch level React Suspense).
+- Display Loading indicator while page components load (Route Switch level React Suspense + Lazy loading).
 - Display "Skeleton" loading indicator before data loads for components that require it.
 - Homepage render based on user login state.
   - Checks if user is already logged in before each render.
@@ -17,8 +17,8 @@ Social Blogging Platform project built with [Vite](https://vitejs.dev/) with use
   - Trending section fetches top 4 liked posts from database and displays them.
   - Login functionality using Firebase Google Authentication.
 - **Blog page:**
-  - Fetches 5 most liked posts initially displays them.
-  - Loads more posts from database when user scrolls on the last displayed post and if there are any more posts left in database. [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) based infinite scroll functionality.
+  - Fetches 5 most liked posts initially and displays them.
+  - Loads more posts from database when user scrolls over the last displayed post and if there are any more posts left in database. [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) based infinite scroll functionality.
   - Saves all fetched posts inside global app store (Might not be good frontend feature as a posts database gets bigger, but it reduces database queries number significantly while browsing the app).
   - When user is logged in displays "Create Post" button and User Interface dropdown inside Header.
 - **Post page:**

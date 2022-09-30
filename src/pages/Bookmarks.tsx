@@ -46,6 +46,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({}) => {
 
   useEffect(() => {
     if (userData && isFirstLoad.current) {
+      if (userData.bookmarks.length === 0) setLoading(false);
       userData.bookmarks.forEach(async (postID: string, i: number) => {
         const post = await fetchPost(postID, fetchedPosts.data, dispatch);
         if (post) {
@@ -56,6 +57,25 @@ const Bookmarks: React.FC<BookmarksProps> = ({}) => {
       isFirstLoad.current = false;
     }
   }, [userData]);
+
+  const renderBookmarks: Function = (): React.ReactNode => {
+    if (loading)
+      return (
+        <>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </>
+      );
+    if (posts.length > 0)
+      return posts.map((post: DocumentData) => <PostCard post={post} />);
+    if (posts.length === 0)
+      return (
+        <h2 className="text-center my-8 text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+          You don't have any bookmarks yet!
+        </h2>
+      );
+  };
 
   return (
     <main className="min-h-screen flex flex-col relative">
@@ -70,19 +90,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({}) => {
           <h1 className="mx-4 mt-8 mb-4 text-center text-2xl font-bold text-gray-900">
             Your Bookmarks:
           </h1>
-          {loading ? (
-            <>
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-            </>
-          ) : posts.length > 0 ? (
-            posts.map((post: DocumentData) => <PostCard post={post} />)
-          ) : (
-            <h2 className="text-center my-8 text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
-              You don't have any bookmarks yet!
-            </h2>
-          )}
+          {renderBookmarks()}
         </div>
         <div className="basis-1/4">
           <Ad />
