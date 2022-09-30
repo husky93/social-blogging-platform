@@ -37,15 +37,15 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             timestamp={post.timestamp}
             xs
           />
-          <h2 className="my-5 ml-12 text-3xl font-extrabold text-gray-900 hover:text-green-700">
+          <h2 className="my-5 text-xl font-extrabold text-gray-900 hover:text-green-700 md:text-3xl md:ml-12">
             {post.title}
           </h2>
-          <div className="ml-12 flex gap-2">
+          <div className="flex flex-wrap gap-2 md:ml-12">
             {post.tags.map((tag: string, i: number) => (
               <Badge key={`badge-${i}`}>#{tag}</Badge>
             ))}
           </div>
-          <div className="my-2 ml-12 text-xl flex items-center">
+          <div className="my-2 text-xl flex items-center md:ml-12">
             <LikeToggler active={false} handleToggle={() => {}} id={post.id} />
             <span className="font-light text-sm">
               {post.likesCount} {post.likesCount > 1 ? 'reactions' : 'reaction'}

@@ -106,7 +106,7 @@ const Post: React.FC<PostProps> = ({}) => {
                     <Badge>#{tag}</Badge>
                   ))}
                 </div>
-                <h1 className="my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
+                <h1 className="my-8 text-4xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800 lg:text-5xl">
                   {post.title}
                 </h1>
                 {post.content.map((item: Node, i: number) =>

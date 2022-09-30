@@ -17,3 +17,7 @@
 .w-inherit {
   width: inherit;
 }
+
+* {
+  box-sizing: border-box;
+}

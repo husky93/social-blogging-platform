@@ -32,13 +32,13 @@ const Blog: React.FC<BlogProps> = ({}) => {
         <UserUI />
       </Header>
       <Container customClasses="flex">
-        <div className="basis-1/4 my-4">
+        <div className="hidden basis-1/4 my-4 lg:block">
           <Menu />
         </div>
-        <div className="basis-2/4 p-4">
+        <div className="md:p-4 lg:basis-2/4 ">
           <BlogContent />
         </div>
-        <div className="basis-1/4">
+        <div className="hidden lg:basis-1/4 lg:block">
           <Ad />
           <Ad />
           <Ad />
