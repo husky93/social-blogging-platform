@@ -138,6 +138,15 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
     draftTitle: string
   ) => {
     try {
+      if (!draftTitle) {
+        showAlert(
+          'Error!',
+          'You must enter an article title before saving a draft!',
+          'danger',
+          dispatch
+        );
+        return;
+      }
       if (user.data) {
         const usersRef: CollectionReference<DocumentData> = collection(
           db,
