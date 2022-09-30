@@ -42,6 +42,9 @@ const Author: LazyExoticComponent<any> = React.lazy(
 const Footer: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Footer')
 );
+const Badge: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/Badge')
+);
 
 interface PostProps {}
 
@@ -98,6 +101,11 @@ const Post: React.FC<PostProps> = ({}) => {
                   displayName={post.author.displayName}
                   timestamp={post.timestamp}
                 />
+                <div className="mt-2">
+                  {post.tags.map((tag: string) => (
+                    <Badge>#{tag}</Badge>
+                  ))}
+                </div>
                 <h1 className="my-8 text-5xl font-extrabold block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-500 to-slate-800">
                   {post.title}
                 </h1>
