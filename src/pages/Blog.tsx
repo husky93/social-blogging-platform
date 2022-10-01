@@ -31,11 +31,11 @@ const Blog: React.FC<BlogProps> = ({}) => {
       <Header>
         <UserUI />
       </Header>
-      <Container customClasses="flex">
+      <Container customClasses="flex flex-col items-center lg:items-start lg:flex-row">
         <div className="hidden basis-1/4 my-4 lg:block">
           <Menu />
         </div>
-        <div className="md:p-4 lg:basis-2/4 ">
+        <div className="md:p-4 lg:basis-2/4">
           <BlogContent />
         </div>
         <div className="hidden lg:basis-1/4 lg:block">
