@@ -1,1 +1,0 @@
-import{j as s}from"./index.3ddb063d.js";const o=({children:r,customClasses:a})=>{const d=`w-full bg-white rounded-lg border shadow-md dark:bg-gray-800 dark:border-gray-700 ${a}`;return s("div",{className:d,children:r})};export{o as default};
