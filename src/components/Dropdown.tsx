@@ -11,8 +11,8 @@ interface DropdownProps {
 const Dropdown: React.FC<DropdownProps> = ({ user, handleSignOut }) => {
   const [hidden, setHidden] = useState(true);
   const classes = hidden
-    ? 'hidden absolute w-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700'
-    : 'absolute w-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700';
+    ? 'hidden absolute w-full z-10 bg-white rounded divide-y divide-gray-100 shadow'
+    : 'absolute w-full z-10 bg-white rounded divide-y divide-gray-100 shadow';
 
   const toggleDropdown: React.MouseEventHandler<HTMLButtonElement> = () => {
     setHidden((prevState) => !prevState);
@@ -55,13 +55,13 @@ const Dropdown: React.FC<DropdownProps> = ({ user, handleSignOut }) => {
       )}
       <div id="dropdown" className={classes}>
         <ul
-          className="py-1 text-sm text-gray-700 dark:text-gray-200"
+          className="py-1 text-sm text-gray-700"
           aria-labelledby="dropdownDefault"
         >
           <li>
             <Link
               to="/dashboard"
-              className="block text-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              className="block text-center py-2 px-4 hover:bg-gray-100"
             >
               Dashboard
             </Link>
@@ -69,7 +69,7 @@ const Dropdown: React.FC<DropdownProps> = ({ user, handleSignOut }) => {
           <li>
             <button
               onClick={handleSignOut}
-              className="block text-center w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              className="block text-center w-full py-2 px-4 hover:bg-gray-100"
             >
               Sign out
             </button>

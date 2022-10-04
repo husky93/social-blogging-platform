@@ -13,13 +13,13 @@ const Heading: React.FC<HeadingProps> = ({ attributes, children, variant }) => {
   useEffect(() => {
     switch (variant) {
       case 'h1':
-        setClasses('text-3xl font-bold dark:text-white');
+        setClasses('text-3xl font-bold');
         break;
       case 'h2':
-        setClasses('text-2xl font-medium dark:text-white');
+        setClasses('text-2xl font-medium');
         break;
       default:
-        setClasses('text-2xl font-medium dark:text-white');
+        setClasses('text-2xl font-medium');
     }
   }, [variant]);
 

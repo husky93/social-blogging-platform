@@ -14,8 +14,8 @@ const LikeToggler: React.FC<LikeTogglerProps> = ({
   id,
 }) => {
   const classes: string = active
-    ? 'flex items-center transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800 dark:text-green-400 dark:hover:text-white'
-    : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 dark:text-gray-400 dark:hover:text-white';
+    ? 'flex items-center transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800'
+    : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900';
   return (
     <button className={classes} onClick={handleToggle} data-id={id}>
       <Icon>{active ? <Heart /> : <HeartOutline />}</Icon>

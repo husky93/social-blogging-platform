@@ -8,11 +8,11 @@ interface TagProps {
 
 const Tag: React.FC<TagProps> = ({ children, handleRemove, id }) => {
   return (
-    <span className="m-2 inline-flex items-center py-1 px-2 mr-2 text-sm font-medium text-green-800 bg-green-100 rounded dark:bg-green-200 dark:text-green-800">
+    <span className="m-2 inline-flex items-center py-1 px-2 mr-2 text-sm font-medium text-green-800 bg-green-100 rounded">
       {children}
       <button
         type="button"
-        className="inline-flex items-center p-0.5 ml-2 text-sm text-green-400 bg-transparent rounded-sm hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-300 dark:hover:text-green-900"
+        className="inline-flex items-center p-0.5 ml-2 text-sm text-green-400 bg-transparent rounded-sm hover:bg-green-200 hover:text-green-900"
         aria-label="Remove"
         data-id={id}
         onClick={handleRemove}

@@ -94,11 +94,9 @@ const Comment: React.FC<CommentProps> = ({
       <Avatar imgLink={comment.author.photoUrl} />
       <div className="w-full p-4 rounded border border-gray-200">
         <div className="flex items-center gap-2 mb-4">
-          <span className="dark:text-white text-gray-600">
-            {comment.author.displayName}
-          </span>
-          <span className="dark:text-white text-gray-400">•</span>
-          <span className="text-sm font-light dark:text-white text-gray-400">
+          <span className="text-gray-600">{comment.author.displayName}</span>
+          <span className="text-gray-400">•</span>
+          <span className="text-sm font-light text-gray-400">
             {format(new Date(comment.timestamp.seconds * 1000), 'do MMM yy')}
           </span>
         </div>

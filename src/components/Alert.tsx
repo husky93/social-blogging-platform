@@ -14,29 +14,19 @@ const Alert: React.FC<AlertProps> = ({ variant, title, children }) => {
   useEffect(() => {
     switch (variant) {
       case 'info':
-        setClasses(
-          'p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800'
-        );
+        setClasses('p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg');
         break;
       case 'danger':
-        setClasses(
-          'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800'
-        );
+        setClasses('p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg');
         break;
       case 'success':
-        setClasses(
-          'p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800'
-        );
+        setClasses('p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg');
         break;
       case 'warning':
-        setClasses(
-          'p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800'
-        );
+        setClasses('p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg');
         break;
       case 'dark':
-        setClasses(
-          'p-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300'
-        );
+        setClasses('p-4 text-sm text-gray-700 bg-gray-100 rounded-lg');
         break;
       default:
         setClasses('');

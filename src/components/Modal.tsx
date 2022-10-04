@@ -16,10 +16,10 @@ const Modal: React.FC<ModalProps> = ({ children, handleModalClose }) => {
         className="relative p-4 w-full max-w-md h-full md:h-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div className="relative bg-white rounded-lg shadow ">
           <button
             type="button"
-            className="close-btn absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            className="close-btn absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
             data-modal-toggle="popup-modal"
             onClick={handleModalClose}
           >

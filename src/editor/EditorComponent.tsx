@@ -256,7 +256,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
           placeholder="Your article title..."
           type="text"
           id="large-input"
-          className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-gren-500"
+          className="block text-2xl font-bold p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-green-500 focus:border-green-500"
         />
         <TagInput
           tags={tags}
@@ -276,7 +276,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
         )}
       </div>
       <Slate editor={editor} value={initialValue}>
-        <div className="my-6 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+        <div className="my-6 w-full bg-gray-50 rounded-lg border border-gray-200">
           <EditorUI
             toggleHeadingOneBlock={(
               e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -321,7 +321,7 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
               CustomEditor.toggleStrikethroughMark(editor);
             }}
           />
-          <div className="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">
+          <div className="py-2 px-4 bg-white rounded-b-lg">
             <Editable
               className="py-4 min-h-[500px]"
               renderElement={renderElement}

@@ -22,9 +22,9 @@ const Author: React.FC<AuthorProps> = ({
   return (
     <div className="flex items-center space-x-4">
       <Avatar imgLink={avatarUrl} />
-      <div className={`${xs ? 'font-normal' : 'font-medium'} dark:text-white`}>
+      <div className={`${xs ? 'font-normal' : 'font-medium'} `}>
         <div className={xs ? 'text-sm' : ''}>{displayName}</div>
-        <div className="text-sm font-light text-gray-500 dark:text-gray-400">
+        <div className="text-sm font-light text-gray-500 ">
           Posted on {format(date, 'do MMMMMMM y')}
         </div>
       </div>
