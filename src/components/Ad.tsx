@@ -6,7 +6,7 @@ interface AdProps {}
 
 const Ad: React.FC<AdProps> = ({}) => {
   return (
-    <div className="flex flex-col text-8xl text-gray-400 items-center w-full overflow-y-auto py-4 my-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
+    <div className="flex flex-col text-8xl text-gray-400 items-center w-full overflow-y-auto py-4 my-4 px-3 bg-gray-50 rounded">
       <Icon>
         <Add />
       </Icon>

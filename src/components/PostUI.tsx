@@ -162,6 +162,7 @@ const PostUI: React.FC<PostUIProps> = ({
               true
             );
           }}
+          aria-label="Like post"
         >
           <Icon>{likesActive ? <Heart /> : <HeartOutline />}</Icon>
         </button>
@@ -182,6 +183,7 @@ const PostUI: React.FC<PostUIProps> = ({
               'bookmarks'
             );
           }}
+          aria-label="Bookmark post"
         >
           <Icon>{bookmarksActive ? <Bookmark /> : <BookmarkOutline />}</Icon>
         </button>

@@ -17,7 +17,12 @@ const LikeToggler: React.FC<LikeTogglerProps> = ({
     ? 'flex items-center transition-all p-1 text-green-500 rounded cursor-pointer hover:text-green-800'
     : 'flex items-center transition-all p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900';
   return (
-    <button className={classes} onClick={handleToggle} data-id={id}>
+    <button
+      className={classes}
+      onClick={handleToggle}
+      data-id={id}
+      aria-label="Like post"
+    >
       <Icon>{active ? <Heart /> : <HeartOutline />}</Icon>
     </button>
   );

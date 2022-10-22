@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { BaseElement } from 'slate';
+import type { BaseElement } from 'slate';
 
 declare module 'slate' {
   export interface BaseElement {
