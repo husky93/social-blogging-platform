@@ -37,7 +37,7 @@ const Trending: React.FC<TrendingProps> = ({}) => {
         </div>
       )}
       {!loading && (
-        <div className="flex flex-wrap gap-y-12 justify-around items-center my-8 lg:justify-around">
+        <div className="flex flex-wrap gap-y-12 justify-start items-center my-8 md:justify-around">
           {posts.map((post, index) => {
             if (index === posts.length - 1) return;
             return <TrendingItem post={post} index={index} />;
