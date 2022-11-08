@@ -36,6 +36,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             displayName={displayName}
             timestamp={post.timestamp}
             xs
+            showTimeElapsed
           />
           <h2 className="my-5 text-xl font-extrabold text-gray-900 hover:text-green-700 md:text-3xl md:ml-12">
             {post.title}

@@ -7,6 +7,7 @@ import type { DocumentReference, DocumentData } from 'firebase/firestore';
 import type { RootState } from '../app/store';
 import type { CommentObject } from './CommentList';
 import type { LazyExoticComponent } from 'react';
+import { getTimeBetween } from '../app/modules';
 
 const Avatar: LazyExoticComponent<any> = React.lazy(() => import('./Avatar'));
 const LikeToggler: LazyExoticComponent<any> = React.lazy(
@@ -31,6 +32,7 @@ const Comment: React.FC<CommentProps> = ({
   const [comment, setComment] = useState(comments[id]);
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const date = new Date(comment.timestamp.seconds * 1000);
 
   useEffect(() => {
     if (user.data) {
@@ -97,7 +99,7 @@ const Comment: React.FC<CommentProps> = ({
           <span className="text-gray-600">{comment.author.displayName}</span>
           <span className="text-gray-400">•</span>
           <span className="text-sm font-light text-gray-400">
-            {format(new Date(comment.timestamp.seconds * 1000), 'do MMM yy')}
+            {format(date, 'do MMM yy')} ({getTimeBetween(date)})
           </span>
         </div>
         <p className="mb-4">{comment.text}</p>

@@ -20,6 +20,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
   handleModalOpen,
   post,
 }) => {
+  const date = new Date(post.timestamp.seconds * 1000);
   return (
     <>
       {!!post && (
@@ -29,7 +30,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
               {post.title}
             </h4>
             <span className="font-light text-gray-500 text-sm">
-              {format(new Date(post.timestamp.seconds * 1000), 'dd MMM')}
+              {format(date, 'dd MMM')}
             </span>
             <div className="flex justify-center items-center mt-4">
               <Button
