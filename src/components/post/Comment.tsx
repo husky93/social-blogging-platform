@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { format } from 'date-fns';
-import { db, doc, updateDoc } from '../app/firebase';
-import { updateComments } from '../features/posts/postsSlice';
+import { db, doc, updateDoc } from '../../app/firebase';
+import { updateComments } from '../../features/posts/postsSlice';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
-import type { RootState } from '../app/store';
+import type { RootState } from '../../app/store';
 import type { CommentObject } from './CommentList';
 import type { LazyExoticComponent } from 'react';
-import { getTimeBetween } from '../app/modules';
+import { getTimeBetween } from '../../app/modules';
 
-const Avatar: LazyExoticComponent<any> = React.lazy(() => import('./Avatar'));
+const Avatar: LazyExoticComponent<any> = React.lazy(() => import('../Avatar'));
 const LikeToggler: LazyExoticComponent<any> = React.lazy(
-  () => import('./LikeToggler')
+  () => import('../LikeToggler')
 );
 
 interface CommentProps {

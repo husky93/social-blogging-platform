@@ -2,7 +2,7 @@ import React from 'react';
 import type { LazyExoticComponent } from 'react';
 
 const Hero: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Hero')
+  () => import('../components/homepage/Hero')
 );
 const Header: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Header')
@@ -14,7 +14,7 @@ const Footer: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Footer')
 );
 const Trending: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Trending')
+  () => import('../components/homepage/Trending')
 );
 
 interface HomepageProps {}

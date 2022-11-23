@@ -5,13 +5,19 @@ import {
   BookmarkOutline,
   Bookmark,
 } from '@ricons/ionicons5';
-import { doc, updateDoc, arrayUnion, arrayRemove, db } from '../app/firebase';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { toggleLike } from '../features/posts/postsSlice';
-import { showAlert } from './Alert';
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  db,
+} from '../../app/firebase';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { toggleLike } from '../../features/posts/postsSlice';
+import { showAlert } from '../Alert';
 import React, { useState, useEffect } from 'react';
 import type { DocumentData, DocumentReference } from 'firebase/firestore';
-import type { RootState, AppDispatch } from '../app/store';
+import type { RootState, AppDispatch } from '../../app/store';
 
 interface PostUIProps {
   likes: Array<string>;

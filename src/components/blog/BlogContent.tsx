@@ -1,4 +1,4 @@
-import { useInfiniteLoading } from '../app/hooks';
+import { useInfiniteLoading } from '../../app/hooks';
 import React, { useCallback, useRef } from 'react';
 import {
   query,
@@ -7,14 +7,14 @@ import {
   limit,
   startAfter,
   db,
-} from '../app/firebase';
+} from '../../app/firebase';
 import type { LazyExoticComponent } from 'react';
 
 const PostCard: LazyExoticComponent<any> = React.lazy(
-  () => import('./PostCard')
+  () => import('../PostCard')
 );
 const Skeleton: LazyExoticComponent<any> = React.lazy(
-  () => import('./Skeleton')
+  () => import('../Skeleton')
 );
 
 interface BlogContentProps {}

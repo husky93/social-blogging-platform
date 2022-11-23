@@ -25,7 +25,7 @@ const LoginUI: LazyExoticComponent<any> = React.lazy(
   () => import('../components/LoginUI')
 );
 const PostUI: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/PostUI')
+  () => import('../components/post/PostUI')
 );
 const Card: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Card')
@@ -34,7 +34,7 @@ const Alert: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Alert')
 );
 const CommentList: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/CommentList')
+  () => import('../components/post/CommentList')
 );
 const Author: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Author')

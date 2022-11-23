@@ -3,13 +3,9 @@ import { format } from 'date-fns';
 import type { LazyExoticComponent } from 'react';
 import { DocumentData } from 'firebase/firestore';
 
-const Card: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Card')
-);
+const Card: LazyExoticComponent<any> = React.lazy(() => import('../Card'));
 
-const Button: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Button')
-);
+const Button: LazyExoticComponent<any> = React.lazy(() => import('../Button'));
 
 interface DashboardItemProps {
   handleModalOpen: React.MouseEventHandler<HTMLButtonElement>;

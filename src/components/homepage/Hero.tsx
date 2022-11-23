@@ -1,7 +1,7 @@
 import React from 'react';
-import heroImg from '../assets/hero.jpg';
-import Container from '../components/Container';
-import LoginUI from './LoginUI';
+import heroImg from '../../assets/hero.jpg';
+import Container from '../Container';
+import LoginUI from '../LoginUI';
 
 interface HeroProps {}
 

@@ -14,7 +14,7 @@ const Footer: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Footer')
 );
 const BlogContent: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/BlogContent')
+  () => import('../components/blog/BlogContent')
 );
 const Ad: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Ad')

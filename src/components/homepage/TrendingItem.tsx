@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from './Avatar';
+import Avatar from '../Avatar';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import type { NavigateFunction } from 'react-router-dom';

@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { updateComments } from '../features/posts/postsSlice';
-import { showAlert } from './Alert';
-import { updateDoc, doc, arrayUnion, db } from '../app/firebase';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { updateComments } from '../../features/posts/postsSlice';
+import { showAlert } from '../Alert';
+import { updateDoc, doc, arrayUnion, db } from '../../app/firebase';
 import { Timestamp } from 'firebase/firestore';
-import type { RootState } from '../app/store';
+import type { RootState } from '../../app/store';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 import type { LazyExoticComponent } from 'react';
 
 const Button: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Button')
+  () => import('../../components/Button')
 );
-const Comment: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Comment')
-);
+const Comment: LazyExoticComponent<any> = React.lazy(() => import('./Comment'));
 const Alert: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Alert')
+  () => import('../../components/Alert')
 );
 
 interface CommentListProps {

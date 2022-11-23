@@ -1,17 +1,17 @@
 import React from 'react';
 import { Icon } from '@ricons/utils';
-import { useInfiniteLoading as useFetch } from '../app/hooks';
+import { useInfiniteLoading as useFetch } from '../../app/hooks';
 import { TrendingUp } from '@ricons/tabler';
 import type { LazyExoticComponent } from 'react';
 
 const Skeleton: LazyExoticComponent<any> = React.lazy(
-  () => import('./Skeleton')
+  () => import('../Skeleton')
 );
 const TrendingItem: LazyExoticComponent<any> = React.lazy(
   () => import('./TrendingItem')
 );
 const Container: LazyExoticComponent<any> = React.lazy(
-  () => import('./Container')
+  () => import('../Container')
 );
 
 interface TrendingProps {}

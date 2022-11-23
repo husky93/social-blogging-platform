@@ -23,13 +23,13 @@ const Container: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Container')
 );
 const DashboardItem: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/DashboardItem')
+  () => import('../components/dashboard/DashboardItem')
 );
 const Skeleton: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Skeleton')
 );
 const Modal: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Modal')
+  () => import('../components/dashboard/Modal')
 );
 const Button: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Button')
