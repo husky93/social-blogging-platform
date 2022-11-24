@@ -15,6 +15,9 @@ const UserUI: LazyExoticComponent<any> = React.lazy(
 const LoginUI: LazyExoticComponent<any> = React.lazy(
   () => import('../components/LoginUI')
 );
+const Menu: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/LoginUI')
+);
 const Footer: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Footer')
 );
