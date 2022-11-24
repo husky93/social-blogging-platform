@@ -67,6 +67,14 @@ const Dropdown: React.FC<DropdownProps> = ({ user, handleSignOut }) => {
             </Link>
           </li>
           <li>
+            <Link
+              to="/settings"
+              className="block text-center py-2 px-4 hover:bg-gray-100"
+            >
+              Settings
+            </Link>
+          </li>
+          <li>
             <button
               onClick={handleSignOut}
               className="block text-center w-full py-2 px-4 hover:bg-gray-100"
