@@ -22,6 +22,21 @@ const Profile: React.FC<ProfileProps> = ({}) => {
     }
   }, [user]);
 
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ): void => {
+    if (e.target.id === 'name') {
+      setNameValue(e.target.value);
+    }
+    if (e.target.id === 'display-name') {
+      setDisplayNameValue(e.target.value);
+    }
+  };
+
+  const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ): void => {};
+
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <h1 className="mx-4 mt-8 mb-4 text-center text-2xl font-bold text-gray-900">
@@ -32,6 +47,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         <div className="flex flex-col gap-2 my-2">
           <label htmlFor="name">Name:</label>
           <input
+            onChange={handleInputChange}
             value={nameValue}
             id="name"
             type="text"
@@ -41,6 +57,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         <div className="flex flex-col gap-2 my-2">
           <label htmlFor="display-name">Display Name:</label>
           <input
+            onChange={handleInputChange}
             value={displayNameValue}
             id="display-name"
             type="text"
@@ -52,6 +69,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
           <div className="flex gap-4 items-center">
             <Avatar imgLink={user.data?.photoUrl} />
             <input
+              onChange={handleFileChange}
               id="profile-pic"
               type="file"
               accept="image/png, image/jpeg"
