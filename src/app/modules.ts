@@ -38,7 +38,6 @@ export const getTimeBetween = (start: Date): string => {
     start,
     end: new Date(),
   });
-  console.log(timeObj);
   if (timeObj.years && timeObj.years > 0)
     return `${timeObj.years} ${timeObj.years > 1 ? 'years' : 'year'} ago`;
   if (timeObj.months && timeObj.months > 0)

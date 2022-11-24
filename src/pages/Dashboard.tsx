@@ -71,7 +71,6 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
   const handleModalOpen: React.MouseEventHandler<HTMLButtonElement> =
     useCallback((e): void => {
       if (e.target instanceof HTMLButtonElement) {
-        console.log(e.target.dataset.id);
         setModalID(e.target.dataset.id);
       }
     }, []);

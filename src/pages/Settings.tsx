@@ -1,7 +1,5 @@
 import React from 'react';
-import { useAppSelector } from '../app/hooks';
 import { Outlet } from 'react-router-dom';
-import type { RootState } from '../app/store';
 import type { LazyExoticComponent } from 'react';
 
 const Header: LazyExoticComponent<any> = React.lazy(
@@ -28,8 +26,6 @@ const Footer: LazyExoticComponent<any> = React.lazy(
 interface SettingsProps {}
 
 const Settings: React.FC<SettingsProps> = ({}) => {
-  const user: RootState['user'] = useAppSelector((state) => state.user);
-
   return (
     <main className="min-h-screen flex flex-col">
       <Header>

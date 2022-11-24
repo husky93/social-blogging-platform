@@ -50,10 +50,8 @@ export const postsSlice = createSlice({
         const isClicked = post[propName].find(
           (item: string) => item === userID
         );
-        console.log(isClicked);
         if (isClicked) {
           const index = post[propName].findIndex((x: string) => x === userID);
-          console.log(post[propName], index);
           state.data[postIndex][propName].splice(index, 1);
         }
         if (!isClicked) {
@@ -65,7 +63,6 @@ export const postsSlice = createSlice({
       const { postID, comments } = action.payload;
       const currentState = current(state);
       const post = currentState.data.find((item) => item.id === postID);
-      console.log(post);
       const postIndex = currentState.data.findIndex(
         (item) => item.id === postID
       );
