@@ -18,6 +18,9 @@ const Dashboard: LazyExoticComponent<any> = React.lazy(
 const Bookmarks: LazyExoticComponent<any> = React.lazy(
   () => import('./pages/Bookmarks')
 );
+const Settings: LazyExoticComponent<any> = React.lazy(
+  () => import('./pages/Settings')
+);
 
 interface RouteSwitchProps {}
 
@@ -34,6 +37,7 @@ const RouteSwitch: React.FC<RouteSwitchProps> = ({}) => {
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>
       </Suspense>
