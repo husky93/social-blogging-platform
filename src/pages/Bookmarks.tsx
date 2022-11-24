@@ -26,6 +26,9 @@ const PostCard: LazyExoticComponent<any> = React.lazy(
 const Menu: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Menu')
 );
+const BlogMenu: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/blog/BlogMenu')
+);
 const Ad: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Ad')
 );
@@ -84,7 +87,9 @@ const Bookmarks: React.FC<BookmarksProps> = ({}) => {
       </Header>
       <Container customClasses="flex flex-1 w-full">
         <div className="basis-1/4 my-4">
-          <Menu />
+          <Menu>
+            <BlogMenu />
+          </Menu>
         </div>
         <div className="basis-2/4 flex flex-col p-4">
           <h1 className="mx-4 mt-8 mb-4 text-center text-2xl font-bold text-gray-900">

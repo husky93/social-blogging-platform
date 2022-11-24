@@ -7,6 +7,9 @@ const Container: LazyExoticComponent<any> = React.lazy(
 const Menu: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Menu')
 );
+const BlogMenu: LazyExoticComponent<any> = React.lazy(
+  () => import('../components/blog/BlogMenu')
+);
 const Header: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Header')
 );
@@ -33,7 +36,9 @@ const Blog: React.FC<BlogProps> = ({}) => {
       </Header>
       <Container customClasses="flex flex-col items-center lg:items-start lg:flex-row">
         <div className="hidden basis-1/4 my-4 lg:block">
-          <Menu />
+          <Menu>
+            <BlogMenu />
+          </Menu>
         </div>
         <div className="md:p-4 lg:basis-2/4">
           <BlogContent />
