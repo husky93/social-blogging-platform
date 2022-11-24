@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { showAlert } from '../Alert';
 import type { RootState } from '../../app/store';
 import type { LazyExoticComponent } from 'react';
 
 const Card: LazyExoticComponent<any> = React.lazy(() => import('../Card'));
 const Button: LazyExoticComponent<any> = React.lazy(() => import('../Button'));
 const Avatar: LazyExoticComponent<any> = React.lazy(() => import('../Avatar'));
+const Alert: LazyExoticComponent<any> = React.lazy(() => import('../Alert'));
 
 interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = ({}) => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
+  const alert: RootState['alert'] = useAppSelector((state) => state.alert);
+  const dispatch = useAppDispatch();
   const [nameValue, setNameValue] = useState('');
   const [displayNameValue, setDisplayNameValue] = useState('');
-  const [fileValue, setFileValue] = useState(null);
+  const [fileValue, setFileValue] = useState('');
 
   useEffect(() => {
     if (user.data) {
@@ -35,7 +39,19 @@ const Profile: React.FC<ProfileProps> = ({}) => {
 
   const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
-  ): void => {};
+  ): void => {
+    if (e.target.files[0].size > 2097152) {
+      showAlert(
+        'Error!',
+        'The file you are trying to upload is too big! (Maximum accepted size is 2MB)',
+        'danger',
+        dispatch
+      );
+      setFileValue('');
+    } else {
+      setFileValue(e.target.files[0]);
+    }
+  };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -43,6 +59,11 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         Profile settings
       </h1>
       <Card customClasses="p-4 my-6">
+        {alert.data.isShown && (
+          <Alert title={alert.data.title} variant={alert.data.variant}>
+            {alert.data.text}
+          </Alert>
+        )}
         <h2 className="mb-4 text-xl font-bold text-gray-900">User</h2>
         <div className="flex flex-col gap-2 my-2">
           <label htmlFor="name">Name:</label>
@@ -70,6 +91,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
             <Avatar imgLink={user.data?.photoUrl} />
             <input
               onChange={handleFileChange}
+              value={fileValue}
               id="profile-pic"
               type="file"
               accept="image/png, image/jpeg"
