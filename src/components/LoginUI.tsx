@@ -37,6 +37,7 @@ const LoginUI: React.FC<LoginUIProps> = ({ text }) => {
       await setDoc(doc(usersRef, user.uid), {
         uid: user.uid,
         displayName: user.displayName,
+        name: user.displayName,
         photoUrl: user.photoURL,
         posts: [],
         bookmarks: [],
