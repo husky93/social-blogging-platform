@@ -10,7 +10,7 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({}) => {
     <>
       <ul className="space-y-2">
         <li>
-          <Link to="/settings/profile" className="nav-link">
+          <Link to="profile" className="nav-link">
             <Icon>
               <MoodSmile className="nav-icon" />
             </Icon>
