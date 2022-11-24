@@ -5,6 +5,7 @@ type InitialState = {
   data: null | {
     uid: string;
     displayName: string;
+    name: string;
     photoUrl: string;
   };
 };
