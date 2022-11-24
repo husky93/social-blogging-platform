@@ -5,9 +5,16 @@ interface ButtonProps {
   variant: 'primary' | 'secondary' | 'danger' | 'hollow';
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
   id?: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const Button: React.FC<ButtonProps> = ({ handleClick, text, variant, id }) => {
+const Button: React.FC<ButtonProps> = ({
+  handleClick,
+  text,
+  variant,
+  id,
+  type,
+}) => {
   const [classes, setClasses] = useState('');
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const Button: React.FC<ButtonProps> = ({ handleClick, text, variant, id }) => {
   }, []);
 
   return (
-    <button onClick={handleClick} className={classes} data-id={id}>
+    <button onClick={handleClick} className={classes} data-id={id} type={type}>
       {text}
     </button>
   );
