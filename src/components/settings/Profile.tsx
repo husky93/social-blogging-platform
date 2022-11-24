@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { showAlert } from '../Alert';
 import type { RootState } from '../../app/store';
-import type { LazyExoticComponent } from 'react';
+import type { LazyExoticComponent, LegacyRef, MutableRefObject } from 'react';
 
 const Card: LazyExoticComponent<any> = React.lazy(() => import('../Card'));
 const Button: LazyExoticComponent<any> = React.lazy(() => import('../Button'));
@@ -17,7 +17,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const dispatch = useAppDispatch();
   const [nameValue, setNameValue] = useState('');
   const [displayNameValue, setDisplayNameValue] = useState('');
-  const [fileValue, setFileValue] = useState('');
+  const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (user.data) {
@@ -40,16 +40,21 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ): void => {
-    if (e.target.files[0].size > 2097152) {
+    var file;
+    if (fileInput.current !== null) {
+      const input = fileInput.current;
+      if (input.files) {
+        file = input.files[0];
+      }
+    }
+    if (file && file.size > 2097152) {
       showAlert(
         'Error!',
         'The file you are trying to upload is too big! (Maximum accepted size is 2MB)',
         'danger',
         dispatch
       );
-      setFileValue('');
-    } else {
-      setFileValue(e.target.files[0]);
+      e.target.value = '';
     }
   };
 
@@ -91,10 +96,10 @@ const Profile: React.FC<ProfileProps> = ({}) => {
             <Avatar imgLink={user.data?.photoUrl} />
             <input
               onChange={handleFileChange}
-              value={fileValue}
               id="profile-pic"
               type="file"
               accept="image/png, image/jpeg"
+              ref={fileInput}
             />
           </div>
         </div>
