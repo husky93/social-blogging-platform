@@ -31,15 +31,35 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    onAuthStateChanged(auth, (userAuth) => {
+    onAuthStateChanged(auth, async (userAuth) => {
       if (userAuth) {
-        dispatch(
-          login({
-            uid: userAuth.uid,
-            displayName: userAuth.displayName,
-            photoUrl: userAuth.photoURL,
-          })
+        const ref: DocumentReference<DocumentData> = doc(
+          db,
+          'users',
+          userAuth.uid
         );
+        const userSnapshot = await getDoc(ref);
+        const userData = userSnapshot.data();
+        console.log(userData);
+        if (userData) {
+          dispatch(
+            login({
+              uid: userAuth.uid,
+              displayName: userData.displayName,
+              name: userData.name,
+              photoUrl: userData.photoUrl,
+            })
+          );
+        } else {
+          dispatch(
+            login({
+              uid: userAuth.uid,
+              displayName: userAuth.displayName,
+              name: userAuth.displayName,
+              photoUrl: userAuth.photoURL,
+            })
+          );
+        }
         setLoading(false);
       } else {
         dispatch(logout());
