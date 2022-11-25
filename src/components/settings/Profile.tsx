@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { db, doc, updateDoc } from '../../app/firebase';
+import {
+  db,
+  doc,
+  updateDoc,
+  uploadBytesResumable,
+  getDownloadURL,
+  storage,
+  ref,
+} from '../../app/firebase';
 import { login } from '../../features/user/userSlice';
 import { showAlert } from '../Alert';
 import type { RootState } from '../../app/store';
@@ -61,7 +69,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
     }
   };
 
-  const requestUserDataChange = async (): Promise<any> => {
+  const requestUserDataChange = async (newData: object): Promise<any> => {
     if (user.data) {
       const ref: DocumentReference<DocumentData> = doc(
         db,
@@ -70,10 +78,9 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       );
       const newUserData = {
         ...user.data,
-        name: nameValue,
-        displayName: displayNameValue,
+        ...newData,
       };
-      await updateDoc(ref, { name: nameValue, displayName: displayNameValue });
+      await updateDoc(ref, { ...newData });
       dispatch(login(newUserData));
     }
   };
@@ -88,6 +95,23 @@ const Profile: React.FC<ProfileProps> = ({}) => {
     }
   };
 
+  const requestFileUpload = async (file: File): Promise<any> => {
+    const storageRef = ref(storage, `profilepics/${user.data?.uid}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {},
+      (error) => {
+        console.error('File upload failed!');
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          requestUserDataChange({ photoUrl: downloadURL });
+        });
+      }
+    );
+  };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e): void => {
     e.preventDefault();
     if (!nameValue || !displayNameValue) {
@@ -99,8 +123,16 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       );
       return;
     }
-    requestUserDataChange();
     if (user.data && user.data.posts.length > 0) requestPostsDataChange();
+    var file;
+    if (fileInput.current !== null) {
+      const input = fileInput.current;
+      if (input.files) {
+        file = input.files[0];
+      }
+    }
+    if (file) requestFileUpload(file);
+    requestUserDataChange({ name: nameValue, displayName: displayNameValue });
   };
 
   return (

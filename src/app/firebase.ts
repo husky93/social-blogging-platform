@@ -26,6 +26,12 @@ import {
   getFirestore,
   serverTimestamp,
 } from 'firebase/firestore';
+import {
+  getStorage,
+  uploadBytesResumable,
+  getDownloadURL,
+  ref,
+} from 'firebase/storage';
 import type { Firestore } from 'firebase/firestore';
 import type { FirebaseApp } from '@firebase/app-types';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -46,10 +52,12 @@ const app = initializeApp(firebaseConfig);
 const auth: Auth = getAuth(app);
 const provider: GoogleAuthProvider = new GoogleAuthProvider();
 const db: Firestore = getFirestore(app);
+const storage = getStorage();
 
 export {
   db,
   doc,
+  ref,
   auth,
   limit,
   query,
@@ -57,6 +65,7 @@ export {
   setDoc,
   getDoc,
   getDocs,
+  storage,
   startAt,
   orderBy,
   signOut,
@@ -68,8 +77,10 @@ export {
   arrayUnion,
   arrayRemove,
   getFirestore,
+  getDownloadURL,
   serverTimestamp,
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
+  uploadBytesResumable,
 };
