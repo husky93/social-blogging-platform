@@ -161,27 +161,42 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         )}
         <h2 className="mb-4 text-xl font-bold text-gray-900">User</h2>
         <div className="flex flex-col gap-2 my-2">
-          <label htmlFor="name">Name: *</label>
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Name: *
+          </label>
           <input
             onChange={handleInputChange}
             value={nameValue}
             id="name"
             type="text"
-            className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
           />
         </div>
         <div className="flex flex-col gap-2 my-2">
-          <label htmlFor="display-name">Display Name: *</label>
+          <label
+            htmlFor="display-name"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Display Name: *
+          </label>
           <input
             onChange={handleInputChange}
             value={displayNameValue}
             id="display-name"
             type="text"
-            className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
           />
         </div>
         <div className="flex flex-col gap-2 my-2">
-          <label htmlFor="profile-pic">Profile Picture:</label>
+          <label
+            htmlFor="profile-pic"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Profile Picture:
+          </label>
           <div className="flex gap-4 items-center">
             <Avatar imgLink={user.data?.photoUrl} />
             <input
