@@ -48,6 +48,10 @@ Social Blogging Platform project built with [Vite](https://vitejs.dev/) with use
   - Display posts created by user.
   - Option to delete posts created by logged in user from database.
   - Delete confirmation popup modal.
+- **Settings page:**
+  - Nested Route switch.
+  - Ability to change your display name.
+  - Profile picture change functionality with an update to user posts (upload and read from Firebase storage).
 
  
 <img src="https://github.com/husky93/social-blogging-platform/blob/main/website.jpg?raw=true"/>
