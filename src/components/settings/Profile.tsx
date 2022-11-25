@@ -63,10 +63,10 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         file = input.files[0];
       }
     }
-    if (file && file.size > 2097152) {
+    if (file && file.size > 1097152) {
       showAlert(
         'Error!',
-        'The file you are trying to upload is too big! (Maximum accepted size is 2MB)',
+        'The file you are trying to upload is too big! (Maximum accepted size is 1MB)',
         'danger',
         dispatch
       );
@@ -192,12 +192,14 @@ const Profile: React.FC<ProfileProps> = ({}) => {
               ref={fileInput}
             />
           </div>
+        </div>{' '}
+        <div className="ml-auto w-fit">
+          {isUploading ? (
+            <Spinner />
+          ) : (
+            <Button type="submit" text="Submit changes" variant="primary" />
+          )}
         </div>
-        {isUploading ? (
-          <Spinner />
-        ) : (
-          <Button type="submit" text="Submit changes" variant="primary" />
-        )}
       </Card>
     </form>
   );
