@@ -40,7 +40,6 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
         );
         const userSnapshot = await getDoc(ref);
         const userData = userSnapshot.data();
-        console.log(userData);
         if (userData) {
           dispatch(
             login({
@@ -48,6 +47,7 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
               displayName: userData.displayName,
               name: userData.name,
               photoUrl: userData.photoUrl,
+              posts: userData.posts,
             })
           );
         } else {
@@ -57,6 +57,7 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
               displayName: userAuth.displayName,
               name: userAuth.displayName,
               photoUrl: userAuth.photoURL,
+              posts: [],
             })
           );
         }
