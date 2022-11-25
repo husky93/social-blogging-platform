@@ -19,6 +19,9 @@ const Card: LazyExoticComponent<any> = React.lazy(() => import('../Card'));
 const Button: LazyExoticComponent<any> = React.lazy(() => import('../Button'));
 const Avatar: LazyExoticComponent<any> = React.lazy(() => import('../Avatar'));
 const Alert: LazyExoticComponent<any> = React.lazy(() => import('../Alert'));
+const Spinner: LazyExoticComponent<any> = React.lazy(
+  () => import('../Spinner')
+);
 
 interface ProfileProps {}
 
@@ -28,6 +31,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const dispatch = useAppDispatch();
   const [nameValue, setNameValue] = useState('');
   const [displayNameValue, setDisplayNameValue] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -98,6 +102,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const requestFileUpload = async (file: File): Promise<any> => {
     const storageRef = ref(storage, `profilepics/${user.data?.uid}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
+    setIsUploading(true);
     uploadTask.on(
       'state_changed',
       (snapshot) => {},
@@ -107,6 +112,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           requestUserDataChange({ photoUrl: downloadURL });
+          setIsUploading(false);
         });
       }
     );
@@ -180,7 +186,11 @@ const Profile: React.FC<ProfileProps> = ({}) => {
             />
           </div>
         </div>
-        <Button type="submit" text="Submit changes" variant="primary" />
+        {isUploading ? (
+          <Spinner />
+        ) : (
+          <Button type="submit" text="Submit changes" variant="primary" />
+        )}
       </Card>
     </form>
   );
