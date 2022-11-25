@@ -31,6 +31,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const dispatch = useAppDispatch();
   const [nameValue, setNameValue] = useState('');
   const [displayNameValue, setDisplayNameValue] = useState('');
+  const [profileUrl, setProfileUrl] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -94,7 +95,10 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       const posts = user.data.posts;
       posts.forEach(async (post) => {
         const ref: DocumentReference<DocumentData> = doc(db, 'posts', post);
-        await updateDoc(ref, { 'author.displayName': displayNameValue });
+        await updateDoc(ref, {
+          'author.displayName': displayNameValue,
+          'author.photoUrl': profileUrl ? profileUrl : user.data?.photoUrl,
+        });
       });
     }
   };
@@ -112,13 +116,16 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           requestUserDataChange({ photoUrl: downloadURL });
+          setProfileUrl(downloadURL);
           setIsUploading(false);
         });
       }
     );
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e): void => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    e
+  ): Promise<any> => {
     e.preventDefault();
     if (!nameValue || !displayNameValue) {
       showAlert(
@@ -129,7 +136,6 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       );
       return;
     }
-    if (user.data && user.data.posts.length > 0) requestPostsDataChange();
     var file;
     if (fileInput.current !== null) {
       const input = fileInput.current;
@@ -137,8 +143,9 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         file = input.files[0];
       }
     }
-    if (file) requestFileUpload(file);
+    if (file) await requestFileUpload(file);
     requestUserDataChange({ name: nameValue, displayName: displayNameValue });
+    if (user.data && user.data.posts.length > 0) requestPostsDataChange();
   };
 
   return (
