@@ -91,7 +91,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e): void => {
     e.preventDefault();
     requestUserDataChange();
-    requestPostsDataChange();
+    if (user.data && user.data.posts.length > 0) requestPostsDataChange();
   };
 
   return (
