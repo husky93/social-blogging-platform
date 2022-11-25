@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { db, doc, updateDoc } from '../../app/firebase';
+import { login } from '../../features/user/userSlice';
 import { showAlert } from '../Alert';
 import type { RootState } from '../../app/store';
-import type { LazyExoticComponent, LegacyRef, MutableRefObject } from 'react';
+import type { LazyExoticComponent } from 'react';
+import type { DocumentReference, DocumentData } from 'firebase/firestore';
 
 const Card: LazyExoticComponent<any> = React.lazy(() => import('../Card'));
 const Button: LazyExoticComponent<any> = React.lazy(() => import('../Button'));
@@ -58,8 +61,41 @@ const Profile: React.FC<ProfileProps> = ({}) => {
     }
   };
 
+  const requestUserDataChange = async (): Promise<any> => {
+    if (user.data) {
+      const ref: DocumentReference<DocumentData> = doc(
+        db,
+        'users',
+        user.data.uid
+      );
+      const newUserData = {
+        ...user.data,
+        name: nameValue,
+        displayName: displayNameValue,
+      };
+      await updateDoc(ref, { name: nameValue, displayName: displayNameValue });
+      dispatch(login(newUserData));
+    }
+  };
+
+  const requestPostsDataChange = async (): Promise<any> => {
+    if (user.data) {
+      const posts = user.data.posts;
+      posts.forEach(async (post) => {
+        const ref: DocumentReference<DocumentData> = doc(db, 'posts', post);
+        await updateDoc(ref, { 'author.displayName': displayNameValue });
+      });
+    }
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e): void => {
+    e.preventDefault();
+    requestUserDataChange();
+    requestPostsDataChange();
+  };
+
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form onSubmit={handleSubmit}>
       <h1 className="mx-4 mt-8 mb-4 text-center text-2xl font-bold text-gray-900">
         Profile settings
       </h1>

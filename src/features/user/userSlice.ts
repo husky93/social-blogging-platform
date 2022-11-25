@@ -7,7 +7,7 @@ type InitialState = {
     displayName: string;
     name: string;
     photoUrl: string;
-    posts: Array<String>;
+    posts: Array<string>;
   };
 };
 

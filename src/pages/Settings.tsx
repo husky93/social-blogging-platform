@@ -17,9 +17,6 @@ const Menu: LazyExoticComponent<any> = React.lazy(
 const SettingsMenu: LazyExoticComponent<any> = React.lazy(
   () => import('../components/settings/SettingsMenu')
 );
-const Profile: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/settings/Profile')
-);
 const Footer: LazyExoticComponent<any> = React.lazy(
   () => import('../components/Footer')
 );
