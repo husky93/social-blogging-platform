@@ -90,6 +90,15 @@ const Profile: React.FC<ProfileProps> = ({}) => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e): void => {
     e.preventDefault();
+    if (!nameValue || !displayNameValue) {
+      showAlert(
+        'Error!',
+        'Some of the required inputs are empty. Please fill them up.',
+        'danger',
+        dispatch
+      );
+      return;
+    }
     requestUserDataChange();
     if (user.data && user.data.posts.length > 0) requestPostsDataChange();
   };
@@ -107,7 +116,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         )}
         <h2 className="mb-4 text-xl font-bold text-gray-900">User</h2>
         <div className="flex flex-col gap-2 my-2">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Name: *</label>
           <input
             onChange={handleInputChange}
             value={nameValue}
@@ -117,7 +126,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
           />
         </div>
         <div className="flex flex-col gap-2 my-2">
-          <label htmlFor="display-name">Display Name:</label>
+          <label htmlFor="display-name">Display Name: *</label>
           <input
             onChange={handleInputChange}
             value={displayNameValue}
