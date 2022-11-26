@@ -35,7 +35,7 @@ Social Blogging Platform project built with [Vite](https://vitejs.dev/) with use
 - **Create Post page:**
   - Tag input with an ability to add 4 tags.
   - Alert element displaying message when something goes wrong.
-  - Custom text editor built on top of [Slate](https://docs.slatejs.org/) framework.
+  - Custom WYSIWYG text editor built on top of [Slate](https://docs.slatejs.org/) framework.
   - Option to create H1, H2, Blockquote, List item elements.
   - Option to make selected text bold, italic or line through.
   - Option to Save draft in database and load it whenever user visits Create Post page again.
