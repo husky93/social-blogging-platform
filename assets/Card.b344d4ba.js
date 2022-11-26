@@ -1,1 +1,0 @@
-import{j as d}from"./index.2a09c462.js";const o=({children:s,customClasses:r})=>{const a=`w-full bg-white rounded-lg border shadow-md ${r}`;return d("div",{className:a,children:s})};export{o as default};
