@@ -15,7 +15,7 @@ interface AuthorProps {
   details?: {
     education?: string;
     job?: string;
-  };
+  } | null;
 }
 
 const Author: React.FC<AuthorProps> = ({
@@ -26,6 +26,7 @@ const Author: React.FC<AuthorProps> = ({
   showTimeElapsed,
   details,
 }) => {
+  console.log(details);
   const date = new Date(timestamp.seconds * 1000);
   return (
     <div className="flex items-center space-x-4">
@@ -33,16 +34,26 @@ const Author: React.FC<AuthorProps> = ({
       <div className={`${xs ? 'font-normal' : 'font-medium'} `}>
         <div className={xs ? 'text-sm' : ''}>{displayName}</div>
         {details && (
-          <div className="flex flex-col">
+          <div className="flex gap-3 mb-2">
             {details.job && (
-              <span className="block mb-2 text-sm font-medium text-gray-900">
-                {details.job}
-              </span>
+              <div>
+                <span className="text-sm font-medium text-gray-700">
+                  Job Title:{' '}
+                </span>
+                <span className="text-sm font-normal text-gray-600">
+                  {details.job}
+                </span>
+              </div>
             )}
             {details.education && (
-              <span className="block mb-2 text-sm font-medium text-gray-900">
-                {details.education}
-              </span>
+              <div>
+                <span className="text-sm font-medium text-gray-700">
+                  Education:{' '}
+                </span>
+                <span className="text-sm font-normal text-gray-600">
+                  {details.education}
+                </span>
+              </div>
             )}
           </div>
         )}

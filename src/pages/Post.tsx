@@ -10,41 +10,18 @@ import {
 import { serialize } from '../editor/serialize';
 import type { RootState } from '../app/store';
 import type { Node } from 'slate';
-import type { LazyExoticComponent } from 'react';
 
-const Header: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Header')
-);
-const Container: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Container')
-);
-const UserUI: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/UserUI')
-);
-const LoginUI: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/LoginUI')
-);
-const PostUI: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/post/PostUI')
-);
-const Card: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Card')
-);
-const Alert: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Alert')
-);
-const CommentList: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/post/CommentList')
-);
-const Author: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Author')
-);
-const Footer: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Footer')
-);
-const Badge: LazyExoticComponent<any> = React.lazy(
-  () => import('../components/Badge')
-);
+const Header = React.lazy(() => import('../components/Header'));
+const Container = React.lazy(() => import('../components/Container'));
+const UserUI = React.lazy(() => import('../components/UserUI'));
+const LoginUI = React.lazy(() => import('../components/LoginUI'));
+const PostUI = React.lazy(() => import('../components/post/PostUI'));
+const Card = React.lazy(() => import('../components/Card'));
+const Alert = React.lazy(() => import('../components/Alert'));
+const CommentList = React.lazy(() => import('../components/post/CommentList'));
+const Author = React.lazy(() => import('../components/Author'));
+const Footer = React.lazy(() => import('../components/Footer'));
+const Badge = React.lazy(() => import('../components/Badge'));
 
 interface PostProps {}
 
@@ -60,7 +37,7 @@ const Post: React.FC<PostProps> = ({}) => {
     if (!user.data && post?.comments.length === 0) return;
     return (
       <Card customClasses="py-8 px-4 sm:p-12 mt-6">
-        <CommentList post={post} postID={params.id} />
+        <CommentList post={post} postID={params.id!} />
       </Card>
     );
   };
@@ -100,6 +77,14 @@ const Post: React.FC<PostProps> = ({}) => {
                   avatarUrl={post.author.photoUrl}
                   displayName={post.author.displayName}
                   timestamp={post.timestamp}
+                  details={
+                    post.author.education || post.author.job
+                      ? {
+                          education: post.author.education,
+                          job: post.author.job,
+                        }
+                      : null
+                  }
                 />
                 <div className="mt-2">
                   {post.tags.map((tag: string) => (
