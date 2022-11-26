@@ -12,16 +12,12 @@ import {
 import { login } from '../../features/user/userSlice';
 import { showAlert } from '../Alert';
 import type { RootState } from '../../app/store';
-import type { LazyExoticComponent } from 'react';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
 
-const Card: LazyExoticComponent<any> = React.lazy(() => import('../Card'));
-const Button: LazyExoticComponent<any> = React.lazy(() => import('../Button'));
-const Avatar: LazyExoticComponent<any> = React.lazy(() => import('../Avatar'));
-const Alert: LazyExoticComponent<any> = React.lazy(() => import('../Alert'));
-const Spinner: LazyExoticComponent<any> = React.lazy(
-  () => import('../Spinner')
-);
+const Button = React.lazy(() => import('../Button'));
+const Alert = React.lazy(() => import('../Alert'));
+const Spinner = React.lazy(() => import('../Spinner'));
+const UserForm = React.lazy(() => import('./UserForm'));
 
 interface ProfileProps {}
 
@@ -153,69 +149,26 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       <h1 className="mx-4 mt-8 mb-4 text-center text-2xl font-bold text-gray-900">
         Profile settings
       </h1>
-      <Card customClasses="p-4 my-6">
-        {alert.data.isShown && (
-          <Alert title={alert.data.title} variant={alert.data.variant}>
-            {alert.data.text}
-          </Alert>
+      {alert.data.isShown && (
+        <Alert title={alert.data.title} variant={alert.data.variant}>
+          {alert.data.text}
+        </Alert>
+      )}
+      <UserForm
+        handleFileChange={handleFileChange}
+        handleInputChange={handleInputChange}
+        nameValue={nameValue}
+        displayNameValue={displayNameValue}
+        user={user}
+        fileInput={fileInput}
+      />
+      <div className="ml-auto w-fit">
+        {isUploading ? (
+          <Spinner />
+        ) : (
+          <Button type="submit" text="Submit changes" variant="primary" />
         )}
-        <h2 className="mb-4 text-xl font-bold text-gray-900">User</h2>
-        <div className="flex flex-col gap-2 my-2">
-          <label
-            htmlFor="name"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Name: *
-          </label>
-          <input
-            onChange={handleInputChange}
-            value={nameValue}
-            id="name"
-            type="text"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-          />
-        </div>
-        <div className="flex flex-col gap-2 my-2">
-          <label
-            htmlFor="display-name"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Display Name: *
-          </label>
-          <input
-            onChange={handleInputChange}
-            value={displayNameValue}
-            id="display-name"
-            type="text"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-          />
-        </div>
-        <div className="flex flex-col gap-2 my-2">
-          <label
-            htmlFor="profile-pic"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Profile Picture:
-          </label>
-          <div className="flex gap-4 items-center">
-            <Avatar imgLink={user.data?.photoUrl} />
-            <input
-              onChange={handleFileChange}
-              id="profile-pic"
-              type="file"
-              accept="image/png, image/jpeg"
-              ref={fileInput}
-            />
-          </div>
-        </div>{' '}
-        <div className="ml-auto w-fit">
-          {isUploading ? (
-            <Spinner />
-          ) : (
-            <Button type="submit" text="Submit changes" variant="primary" />
-          )}
-        </div>
-      </Card>
+      </div>
     </form>
   );
 };
