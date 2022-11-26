@@ -18,6 +18,7 @@ const Button = React.lazy(() => import('../Button'));
 const Alert = React.lazy(() => import('../Alert'));
 const Spinner = React.lazy(() => import('../Spinner'));
 const UserForm = React.lazy(() => import('./UserForm'));
+const AboutForm = React.lazy(() => import('./AboutForm'));
 
 interface ProfileProps {}
 
@@ -25,27 +26,42 @@ const Profile: React.FC<ProfileProps> = ({}) => {
   const user: RootState['user'] = useAppSelector((state) => state.user);
   const alert: RootState['alert'] = useAppSelector((state) => state.alert);
   const dispatch = useAppDispatch();
-  const [nameValue, setNameValue] = useState('');
-  const [displayNameValue, setDisplayNameValue] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    displayName: '',
+    education: '',
+    job: '',
+  });
   const [profileUrl, setProfileUrl] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (user.data) {
-      setNameValue(user.data.name);
-      setDisplayNameValue(user.data.displayName);
-    }
+    setFormData((prevState) => {
+      if (user.data) {
+        return {
+          ...prevState,
+          name: user.data.name,
+          displayName: user.data.displayName,
+        };
+      } else return { ...prevState };
+    });
   }, [user]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ): void => {
     if (e.target.id === 'name') {
-      setNameValue(e.target.value);
+      setFormData({ ...formData, name: e.target.value });
     }
     if (e.target.id === 'display-name') {
-      setDisplayNameValue(e.target.value);
+      setFormData({ ...formData, displayName: e.target.value });
+    }
+    if (e.target.id === 'education') {
+      setFormData({ ...formData, education: e.target.value });
+    }
+    if (e.target.id === 'job') {
+      setFormData({ ...formData, job: e.target.value });
     }
   };
 
@@ -92,7 +108,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       posts.forEach(async (post) => {
         const ref: DocumentReference<DocumentData> = doc(db, 'posts', post);
         await updateDoc(ref, {
-          'author.displayName': displayNameValue,
+          'author.displayName': formData.displayName,
           'author.photoUrl': profileUrl ? profileUrl : user.data?.photoUrl,
         });
       });
@@ -123,7 +139,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
     e
   ): Promise<any> => {
     e.preventDefault();
-    if (!nameValue || !displayNameValue) {
+    if (!formData.name || !formData.displayName) {
       showAlert(
         'Error!',
         'Some of the required inputs are empty. Please fill them up.',
@@ -140,7 +156,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       }
     }
     if (file) await requestFileUpload(file);
-    requestUserDataChange({ name: nameValue, displayName: displayNameValue });
+    requestUserDataChange({ ...formData });
     if (user.data && user.data.posts.length > 0) requestPostsDataChange();
   };
 
@@ -157,11 +173,12 @@ const Profile: React.FC<ProfileProps> = ({}) => {
       <UserForm
         handleFileChange={handleFileChange}
         handleInputChange={handleInputChange}
-        nameValue={nameValue}
-        displayNameValue={displayNameValue}
+        nameValue={formData.name}
+        displayNameValue={formData.displayName}
         user={user}
         fileInput={fileInput}
       />
+      <AboutForm handleInputChange={handleInputChange} />
       <div className="ml-auto w-fit">
         {isUploading ? (
           <Spinner />
