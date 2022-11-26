@@ -12,6 +12,10 @@ interface AuthorProps {
   timestamp: Timestamp;
   xs?: boolean;
   showTimeElapsed?: boolean;
+  details?: {
+    education?: string;
+    job?: string;
+  };
 }
 
 const Author: React.FC<AuthorProps> = ({
@@ -20,6 +24,7 @@ const Author: React.FC<AuthorProps> = ({
   timestamp,
   xs,
   showTimeElapsed,
+  details,
 }) => {
   const date = new Date(timestamp.seconds * 1000);
   return (
@@ -27,6 +32,20 @@ const Author: React.FC<AuthorProps> = ({
       <Avatar imgLink={avatarUrl} />
       <div className={`${xs ? 'font-normal' : 'font-medium'} `}>
         <div className={xs ? 'text-sm' : ''}>{displayName}</div>
+        {details && (
+          <div className="flex flex-col">
+            {details.job && (
+              <span className="block mb-2 text-sm font-medium text-gray-900">
+                {details.job}
+              </span>
+            )}
+            {details.education && (
+              <span className="block mb-2 text-sm font-medium text-gray-900">
+                {details.education}
+              </span>
+            )}
+          </div>
+        )}
         <div className="text-sm font-light text-gray-500 ">
           Posted on {format(date, 'do MMMMMMM y')}{' '}
           {showTimeElapsed ? `(${getTimeBetween(date)})` : ''}
