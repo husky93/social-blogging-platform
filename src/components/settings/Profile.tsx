@@ -110,6 +110,8 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         const ref: DocumentReference<DocumentData> = doc(db, 'posts', post);
         await updateDoc(ref, {
           'author.displayName': formData.displayName,
+          'author.education': formData.education,
+          'author.job': formData.job,
           'author.photoUrl': profileUrl ? profileUrl : user.data?.photoUrl,
         });
       });
