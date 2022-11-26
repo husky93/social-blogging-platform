@@ -40,9 +40,10 @@ const Profile: React.FC<ProfileProps> = ({}) => {
     setFormData((prevState) => {
       if (user.data) {
         return {
-          ...prevState,
           name: user.data.name,
           displayName: user.data.displayName,
+          education: user.data.education,
+          job: user.data.job,
         };
       } else return { ...prevState };
     });
