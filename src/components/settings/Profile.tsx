@@ -178,7 +178,11 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         user={user}
         fileInput={fileInput}
       />
-      <AboutForm handleInputChange={handleInputChange} />
+      <AboutForm
+        handleInputChange={handleInputChange}
+        educationValue={formData.education}
+        jobValue={formData.job}
+      />
       <div className="ml-auto w-fit">
         {isUploading ? (
           <Spinner />
