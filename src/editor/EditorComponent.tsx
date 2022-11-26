@@ -105,6 +105,8 @@ const EditorComponent: React.FC<EditorProps> = ({}) => {
             uid: user.data.uid,
             displayName: user.data.displayName,
             photoUrl: user.data.photoUrl,
+            education: user.data.education,
+            job: user.data.job,
           },
           title: title,
           content: post,
