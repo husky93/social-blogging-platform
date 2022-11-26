@@ -8,6 +8,8 @@ type InitialState = {
     name: string;
     photoUrl: string;
     posts: Array<string>;
+    education: string;
+    job: string;
   };
 };
 

@@ -48,6 +48,8 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
               name: userData.name,
               photoUrl: userData.photoUrl,
               posts: userData.posts,
+              education: userData.education,
+              job: userData.job,
             })
           );
         } else {
@@ -57,6 +59,8 @@ export const useCheckIfLoggedIn = (dispatch: AppDispatch): boolean => {
               displayName: userAuth.displayName,
               name: userAuth.displayName,
               photoUrl: userAuth.photoURL,
+              education: '',
+              job: '',
               posts: [],
             })
           );

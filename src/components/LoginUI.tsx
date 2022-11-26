@@ -41,6 +41,8 @@ const LoginUI: React.FC<LoginUIProps> = ({ text }) => {
         photoUrl: user.photoURL,
         posts: [],
         bookmarks: [],
+        education: '',
+        job: '',
       });
     } catch (error: any) {
       console.error('Error writing new data to Firebase Database', error);
@@ -54,13 +56,6 @@ const LoginUI: React.FC<LoginUIProps> = ({ text }) => {
     signInWithPopup(auth, provider)
       .then(async (result: UserCredential) => {
         const user: User = result.user;
-        dispatch(
-          login({
-            uid: user.uid,
-            displayName: user.displayName,
-            photoUrl: user.photoURL,
-          })
-        );
         const docRef: DocumentReference<DocumentData> = doc(
           db,
           'users',
